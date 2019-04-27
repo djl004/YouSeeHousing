@@ -1,22 +1,21 @@
 package com.example.youseehousing;
 
+import android.accounts.Account;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class SignUpPage extends AppCompatActivity {
+public class AccountCreation extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up_page);
+        setContentView(R.layout.activity_account_creation);
     }
 
-    public void createAccountonClick(View view) {
-        //Intent myIntent = new Intent(SignUpPage.this, MainHousingListing.class);
-        Intent myIntent = new Intent(SignUpPage.this, AccountCreation.class);
-
+    public void finishedonClick (View view) {
+        Intent myIntent = new Intent(AccountCreation.this, MainHousingListing.class);
         startActivity(myIntent);
     }
 }

@@ -60,6 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="121dp"
         android:layout_marginTop="416dp"
+        android:onClick="createAccountonClick"
         android:text="Create an account"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
