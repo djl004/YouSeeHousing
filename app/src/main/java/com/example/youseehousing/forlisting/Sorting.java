@@ -26,11 +26,11 @@ public class Sorting{
     public static ArrayList <Listing> sort(ArrayList<Listing> l, String param, boolean reverse){
 
         // Sort according to the parameter passed in
-        if(param == "distance"){
+        if(param.equals("distance")){
             Collections.sort(l, new SortDistance());
-        } else if (param == "rent") {
+        } else if (param.equals("rent")) {
             Collections.sort(l, new SortRent());
-        } else if (param == "numVacancies"){
+        } else if (param.equals("numVacancies")){
             Collections.sort(l, new SortVacancies());
         }
 

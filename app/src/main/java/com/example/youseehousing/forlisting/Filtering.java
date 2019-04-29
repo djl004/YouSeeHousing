@@ -45,8 +45,8 @@ public class Filtering{
 
 
         // Filter using a parameter that uses limits
-        if(param == "distance" || param == "price" || param == "numBaths" || param == "numRooms"
-                || param == "numVacancies" || param == "leaseDuration"){
+        if(param.equals("distance") || param.equals("price") || param.equals("numBaths") || param.equals("numRooms")
+                || param.equals("numVacancies") || param.equals("leaseDuration")){
 
             // Go through the ArrayList and delete Listings that don't fit
             for(int i = 0; i < l.size(); i++) {
@@ -56,17 +56,17 @@ public class Filtering{
 
                 // For params that include a botLimit and a topLimit, get the relevant instance variable
                 int relevantVar = 0;
-                if (param == "distance") {
+                if (param.equals("distance")){
                     relevantVar = currentObj.getDistance();
-                } else if (param == "price") {
+                } else if (param.equals("price")) {
                     relevantVar = currentObj.getPrice();
-                } else if (param == "numBaths") {
+                } else if (param.equals("numBaths")) {
                     relevantVar = currentObj.getNumBaths();
-                } else if (param == "numRooms") {
+                } else if (param.equals("numRooms")) {
                     relevantVar = currentObj.getNumRooms();
-                } else if (param == "numVacancies") {
+                } else if (param.equals("numVacancies")) {
                     relevantVar = currentObj.getNumVacancies();
-                } else if (param == "leaseDuration") {
+                } else if (param.equals("leaseDuration")) {
                     relevantVar = currentObj.getLeaseDuration();
                 }
 
@@ -86,7 +86,8 @@ public class Filtering{
 
 
         // Filter using a parameter that doesn't use limits
-        else if(param == "hasUtils" || param == "hasWD" || param == "hasFurniture" || param == "hasPets"){
+        else if(param.equals("hasUtils") || param.equals("hasWD") || param.equals("hasFurniture")
+                || param.equals("hasPets")){
 
             // Go through the ArrayList and delete Listings that don't fit
             for(int i = 0; i < l.size(); i++) {
@@ -96,13 +97,13 @@ public class Filtering{
 
                 // Get the relevant variable
                 boolean relevantVar = false;
-                if (param == "hasUtils") {
+                if (param.equals("hasUtils")) {
                     relevantVar = currentObj.isHasUtils;
-                } else if (param == "hasWD") {
+                } else if (param.equals("hasWD")) {
                     relevantVar = currentObj.isHasWD;
-                } else if (param == "hasFurniture") {
+                } else if (param.equals("hasFurniture")) {
                     relevantVar = currentObj.isHasFurniture;
-                } else if (param == "hasPets") {
+                } else if (param.equals("hasPets")) {
                     relevantVar = currentObj.isHasPets;
                 }
 
