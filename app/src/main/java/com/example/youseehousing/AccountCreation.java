@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.youseehousing.forlisting.Listing;
+
 public class AccountCreation extends AppCompatActivity {
 
     @Override
@@ -15,7 +17,7 @@ public class AccountCreation extends AppCompatActivity {
     }
 
     public void finishedonClick (View view) {
-        Intent myIntent = new Intent(AccountCreation.this, MainHousingListing.class);
+        Intent myIntent = new Intent(AccountCreation.this, Listing.class);
         startActivity(myIntent);
     }
 
