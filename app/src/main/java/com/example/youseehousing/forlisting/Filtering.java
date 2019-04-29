@@ -54,7 +54,6 @@ public class Filtering{
         // Filter using a parameter that uses limits
         if(usesLimits){
 
-        }
             // Go through the ArrayList and delete Listings that don't fit
             for(int i = 0; i < l.size(); i++) {
 
