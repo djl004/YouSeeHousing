@@ -14,14 +14,15 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button signUp;
+    private Button signUp, logIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        signUp = (Button) findViewById(R.id.signup);
+        signUp = findViewById(R.id.signup);
+        logIn = findViewById(R.id.login);
 
         // When "SIGN UP" button is clicked.
         signUp.setOnClickListener(new View.OnClickListener() {
@@ -30,10 +31,28 @@ public class MainActivity extends AppCompatActivity {
                 signupFxn();
             }
         });
+
+        logIn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                if(true) {
+                    Toast.makeText(getApplicationContext(), "Input needs to be checked",
+                            Toast.LENGTH_LONG).show();
+                }
+                else {
+                    logInFxn();
+                }
+            }
+        });
     }
 
     private void signupFxn() {
         Intent myIntent = new Intent(MainActivity.this, SignUpPage.class);
+        startActivity(myIntent);
+    }
+
+    private void logInFxn() {
+        Intent myIntent = new Intent(MainActivity.this, MainHousingListing.class);
         startActivity(myIntent);
     }
     @Override
