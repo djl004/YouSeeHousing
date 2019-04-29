@@ -18,4 +18,5 @@ public class AccountCreation extends AppCompatActivity {
         Intent myIntent = new Intent(AccountCreation.this, MainHousingListing.class);
         startActivity(myIntent);
     }
+
 }
