@@ -18,7 +18,7 @@ public class Sorting{
      * @param l: The arraylist to sort
      * @param param: The listing parameter to sort by. So far, can be:
      *               - distance, pass in "distance"
-     *               - rent, pass in "rent"
+     *               - price, pass in "price"
      *               - number of vacancies, pass in "numVacancies"
      * @param reverse: False to sort from low->high. True to sort from high->low
      * @return: The sorted list
@@ -28,7 +28,7 @@ public class Sorting{
         // Sort according to the parameter passed in
         if(param.equals("distance")){
             Collections.sort(l, new SortDistance());
-        } else if (param.equals("rent")) {
+        } else if (param.equals("price")) {
             Collections.sort(l, new SortRent());
         } else if (param.equals("numVacancies")){
             Collections.sort(l, new SortVacancies());
