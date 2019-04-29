@@ -43,16 +43,10 @@ public class Filtering{
     public static ArrayList<Listing> filter(ArrayList<Listing> l, String param, int botLimit, int topLimit){
 
 
-        // Check if this particular method call is using limits or not
-        boolean usesLimits = false;
-        if(param == "distance" || param == "price" || param == "numBaths" || param == "numRooms"
-                || param == "numVacancies" || param == "leaseDuration"){
-            usesLimits = true;
-        }
-
 
         // Filter using a parameter that uses limits
-        if(usesLimits){
+        if(param == "distance" || param == "price" || param == "numBaths" || param == "numRooms"
+                || param == "numVacancies" || param == "leaseDuration"){
 
             // Go through the ArrayList and delete Listings that don't fit
             for(int i = 0; i < l.size(); i++) {
@@ -72,8 +66,6 @@ public class Filtering{
                     relevantVar = currentObj.getNumRooms();
                 } else if (param == "numVacancies") {
                     relevantVar = currentObj.getNumVacancies();
-                } else if (param == "hasPets") {
-                    relevantVar = currentObj.getHasPets();
                 } else if (param == "leaseDuration") {
                     relevantVar = currentObj.getLeaseDuration();
                 }
@@ -94,7 +86,7 @@ public class Filtering{
 
 
         // Filter using a parameter that doesn't use limits
-        else{
+        else if(param == "hasUtils" || param == "hasWD" || param == "hasFurniture" || param == "hasPets"){
 
             // Go through the ArrayList and delete Listings that don't fit
             for(int i = 0; i < l.size(); i++) {
@@ -102,16 +94,16 @@ public class Filtering{
 
                 Listing currentObj = l.get(i);
 
-                // For params that don't include a botLimit and a topLimit, get the relevant boolean
+                // Get the relevant variable
                 boolean relevantVar = false;
                 if (param == "hasUtils") {
-                    relevantBool = currentObj.isHasUtils;
+                    relevantVar = currentObj.isHasUtils;
                 } else if (param == "hasWD") {
-                    relevantBool = currentObj.isHasWD;
+                    relevantVar = currentObj.isHasWD;
                 } else if (param == "hasFurniture") {
-                    relevantBool = currentObj.isHasFurniture;
+                    relevantVar = currentObj.isHasFurniture;
                 } else if (param == "hasPets") {
-                    relevantBool = currentObj.isHasPets;
+                    relevantVar = currentObj.isHasPets;
                 }
 
 
