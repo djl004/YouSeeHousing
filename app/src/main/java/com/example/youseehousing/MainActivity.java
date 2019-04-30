@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.youseehousing.forlisting.Listing;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button signUp, logIn;
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logInFxn() {
-        Intent myIntent = new Intent(MainActivity.this, MainHousingListing.class);
+        Intent myIntent = new Intent(MainActivity.this, Listing.class);
         startActivity(myIntent);
     }
     @Override
