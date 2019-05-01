@@ -16,7 +16,7 @@ import java.lang.String;            // To use Strings
  *          imported straight from the database while others may need to be calculated on-the-fly.
  *          The Listings will be sorted or filtered as the user desired and then displayed.
   */
-public class Listing{
+public class Listing implements Comparable<Listing>{
 
     // A list of animals allowed
     public static final String DOG = "dog";
@@ -40,6 +40,7 @@ public class Listing{
     // Instance variables (filtering and sorting)
     public double distance;          // Distance from user (should be unique to user)
     public double price;             // Rent per month
+    public double size;              // Size of the listing, in sq.ft.
     public boolean hasUtils;         // Are the utilities factored into the rent?
     public boolean hasWD;            // has a washer/dryer
     public boolean hasFurniture;     // Whether or not it’s furnished
@@ -232,7 +233,18 @@ public class Listing{
         this.leaseDuration = leaseDuration;
     }
 
+    public double getSize() {
+        return size;
+    }
 
+    public void setSize(double size) {
+        this.size = size;
+    }
+
+    @Override
+    public int compareTo(Listing anotherListing){
+        return this.getNumOfFilterMatching() - anotherListing.getNumOfFilterMatching();
+    }
 
 } // end of public class Listing
 
