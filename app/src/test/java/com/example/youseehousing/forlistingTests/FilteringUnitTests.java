@@ -1,34 +1,40 @@
-package com.example.youseehousing;
+package com.example.youseehousing.forlistingTests;
+
+import com.example.youseehousing.forlisting.Filtering;
+import com.example.youseehousing.forlisting.Listing;
+
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
+
+
 
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ExampleUnitTest {
-
-
-    // Create a list for testing
-    ArrayList<Listing> testList = new ArrayList<Listing>();
-
-    // Add a hundred objects to testList
-    for(int i = 0; i < 100; i++){
-        testList.add(new Listing());
-    }
-
+class ExampleUnitTest extends TestCase {
 
 
 
 
 
     @Test
-    public void filtersOutDistance() {
+    public void testFiltersOutDistance() {
 
 
+        // Create a list for testing
+        ArrayList<Listing> testList = new ArrayList<>();
+
+        // Add a hundred objects to testList
+        for(int i = 0; i < 100; i++){
+            testList.add(new Listing("meaninglessAddress"));
+        }
 
         // Fill in the distance instance variable with random numbers
         for(int i = 0; i < 100; i++){
