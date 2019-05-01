@@ -44,8 +44,8 @@ public class Filtering{
 
 
 
-        // Filter using a parameter that uses limits
-        if(param.equals("distance") || param.equals("price") || param.equals("numBaths") || param.equals("numRooms")
+        // Filter using a parameter that uses limits and compares ints
+        if(param.equals("numBaths") || param.equals("numRooms")
                 || param.equals("numVacancies") || param.equals("leaseDuration")){
 
             // Go through the ArrayList and delete Listings that don't fit
@@ -54,13 +54,9 @@ public class Filtering{
                 Listing currentObj = l.get(i);
 
 
-                // For params that include a botLimit and a topLimit, get the relevant instance variable
+                // For params that use limits with an int, get the relevant instance variable
                 int relevantVar = 0;
-                if (param.equals("distance")){
-                    relevantVar = currentObj.getDistance();
-                } else if (param.equals("price")) {
-                    relevantVar = currentObj.getPrice();
-                } else if (param.equals("numBaths")) {
+                if (param.equals("numBaths")) {
                     relevantVar = currentObj.getNumBaths();
                 } else if (param.equals("numRooms")) {
                     relevantVar = currentObj.getNumRooms();
@@ -69,6 +65,7 @@ public class Filtering{
                 } else if (param.equals("leaseDuration")) {
                     relevantVar = currentObj.getLeaseDuration();
                 }
+
 
 
                 // If the current Listing don't fit in the limits, remove that Listing
@@ -85,7 +82,38 @@ public class Filtering{
 
 
 
-        // Filter using a parameter that doesn't use limits
+        // Filter using a parameter that doesn't use limits and use doubles
+        else if(param.equals("distance") || param.equals("price") ) {
+
+
+            // Go through the ArrayList and delete Listings that don't fit
+            for(int i = 0; i < l.size(); i++) {
+
+                Listing currentObj = l.get(i);
+
+
+                // For params that use limits with an int, get the relevant instance variable
+                double relevantVar = 0;
+                if (param.equals("distance")) {
+                    relevantVar = currentObj.getDistance();
+                } else if (param.equals("price")) {
+                    relevantVar = currentObj.getPrice();
+                }
+
+
+
+                // If the current Listing don't fit in the limits, remove that Listing
+                if(relevantVar < botLimit || relevantVar > topLimit) {
+                    l.remove(i);           // Remove the element
+                    i--;                   // Decrement i to account for the removal of one element
+                }
+
+
+            } // End of going through every element in the list
+        } // End of filtering out double parameters
+
+
+        // Filter using a parameter that don't use limits
         else if(param.equals("hasUtils") || param.equals("hasWD") || param.equals("hasFurniture")
                 || param.equals("hasPets")){
 
@@ -98,13 +126,13 @@ public class Filtering{
                 // Get the relevant variable
                 boolean relevantVar = false;
                 if (param.equals("hasUtils")) {
-                    relevantVar = currentObj.isHasUtils;
+                    relevantVar = currentObj.isHasUtils();
                 } else if (param.equals("hasWD")) {
-                    relevantVar = currentObj.isHasWD;
+                    relevantVar = currentObj.isHasWD();
                 } else if (param.equals("hasFurniture")) {
-                    relevantVar = currentObj.isHasFurniture;
+                    relevantVar = currentObj.isHasFurniture();
                 } else if (param.equals("hasPets")) {
-                    relevantVar = currentObj.isHasPets;
+                    relevantVar = currentObj.isHasPets();
                 }
 
 
