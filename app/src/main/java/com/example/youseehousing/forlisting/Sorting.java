@@ -3,8 +3,8 @@ package com.example.youseehousing.forlisting;
 
 
 import java.util.ArrayList;         // Want to use ArrayList
-import java.util.Collection;        // Use Collection to sort, to reverse a list
-
+import java.util.Collections;       // Use Collections to sort a list
+import java.util.Comparator;        // To create Comparator classes for sorting
 
 
 /**
@@ -29,7 +29,7 @@ public class Sorting{
         if(param.equals("distance")){
             Collections.sort(l, new SortDistance());
         } else if (param.equals("price")) {
-            Collections.sort(l, new SortRent());
+            Collections.sort(l, new SortPrice());
         } else if (param.equals("numVacancies")){
             Collections.sort(l, new SortVacancies());
         }
@@ -51,10 +51,18 @@ public class Sorting{
 /**
  * Comparator class to sort by distance
  */
-public class SortDistance implements Comparator<Listing>{
+class SortDistance implements Comparator<Listing> {
 
     public int compare(Listing a, Listing b){
-        return a.getDistance() - b.getDistance();
+
+
+        // Return 1 if a is bigger, -1 if b is bigger. If they are equal, it doesn't matter
+        if(a.getDistance() > b.getDistance()){
+            return 1;
+        }
+        else{
+            return -1;
+        }
     }
 
 } // end of public class SortDistance
@@ -63,21 +71,31 @@ public class SortDistance implements Comparator<Listing>{
 /**
  * Comparator class to sort by rent
  */
-public class SortRent implements Comparator<Listing>{
+class SortPrice implements Comparator<Listing>{
 
     public int compare(Listing a, Listing b){
-        return a.getRent() - b.getRent();
+
+        // Return 1 if a is bigger, -1 if b is bigger. If they are equal, it doesn't matter
+        if(a.getPrice() > b.getPrice()){
+            return 1;
+        }
+        else{
+            return -1;
+        }
     }
 
 } // end of public class SortRent
 
 
+
+
 /**
  * Comparator class to sort by number of vacancies
  */
-public class SortVacancies implements Comparator<Listing>{
+class SortVacancies implements Comparator<Listing>{
 
     public int compare(Listing a, Listing b){
+
         return a.getNumVacancies() - b.getNumVacancies();
     }
 
