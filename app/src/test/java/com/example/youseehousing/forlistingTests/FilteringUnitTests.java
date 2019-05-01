@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-class ExampleUnitTest extends TestCase {
+public class FilteringUnitTests {
 
 
 
@@ -29,7 +29,7 @@ class ExampleUnitTest extends TestCase {
 
 
         // Create a list for testing
-        ArrayList<Listing> testList = new ArrayList<>();
+        ArrayList<Listing> testList = new ArrayList<Listing>();
 
         // Add a hundred objects to testList
         for(int i = 0; i < 100; i++){
