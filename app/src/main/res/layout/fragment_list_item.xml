@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_list_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/card_margin"
@@ -13,6 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/card_margin"
+        android:clickable="false"
+        android:focusable="auto"
         app:cardBackgroundColor="@color/colorCardBG"
         app:cardCornerRadius="@dimen/card_corner_radius"
         app:cardElevation="4dp"
@@ -25,8 +28,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:adjustViewBounds="true"
+            android:cropToPadding="false"
             android:scaleType="centerInside"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            app:srcCompat="@drawable/placeholder"
+            tools:srcCompat="@drawable/placeholder" />
 
         <TextView
             android:id="@+id/item_number"

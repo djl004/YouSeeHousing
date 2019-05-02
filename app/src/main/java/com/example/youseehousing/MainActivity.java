@@ -94,7 +94,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
    private void signIn(String email,String password){
-        Log.d(TAG,"signIn:" + email);
+       // Commented out login functionality to test list functionality
+       // TODO: Reimplement login functionality
+       logInFxn();
+
+/*        Log.d(TAG,"signIn:" + email);
         if(password.length() == 0) {
            Toast.makeText(getApplicationContext(), "Input needs to be checked",
                    Toast.LENGTH_LONG).show();
@@ -116,5 +120,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+*/
+
    }
 }
