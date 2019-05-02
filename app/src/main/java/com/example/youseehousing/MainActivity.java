@@ -56,8 +56,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view){
                 email = emailInput.getText().toString();
                 pw = pwInput.getText().toString();
-
-                signIn(email,pw);
+                //when no inputs
+                if(email.length() == 0 || pw.length() == 0){
+                    Toast.makeText(getApplicationContext(), "Input needs to be checked",
+                            Toast.LENGTH_LONG).show();
+                }
+                else {
+                    signIn(email, pw);
+                }
             }
         });
     }
