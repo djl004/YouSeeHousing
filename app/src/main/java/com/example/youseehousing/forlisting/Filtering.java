@@ -29,17 +29,17 @@ public class Filtering{
      *                         number, say MAX_VALUE or something.
      *
      *           Examples:
-     *           Key: "price",    Value: "500-1000
-     *           Key: "distance", Value: "0-3"
-     *           Key: "numRooms", Value: "2-4"
-     *           Key: "size", Value: "0-1000"
-     *           Key: "numBaths", Value: "1-3"
-     *           Key: "numVacancies", Value: "1-4"
+     *           Key: "price",         Value: "500-1000
+     *           Key: "distance",      Value: "0-3"
+     *           Key: "numRooms",      Value: "2-4"
+     *           Key: "size",          Value: "0-1000"
+     *           Key: "numBaths",      Value: "1-3"
+     *           Key: "numVacancies",  Value: "1-4"
      *           Key: "leaseDuration", Value: "9-12"
-     *           Key: "hasWD", Value: "true"
-     *           Key: "hasPets", Value: "false"
-     *           Key: "hasFurniture", Value: "true"
-     *           Key: "hasUtils", Value: "true"
+     *           Key: "hasWD",         Value: "true"
+     *           Key: "hasPets",       Value: "false"
+     *           Key: "hasFurniture",  Value: "true"
+     *           Key: "hasUtils",      Value: "true"
      * @return the filtered ArrayList of Listings
      */
     public static ArrayList<Listing> filter(Map<String, String> theFilters){
