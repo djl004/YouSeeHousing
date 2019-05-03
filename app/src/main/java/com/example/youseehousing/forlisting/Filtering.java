@@ -40,7 +40,7 @@ public class Filtering{
      *               Note: If the param doesn't use the botLimit or topLimit, pass in whatever.
      * @return: The filtered list
      */
-    public static ArrayList<Listing> filter(ArrayList<Listing> l, String param, int botLimit, int topLimit){
+    public static ArrayList<Listing> filter(ArrayList<Listing> l, String param, double botLimit, double topLimit){
 
 
 
