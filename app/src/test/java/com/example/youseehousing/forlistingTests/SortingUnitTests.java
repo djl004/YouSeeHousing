@@ -19,6 +19,10 @@ import java.lang.Math;              // To generate random numbers
 public class SortingUnitTests {
 
 
+    // Relevant test variables
+    int testSize = 1000;              // How many items in the list you want to test
+
+
 
 
 
@@ -34,13 +38,13 @@ public class SortingUnitTests {
         ArrayList<Listing> testList = new ArrayList<Listing>();
 
         // Add a hundred objects to testList
-        for(int i = 0; i < 100; i++){
+        for(int i = 0; i < testSize; i++){
             testList.add(new Listing("meaninglessAddress"));
         }
 
 
         // Fill in the distance instance variable with random numbers
-        for(int i = 0; i < 100; i++){
+        for(int i = 0; i < testSize; i++){
             testList.get(i).setDistance(Math.random()* 1000);
         }
 
@@ -52,7 +56,7 @@ public class SortingUnitTests {
         // boolean value to keep track of if filter works or not
         boolean testPassed = true;
 
-        // Check that the sort has worked correctly. Each item is bigger than the last
+        // Check that the sort has worked correctly. Current item should be smaller than the next
         for(int i = 0; i < testList.size() - 1; i++){
 
             // If one pair of items is out of order, test has failed
@@ -77,13 +81,13 @@ public class SortingUnitTests {
         ArrayList<Listing> testList = new ArrayList<Listing>();
 
         // Add a hundred objects to testList
-        for(int i = 0; i < 100; i++){
+        for(int i = 0; i < testSize; i++){
             testList.add(new Listing("meaninglessAddress"));
         }
 
 
         // Fill in the distance instance variable with random numbers
-        for(int i = 0; i < 100; i++){
+        for(int i = 0; i < testSize; i++){
             testList.get(i).setDistance(Math.random()* 1000);
         }
 
@@ -95,7 +99,7 @@ public class SortingUnitTests {
         // boolean value to keep track of if filter works or not
         boolean testPassed = true;
 
-        // Check that the sort has worked correctly. Each item is bigger than the last
+        // Check that the sort has worked correctly. Current item should be larger than the next
         for(int i = 0; i < testList.size() - 1; i++){
 
             // If one pair of items is out of order, test has failed
@@ -123,13 +127,13 @@ public class SortingUnitTests {
         ArrayList<Listing> testList = new ArrayList<Listing>();
 
         // Add a hundred objects to testList
-        for(int i = 0; i < 100; i++){
+        for(int i = 0; i < testSize; i++){
             testList.add(new Listing("meaninglessAddress"));
         }
 
 
         // Fill in the distance instance variable with random numbers
-        for(int i = 0; i < 100; i++){
+        for(int i = 0; i < testSize; i++){
             testList.get(i).setPrice(Math.random()* 1000);
         }
 
@@ -141,7 +145,7 @@ public class SortingUnitTests {
         // boolean value to keep track of if filter works or not
         boolean testPassed = true;
 
-        // Check that the sort has worked correctly. Each item is bigger than the last
+        // Check that the sort has worked correctly. Current item should be smaller than the next
         for(int i = 0; i < testList.size() - 1; i++){
 
             // If one pair of items is out of order, test has failed
@@ -166,13 +170,13 @@ public class SortingUnitTests {
         ArrayList<Listing> testList = new ArrayList<Listing>();
 
         // Add a hundred objects to testList
-        for(int i = 0; i < 100; i++){
+        for(int i = 0; i < testSize; i++){
             testList.add(new Listing("meaninglessAddress"));
         }
 
 
         // Fill in the distance instance variable with random numbers
-        for(int i = 0; i < 100; i++){
+        for(int i = 0; i < testSize; i++){
             testList.get(i).setPrice(Math.random()* 1000);
         }
 
@@ -184,7 +188,7 @@ public class SortingUnitTests {
         // boolean value to keep track of if filter works or not
         boolean testPassed = true;
 
-        // Check that the sort has worked correctly. Each item is bigger than the last
+        // Check that the sort has worked correctly. Current item should be larger than the next
         for(int i = 0; i < testList.size() - 1; i++){
 
             // If one pair of items is out of order, test has failed
@@ -216,13 +220,13 @@ public class SortingUnitTests {
         ArrayList<Listing> testList = new ArrayList<Listing>();
 
         // Add a hundred objects to testList
-        for(int i = 0; i < 100; i++){
+        for(int i = 0; i < testSize; i++){
             testList.add(new Listing("meaninglessAddress"));
         }
 
 
         // Fill in the distance instance variable with random numbers
-        for(int i = 0; i < 100; i++){
+        for(int i = 0; i < testSize; i++){
             testList.get(i).setNumVacancies((int) (Math.random()* 1000));
         }
 
@@ -234,7 +238,7 @@ public class SortingUnitTests {
         // boolean value to keep track of if filter works or not
         boolean testPassed = true;
 
-        // Check that the sort has worked correctly. Each item is bigger than the last
+        // Check that the sort has worked correctly. Current item should be smaller than the next
         for(int i = 0; i < testList.size() - 1; i++){
 
             // If one pair of items is out of order, test has failed
@@ -260,13 +264,13 @@ public class SortingUnitTests {
         ArrayList<Listing> testList = new ArrayList<Listing>();
 
         // Add a hundred objects to testList
-        for(int i = 0; i < 100; i++){
+        for(int i = 0; i < testSize; i++){
             testList.add(new Listing("meaninglessAddress"));
         }
 
 
         // Fill in the distance instance variable with random numbers
-        for(int i = 0; i < 100; i++){
+        for(int i = 0; i < testSize; i++){
             testList.get(i).setNumVacancies((int) (Math.random()* 1000));
         }
 
@@ -278,7 +282,7 @@ public class SortingUnitTests {
         // boolean value to keep track of if filter works or not
         boolean testPassed = true;
 
-        // Check that the sort has worked correctly. Each item is bigger than the last
+        // Check that the sort has worked correctly. Each item is larger than the last
         for(int i = 0; i < testList.size() - 1; i++){
 
             // If one pair of items is out of order, test has failed
