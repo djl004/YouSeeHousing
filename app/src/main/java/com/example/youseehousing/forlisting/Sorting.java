@@ -15,12 +15,12 @@ public class Sorting{
 
     /**
      * This static method is called to sort a list of listings
-     * @param l: The arraylist to sort
+     * @param l: The ArrayList to sort
      * @param param: The listing parameter to sort by. So far, can be:
-     *               - distance, pass in "distance"
-     *               - price, pass in "price"
-     *               - number of vacancies, pass in "numVacancies"
-     * @param reverse: False to sort from low->high. True to sort from high->low
+     *               - "distance" to sort by distance
+     *               - "price" to sort by price
+     *               - "numVacancies" to sort by number of vacancies
+     * @param reverse: false to sort from low->high. true to sort from high->low
      * @return: The sorted list
      */
     public static ArrayList <Listing> sort(ArrayList<Listing> l, String param, boolean reverse){
@@ -48,8 +48,10 @@ public class Sorting{
 } // end of public class Sorting
 
 
+
+
 /**
- * Comparator class to sort by distance
+ * Comparator class used by Collections.sort() to sort by distance
  */
 class SortDistance implements Comparator<Listing> {
 
@@ -69,7 +71,7 @@ class SortDistance implements Comparator<Listing> {
 
 
 /**
- * Comparator class to sort by rent
+ * Comparator class used by Collections.sort() to sort by rent
  */
 class SortPrice implements Comparator<Listing>{
 
@@ -90,7 +92,7 @@ class SortPrice implements Comparator<Listing>{
 
 
 /**
- * Comparator class to sort by number of vacancies
+ * Comparator class used by Collections.sort() to sort by number of vacancies
  */
 class SortVacancies implements Comparator<Listing>{
 
