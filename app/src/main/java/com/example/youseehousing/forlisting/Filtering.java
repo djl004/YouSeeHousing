@@ -69,6 +69,26 @@ public class Filtering{
 
 
 
+    
+    /**
+     * One implementation of setDistances using google maps to calculate the distances between
+     * the listing's address and the user-entered address. It may take too long, in which case we
+     * will swap this implementation for another one.
+     *
+     * @param listings: the listings whose distance to "address" will be calculated
+     * @param address: the user-entered address
+     */
+    public void setDistancesGoogleMaps(ArrayList<Listing> listings, String address){
+
+    } // end of public void setDistances()
+
+
+
+
+
+
+
+
 
 
 }
