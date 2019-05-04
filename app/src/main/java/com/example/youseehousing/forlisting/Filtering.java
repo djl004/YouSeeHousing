@@ -46,17 +46,21 @@ public class Filtering{
         ArrayList<Listing> results = new ArrayList<Listing>();
         if(theFilters.containsKey("price")){            // should make a maximum default value, so this should always be true
             int value = Integer.parseInt(theFilters.get("price"));  // this is the value that is going to be the upper limit to our results. It comes from the filters applied by the user
+                                                                    // reason we may not need a lower bound is people tend to always be open to cheaper options
 //            results = database.populate(value);         // not sure how we will grab data, so this is only temporary, will comment out for compilation purposes
         }
 
-        if(theFilters.get("hasWD").equals("true")){
-            for(Listing result: results){
-                if(result.isHasWD()) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
+        if(theFilters.containsKey("hasWD")){
+            for(Listing result: results){   // the if statement in this should give correct filtering if they want it, if they don't want any filtering with this then don't put the key in
+                //  logic: if they have it set to wanting one, then the .equals evaluates to true, and the if statement will increment those that are set to true
+                //          if they have it set to not want one, then the right statement evaluates to false, and it increments all of the ones that have it set to false
+                //          if we don't like this, we can have three separate values that we check for instead to make it more clear
+                if(result.isHasWD() == theFilters.get("hasWD").equals("true")) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
             }
         }
 
         if(theFilters.containsKey("numRooms")){
-            // for every listing that has more than the requested number of rooms, increment the math filter number
+            // for every listing that has more than the requested number of rooms, increment the match filter number
             for(Listing result: results){
                 if(result.getNumRooms() >= Integer.parseInt(theFilters.get("numRooms"))) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
             }
@@ -74,22 +78,27 @@ public class Filtering{
             }
         }
 
-        if(theFilters.get("hasPets").equals("true")){
+        if(theFilters.containsKey("hasPets")){
             for(Listing result: results){
-                if(result.isHasPets()) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
+                if(result.isHasPets() == theFilters.get("hasPets").equals("true")) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
             }
         }
 
-        if(theFilters.get("hasFurniture").equals("true")){
+        if(theFilters.containsKey("hasFurniture")){
             for(Listing result: results){
-                if(result.isHasFurniture()) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
+                if(result.isHasFurniture() == theFilters.get("hasFurniture").equals("true")) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
             }
         }
 
 
 
-        if(theFilters.containsKey("location")){         // TODO: this is a lot more complicated than meets the eye
-
+        if(theFilters.containsKey("distance")){
+            String delims = "[-]+";
+            String[] priceBounds = theFilters.get("distance").split(delims);
+            for(Listing result: results) {
+                if(result.getDistance() <= Double.parseDouble(priceBounds[1]) && result.getDistance() >= Double.parseDouble(priceBounds[0]))
+                    result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
+            }
         }
 
 
