@@ -51,8 +51,8 @@ public class Listing implements Comparable<Listing>{
     public int leaseDuration;        // The duration of the lease, in months
 
     // Instance variables (needed for calculating this.distance)
-    public double lat;               // Latitude of the house's address
-    public double lng;               // Longitude of the house's address
+    public double lat = 0;               // Latitude of the house's address
+    public double lng = 0;               // Longitude of the house's address
 
 
     /**
@@ -249,6 +249,27 @@ public class Listing implements Comparable<Listing>{
     public int compareTo(Listing anotherListing){
         return this.getNumOfFilterMatching() - anotherListing.getNumOfFilterMatching();
     }
+
+
+
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+
+
 
 } // end of public class Listing
 
