@@ -50,6 +50,10 @@ public class Listing implements Comparable<Listing>{
     public boolean hasPets;          // Whether or not pets are allowed
     public int leaseDuration;        // The duration of the lease, in months
 
+    // Instance variables (needed for calculating this.distance)
+    public double lat;               // Latitude of the house's address
+    public double lng;               // Longitude of the house's address
+
 
     /**
      * Constructor.
