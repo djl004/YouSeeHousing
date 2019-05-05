@@ -14,10 +14,17 @@ public class SetDistance {
 
     // Important variables:
     // If, for whatever reason, a Listing's address could not be converted to coordinates, use -1.
-    public static final double NO_LATITUDE = -1;
-    public static final double NO_LONGITUDE = -1;
+    public static final double NO_LATITUDE = -1000;  // Latitude goes from -90 to 90
+    public static final double NO_LONGITUDE = -1000; // Longitude goes from -180 to 180
+    public static final double NO_DISTANCE = -1; // Probably would want to print out "N/A"
 
-    // Constants used for calculations
+
+    // Index reference for the array returned by getCoords()
+    public static final int LAT_INDEX = 0;
+    public static final int LNG_INDEX = 1;
+
+
+    // Constants used for calculations (Haversine formula)
     public static final double R = 6372.8;             // In kilometers
     public static final double KM_CONSTANT = 0.621371; // How many miles in a kilometer
 
@@ -26,14 +33,49 @@ public class SetDistance {
 
     /**
      * Call this function to set the distances in the ArrayList.
+     *
+     * @param list: The ArrayList of Listings whose distance var will be filled
+     * @param address: The user-entered address whose distance to Listings will be calculated.
+     *
+     * return: True if the distances have been set relative to "address". False if the coordinates
+     *               for "address" could not be found.
      */
-    public static void setDistances(ArrayList<Listing> list, String address){
+    public static boolean setDistances(ArrayList<Listing> list, String address){
 
 
-        // First, call setCoords() to make sure the latitudes and longitudes are filled out
+        // Important variables
+        double lat = 0;         // Latitude for address
+        double lng = 0;         // Longitude for address
+        double arr[] = new double[2]; // Array for storing result of getCoords()
+
+
+
+        // First, call setCoords(list) to make sure the latitudes and longitudes are filled out
         setCoords(list);
 
+        // Now, set "lat" and "lng" for the parameter "address"
+        arr = getCoords(address);
+        lat = arr[LAT_INDEX];
+        lng = arr[LNG_INDEX];
 
+        // If "lat" and "lng" = -1, indicating coords not found, then return false
+        if(lat == NO_LATITUDE || lng == NO_LONGITUDE){
+            return false;
+        }
+
+
+        // Now, calculate and set distances for Listings in list
+        for(int i = 0; i < list.size(); i++){
+            // Create reference to current Listing
+            Listing curr = list.get(i);
+
+            // Set curr's distance
+            curr.setDistance(dBetweenCoords(curr.getLat(), curr.getLng(), lat, lng) );
+        }
+
+
+        // All finished, return success
+        return true;
 
     } // end of setDistances()
 
@@ -62,11 +104,14 @@ public class SetDistance {
             // Get the current Listing for convenience
             Listing curr = list.get(i);
 
+            // Create a double array for storing coordinate information
+            double arr[];
+
             // If Listing has not been filled (lat and lng == 0), then fill them in.
             if(curr.getLat() == 0 && curr.getLng() == 0){
-                double arr[] = getCoords(curr.getAddress());
-                curr.setLat(arr[0]);         // Latitude located in the 1st index
-                curr.setLng(arr[1]);         // Longitude located in the 2nd index
+                arr = getCoords(curr.getAddress());
+                curr.setLat(arr[LAT_INDEX]);         // Latitude located in the 1st index
+                curr.setLng(arr[LNG_INDEX]);         // Longitude located in the 2nd index
             }
 
 
@@ -88,11 +133,16 @@ public class SetDistance {
     /**
      * Helper function for getting coords from an address. If the coordinates cannot be found, then
      * the returned double array will be filled with -1.
+     *
+     * Resource: http://julien.gunnm.org/geek/programming/2015/09/13/how-to-get-geocoding-information-in-java-without-google-maps-api/
+     *
      * @return a double array of size 2. First index contains lat, second contains lng
      */
     public static double[] getCoords(String address){
 
         double arr[] = new double [2];
+
+
 
 
 
