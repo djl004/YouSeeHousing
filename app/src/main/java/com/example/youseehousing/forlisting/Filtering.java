@@ -3,6 +3,7 @@ package com.example.youseehousing.forlisting;
 
 import java.util.ArrayList;         // Want to use ArrayList
 import java.util.Map;
+import org.json.*;
 
 
 public class Filtering{
@@ -44,10 +45,12 @@ public class Filtering{
      */
     public static ArrayList<Listing> filter(Map<String, String> theFilters){
         ArrayList<Listing> results = new ArrayList<Listing>();
+        String delims = "[-]+";
         if(theFilters.containsKey("price")){            // should make a maximum default value, so this should always be true
-            int value = Integer.parseInt(theFilters.get("price"));  // this is the value that is going to be the upper limit to our results. It comes from the filters applied by the user
-                                                                    // reason we may not need a lower bound is people tend to always be open to cheaper options
-//            results = database.populate(value);         // not sure how we will grab data, so this is only temporary, will comment out for compilation purposes
+            String[] bounds = theFilters.get("price").split(delims);
+            int upper = Integer.parseInt(bounds[0]);    // this is the value that is going to be the upper limit to our results. It comes from the filters applied by the user
+            int lower = Integer.parseInt(bounds[1]);    // this is the lower bound
+//            results = database.populate(upper,lower);         // not sure how we will grab data, so this is only temporary, will comment out for compilation purposes
         }
 
         if(theFilters.containsKey("hasWD")){
@@ -61,20 +64,30 @@ public class Filtering{
 
         if(theFilters.containsKey("numRooms")){
             // for every listing that has more than the requested number of rooms, increment the match filter number
+            String[] bounds = theFilters.get("numRooms").split(delims);
+            int upper = Integer.parseInt(bounds[1]);
+            int lower = Integer.parseInt(bounds[0]);
             for(Listing result: results){
-                if(result.getNumRooms() >= Integer.parseInt(theFilters.get("numRooms"))) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
+                if(result.getNumRooms() >= lower && result.getNumRooms() <= upper)
+                    result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
             }
         }
 
         if(theFilters.containsKey("size")){
+            String[] bounds = theFilters.get("size").split(delims);
+            double upper = Double.parseDouble(bounds[1]);
+            double lower = Double.parseDouble(bounds[0]);
             for(Listing result: results){
-                if(result.getSize() >= Double.parseDouble(theFilters.get("size"))) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
+                if(result.getSize() >= lower && result.getSize() <= upper) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
             }
         }
 
         if(theFilters.containsKey("numBaths")){
+            String[] bounds = theFilters.get("numBaths").split(delims);
+            int upper = Integer.parseInt(bounds[1]);
+            int lower = Integer.parseInt(bounds[0]);
             for(Listing result: results){
-                if(result.getNumBaths() >= Integer.parseInt(theFilters.get("numBaths"))) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
+                if(result.getNumBaths() >= lower && result.getNumBaths() <= upper) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
             }
         }
 
@@ -93,10 +106,11 @@ public class Filtering{
 
 
         if(theFilters.containsKey("distance")){
-            String delims = "[-]+";
-            String[] priceBounds = theFilters.get("distance").split(delims);
+            String[] bounds = theFilters.get("distance").split(delims);
+            double upper = Double.parseDouble(bounds[1]);
+            double lower = Double.parseDouble(bounds[0]);
             for(Listing result: results) {
-                if(result.getDistance() <= Double.parseDouble(priceBounds[1]) && result.getDistance() >= Double.parseDouble(priceBounds[0]))
+                if(result.getDistance() <= upper && result.getDistance() >= lower)
                     result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
             }
         }
