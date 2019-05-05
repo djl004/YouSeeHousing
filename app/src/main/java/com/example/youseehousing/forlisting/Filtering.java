@@ -50,7 +50,7 @@ public class Filtering{
             String[] bounds = theFilters.get("price").split(delims);
             int upper = Integer.parseInt(bounds[0]);    // this is the value that is going to be the upper limit to our results. It comes from the filters applied by the user
             int lower = Integer.parseInt(bounds[1]);    // this is the lower bound
-//            results = database.populate(upper,lower);         // not sure how we will grab data, so this is only temporary, will comment out for compilation purposes
+//            results = database.populate(lower,upper);         // not sure how we will grab data, so this is only temporary, will comment out for compilation purposes
         }
 
         if(theFilters.containsKey("hasWD")){
@@ -67,7 +67,7 @@ public class Filtering{
             String[] bounds = theFilters.get("numRooms").split(delims);
             int upper = Integer.parseInt(bounds[1]);
             int lower = Integer.parseInt(bounds[0]);
-            for(Listing result: results){
+            for(Listing result: results){   // this loop goes through all of the listings, incrementing any that are within the filter's boundaries
                 if(result.getNumRooms() >= lower && result.getNumRooms() <= upper)
                     result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
             }
@@ -110,7 +110,7 @@ public class Filtering{
             double upper = Double.parseDouble(bounds[1]);
             double lower = Double.parseDouble(bounds[0]);
             for(Listing result: results) {
-                if(result.getDistance() <= upper && result.getDistance() >= lower)
+                if(result.getDistance() >= lower && result.getDistance() <= upper)
                     result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
             }
         }
