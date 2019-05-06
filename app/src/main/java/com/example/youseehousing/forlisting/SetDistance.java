@@ -4,13 +4,10 @@ package com.example.youseehousing.forlisting;
 
 
 // Various classes needed for geocoding
-
-/* Need to figure out how to import a library
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
-*/
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -240,8 +237,8 @@ public class SetDistance {
  * Source: http://julien.gunnm.org/geek/programming/2015/09/13/how-to-get-geocoding-information-in-java-without-google-maps-api/
  *
  */
-/*
-public class OpenStreetMapUtils {
+
+class OpenStreetMapUtils {
 
     public final static Logger log = Logger.getLogger("OpenStreeMapUtils");
 
@@ -338,7 +335,7 @@ public class OpenStreetMapUtils {
         return res;
     }
 }
-*/
+
 
 
 
