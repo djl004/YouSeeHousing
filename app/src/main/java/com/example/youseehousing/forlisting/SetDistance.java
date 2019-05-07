@@ -109,7 +109,8 @@ public class SetDistance {
 
     /**
      * Function to set the coordinates of all the Listings in the ArrayList. Called from
-     * setDistances() automatically, but can also be called directly, if you desire.
+     * setDistances() automatically, but can also be called directly, if you desire. Maybe you would
+     * like to store these values in the database ahead of time.
      *
      * Note: If a Listing in the ArrayList's coordinates cannot be found, then they will be set to
      *       -1.
@@ -152,7 +153,7 @@ public class SetDistance {
 
     /**
      * Helper function for getting coords from an address. If the coordinates cannot be found, then
-     * the returned double array will be filled with -1.
+     * the returned double array will be filled with -1000, indicating null latitude and longitude
      *
      * Resource: http://julien.gunnm.org/geek/programming/2015/09/13/how-to-get-geocoding-information-in-java-without-google-maps-api/
      *
@@ -160,10 +161,9 @@ public class SetDistance {
      */
     public static double[] getCoords(String address){
 
-        double arr[] = new double [2];
+        double arr[];
 
-
-
+        arr = OpenStreetMapUtils.getInstance().getCoordinates(address);
 
 
         return arr;
@@ -240,6 +240,20 @@ public class SetDistance {
 
 class OpenStreetMapUtils {
 
+
+    // Important variables:
+    // If, for whatever reason, a Listing's address could not be converted to coordinates, use -1.
+    public static final double NO_LATITUDE = -1000;  // Latitude goes from -90 to 90
+    public static final double NO_LONGITUDE = -1000; // Longitude goes from -180 to 180
+    public static final double NO_DISTANCE = -1; // Probably would want to print out "N/A"
+
+
+    // Index reference for the array returned by getCoords()
+    public static final int LAT_INDEX = 0;
+    public static final int LNG_INDEX = 1;
+
+
+
     public final static Logger log = Logger.getLogger("OpenStreeMapUtils");
 
     private static OpenStreetMapUtils instance = null;
@@ -279,14 +293,16 @@ class OpenStreetMapUtils {
         return response.toString();
     }
 
-    public Map<String, Double> getCoordinates(String address) {
-        Map<String, Double> res;
+    public double[] getCoordinates(String address) {
+
+        //Map<String, Double> res;
+        double arr[] = new double[2];
         StringBuffer query;
         String[] split = address.split(" ");
         String queryResult = null;
 
         query = new StringBuffer();
-        res = new HashMap<String, Double>();
+
 
         query.append("http://nominatim.openstreetmap.org/search?q=");
 
@@ -306,9 +322,14 @@ class OpenStreetMapUtils {
 
         try {
             queryResult = getRequest(query.toString());
+        // If failure to get a query result, return error values
         } catch (Exception e) {
             //log.error("Error when trying to get data with the following query " + query);
+            arr[LAT_INDEX] = NO_LATITUDE;
+            arr[LNG_INDEX] = NO_LONGITUDE;
+            return arr;
         }
+
 
         if (queryResult == null) {
             return null;
@@ -326,15 +347,18 @@ class OpenStreetMapUtils {
                 String lat = (String) jsonObject.get("lat");
                 //log.debug("lon=" + lon);
                 //log.debug("lat=" + lat);
-                res.put("lon", Double.parseDouble(lon));
-                res.put("lat", Double.parseDouble(lat));
+                //res.put("lon", Double.parseDouble(lon));
+                //res.put("lat", Double.parseDouble(lat));
+                arr[LAT_INDEX] = Double.parseDouble(lat);
+                arr[LNG_INDEX] = Double.parseDouble(lon);
 
             }
         }
 
-        return res;
-    }
-}
+        return arr;
+        //return res;
+    } // end of getCoordinates()
+} // end of class OpenStreetMapUtils
 
 
 
