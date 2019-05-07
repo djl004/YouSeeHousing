@@ -19,6 +19,12 @@ import java.lang.Math;              // To generate random numbers
  */
 public class SetDistanceTests {
 
+    // Important variables
+    public static final double LAT_LONG_TOLERANCE = 0.01; // for double equality comparison
+
+
+
+
 
 
 } // end of public class SetDistanceTests
