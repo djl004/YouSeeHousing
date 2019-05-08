@@ -100,27 +100,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
    private void signIn(String email,String password){
-        Log.d(TAG,"signIn:" + email);
-        if(password.length() == 0) {
-           Toast.makeText(getApplicationContext(), "Input needs to be checked",
-                   Toast.LENGTH_LONG).show();
-       }else if(email.length() == 0){
-            Toast.makeText(getApplicationContext(), "Input needs to be checked",
-                    Toast.LENGTH_LONG).show();
-       }
-        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this
-                , new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
+//        Log.d(TAG,"signIn:" + email);
+//        if(password.length() == 0) {
+//           Toast.makeText(getApplicationContext(), "Input needs to be checked",
+//                   Toast.LENGTH_LONG).show();
+//       }else if(email.length() == 0){
+//            Toast.makeText(getApplicationContext(), "Input needs to be checked",
+//                    Toast.LENGTH_LONG).show();
+//       }
+//        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this
+//                , new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if(task.isSuccessful()) {
                             Log.d(TAG, "signInWithEmail:success");
                             logInFxn();
-                        }else {
-                            Log.w(TAG,"signInWithEmail:failure",task.getException());
-                            Toast.makeText(getApplicationContext(), "Input needs to be checked",
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+//                        }else {
+//                            Log.w(TAG,"signInWithEmail:failure",task.getException());
+//                            Toast.makeText(getApplicationContext(), "Input needs to be checked",
+//                                    Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//                });
    }
 }

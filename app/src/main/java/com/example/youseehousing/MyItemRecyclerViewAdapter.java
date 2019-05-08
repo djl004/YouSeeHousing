@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.youseehousing.ItemFragment.OnListFragmentInteractionListener;
-import com.example.youseehousing.dummy.DummyContent.DummyItem;
+import com.example.youseehousing.MainHousingListing_ListingDetail.DummyItem;
 
 import java.util.List;
 
