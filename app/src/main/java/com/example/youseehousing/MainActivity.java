@@ -56,8 +56,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view){
                 email = emailInput.getText().toString();
                 pw = pwInput.getText().toString();
-
-                signIn(email,pw);
+                //when no inputs
+                if(email.length() == 0 || pw.length() == 0){
+                    Toast.makeText(getApplicationContext(), "Input needs to be checked",
+                            Toast.LENGTH_LONG).show();
+                }
+                else {
+                    signIn(email, pw);
+                }
             }
         });
     }
@@ -94,11 +100,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
    private void signIn(String email,String password){
-       // Commented out login functionality to test list functionality
-       // TODO: Reimplement login functionality
-       logInFxn();
-
-/*        Log.d(TAG,"signIn:" + email);
+        Log.d(TAG,"signIn:" + email);
         if(password.length() == 0) {
            Toast.makeText(getApplicationContext(), "Input needs to be checked",
                    Toast.LENGTH_LONG).show();
@@ -120,7 +122,5 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-*/
-
    }
 }
