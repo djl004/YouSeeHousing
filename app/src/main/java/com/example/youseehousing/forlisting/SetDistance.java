@@ -62,6 +62,8 @@ public class SetDistance {
 
 
     /**
+     * IMPORTANT: Latitude and Longitude should be stored in the database. setCoords() takes very
+     *            long so we can't call it on demand.
      * Call this function to set the distances in the ArrayList.
      *
      * @param list: The ArrayList of Listings whose distance var will be filled
@@ -79,9 +81,6 @@ public class SetDistance {
         double arr[] = new double[2]; // Array for storing result of getCoords()
 
 
-
-        // First, call setCoords(list) to make sure the latitudes and longitudes are filled out
-        setCoords(list);
 
         // Now, set "lat" and "lng" for the parameter "address"
         arr = getCoords(address);
