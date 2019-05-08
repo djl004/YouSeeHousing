@@ -1,8 +1,5 @@
 package com.example.youseehousing.forlisting;
 
-
-
-
 // Various classes needed for geocoding
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -17,6 +14,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
+
+
+/**
+ * NOTE:
+ *       The latitudes and longitudes MUST be stored in the database before setting distances can
+ *       be done. It takes far too long to get them on the go.
+ *       Call setCoords(ArrayList<Listing> list) to populate the ArrayList with coordinates, and
+ *       then store them in the database.
+ */
+
+
+
+
 
 
 
@@ -270,6 +280,9 @@ class OpenStreetMapUtils {
         return instance;
     }
 
+    /**
+     * Method for getting request from website
+     */
     private String getRequest(String url) throws Exception {
 
         final URL obj = new URL(url);
@@ -277,7 +290,8 @@ class OpenStreetMapUtils {
 
         con.setRequestMethod("GET");
 
-        if (con.getResponseCode() != 200) {
+        int responseCode = con.getResponseCode();
+        if (responseCode != 200) {
             return null;
         }
 
@@ -293,6 +307,10 @@ class OpenStreetMapUtils {
         return response.toString();
     }
 
+
+    /**
+     * Get coordinates given an address
+     */
     public double[] getCoordinates(String address) {
 
         //Map<String, Double> res;
@@ -304,7 +322,7 @@ class OpenStreetMapUtils {
         query = new StringBuffer();
 
 
-        query.append("http://nominatim.openstreetmap.org/search?q=");
+        query.append("https://nominatim.openstreetmap.org/search?q=");
 
         if (split.length == 0) {
             return null;
@@ -332,7 +350,9 @@ class OpenStreetMapUtils {
 
 
         if (queryResult == null) {
-            return null;
+            arr[LAT_INDEX] = NO_LATITUDE;
+            arr[LNG_INDEX] = NO_LONGITUDE;
+            return arr;
         }
 
         Object obj = JSONValue.parse(queryResult);
