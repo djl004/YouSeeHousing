@@ -1,19 +1,20 @@
 
 package com.example.youseehousing.forlistingTests;
 
-        import com.example.youseehousing.forlisting.Listing;
-        import com.example.youseehousing.forlisting.Sorting;
+import com.example.youseehousing.forlisting.Listing;
+import com.example.youseehousing.forlisting.Sorting;
 
-        import junit.framework.TestCase;
-        import org.junit.Test;
-        import java.util.ArrayList;
-        import static org.junit.Assert.*;
-        import java.lang.Math;              // To generate random numbers
+import junit.framework.TestCase;
+import org.junit.Test;
+import java.util.ArrayList;
+import static org.junit.Assert.*;
+import java.lang.Math;              // To generate random numbers
+
 
 
 
 /**
- * Example local unit test, which will execute on the development machine (host).
+ * Contains unit tests for testing Sorting.java
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */

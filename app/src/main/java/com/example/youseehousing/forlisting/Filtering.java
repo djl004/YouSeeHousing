@@ -3,7 +3,6 @@ package com.example.youseehousing.forlisting;
 
 import java.util.ArrayList;         // Want to use ArrayList
 import java.util.Map;
-import org.json.*;
 
 
 public class Filtering{
@@ -16,7 +15,6 @@ public class Filtering{
 
 
     // This static method is called to sort the ArrayList of Listing objects
-
     /**
      * This static method is called to sort the ArrayList of Listing objects
      * @param theFilters: A Map of String keys to String values. Should look like this:
@@ -53,6 +51,7 @@ public class Filtering{
                 if(result.getPrice() <= upper && result.getPrice() >= lower) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
             }
                      // not sure how we will grab data, so this is only temporary, will comment out for compilation purposes
+
         }
 
         if(theFilters.containsKey("hasWD")){
@@ -126,7 +125,12 @@ public class Filtering{
 
 
 
-    /**
+
+
+
+    /** NOTE: Doesn't look as practical as what we have in SetDistance.java
+     *
+     *
      * One implementation of setDistances using google maps to calculate the distances between
      * the listing's address and the user-entered address. It may take too long, in which case we
      * will swap this implementation for another one.
@@ -134,13 +138,15 @@ public class Filtering{
      * @param listings: the listings whose distance to "address" will be calculated
      * @param address: the user-entered address
      */
+
+    /**
     public void setDistancesGoogleMaps(ArrayList<Listing> listings, String address){
 
 
         return;
     } // end of public void setDistances()
 
-
+    */
 
 
 
