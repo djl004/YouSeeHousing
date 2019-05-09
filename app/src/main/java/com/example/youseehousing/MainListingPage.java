@@ -2,6 +2,7 @@ package com.example.youseehousing;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,7 +25,9 @@ public class MainListingPage extends AppCompatActivity {
 
     private ImageView imagesView;
     private TextView titleView;
+    private TextView captionView;
     private TextView descriptionView;
+    private MainHousingListing_PopulateList.ListingDetails listing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,26 @@ public class MainListingPage extends AppCompatActivity {
 
         imagesView = (ImageView) findViewById(R.id.image);
         titleView = (TextView) findViewById(R.id.title);
+        captionView = (TextView) findViewById(R.id.caption);
         descriptionView = (TextView) findViewById(R.id.description);
+
+        // Get data passed from previous activity
+        // Check if members are null when setting parameters
+        listing = (MainHousingListing_PopulateList.ListingDetails)
+                getIntent().getParcelableExtra("parcel_data");
+
+        // Set parameters
+        try {
+            titleView.setText(listing.title);
+            captionView.setText(listing.caption);
+            descriptionView.setText(listing.description);
+        }
+        catch (NullPointerException e1) {
+            // Nothing was passed from previous activity
+            e1.printStackTrace();
+            Log.e("exception", "exception: no parcel was passed from previous activity!"
+                                            + e1);
+        }
     }
 
 

@@ -3,6 +3,7 @@ package com.example.youseehousing;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,27 +49,41 @@ public class MainHousingListing_PopulateList {
     //      id, title, details, description
     private static ListingDetails createListingDetails(int position) {
         return new ListingDetails (String.valueOf(position),
-                              "Title",
+                              "Listing " + position,
                             "Item " + position,
                                     makeCaption(position),
-                         "This is the description of the listing."
+                         "This is the description of listing " + position + "."
                                     );
     }
 
     /**
      * @param position : The array index corresponds to the position of the listing thumbnail
      *                     in the list
+     *  TODO: Determine what goes in the caption
+     *                 Maybe something like: "$2152/mo 2BR/2BA"
      */
     private static String makeCaption(int position) {
         StringBuilder builder = new StringBuilder();
-        builder.append("Details about Item: ").append(position);
+
+        // randomly generated rent and bedrooms for fun
+        // the rent's too damn high!
+        DecimalFormat df = new DecimalFormat("0.00");
+        double rent = (Math.random()*2000.0)+1000.00;
+        int bedroom_count = (int) (Math.random()*5+1);
+        int bathroom_count = (int) (Math.random()*4+1);
+
+        builder.append("$").append(df.format(rent)).append("/mo.  "); // Rent
+        builder.append(bedroom_count).append("BR/"); // Bedrooms
+        builder.append(bathroom_count).append("BA"); // Bedrooms
+
         return builder.toString();
     }
 
     /**
      * A list item representing a piece of content.
-     * This might deserve its own class where it dynamically pulls content from the database
-     * based on its id and populates these parameters with that information.
+     * This class implements Parcelable so it can pass its data to the MainListingPage activity.
+     * TODO: This definitely deserves its own class where it dynamically pulls content from the database
+     *        based on its id and populates these parameters with that information.
      */
 
     public static class ListingDetails implements Parcelable {
@@ -87,7 +102,6 @@ public class MainHousingListing_PopulateList {
             this.description = description;
         }
 
-
         protected ListingDetails(Parcel in) {
             id = in.readString();
             title = in.readString();
@@ -95,6 +109,13 @@ public class MainHousingListing_PopulateList {
             caption = in.readString();
             description = in.readString();
         }
+
+        @Override
+        public String toString() {
+            return content;
+        }
+
+        // Begin implemented Parcelable methods
 
         public static final Creator<ListingDetails> CREATOR = new Creator<ListingDetails>() {
             @Override
@@ -109,11 +130,6 @@ public class MainHousingListing_PopulateList {
         };
 
         @Override
-        public String toString() {
-            return content;
-        }
-
-        @Override
         public int describeContents() {
             return 0;
         }
@@ -126,5 +142,8 @@ public class MainHousingListing_PopulateList {
             dest.writeString(caption);
             dest.writeString(description);
         }
+
+        // End implemented Parcelable methods
+
     }
 }

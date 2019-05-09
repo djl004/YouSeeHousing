@@ -42,7 +42,10 @@ public class MainHousingListing extends AppCompatActivity implements ItemFragmen
         // Doesn't crash, just doesn't do anything
         try {
             Intent intent_f = new Intent(MainHousingListing.this, MainListingPage.class);
+
+            // Pass selected listing's data to the next activity
             intent_f.putExtra("parcel_data", item);
+
             startActivity(intent_f);
         }
         catch (android.content.ActivityNotFoundException e) {
