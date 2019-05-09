@@ -11,10 +11,10 @@ import java.util.Map;
  * <p>
  * TODO: Replace all uses of this class before publishing your app.
  */
-public class MainHousingListing_ListingDetail {
+public class MainHousingListing_PopulateList {
 
     /**
-     * An array of sample (dummy) items.
+     * An array of listing thumbnails
      */
     public static final List<DummyItem> ITEMS = new ArrayList<DummyItem>();
 
@@ -23,8 +23,10 @@ public class MainHousingListing_ListingDetail {
      */
     public static final Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
 
-    private static final int COUNT = 25;
+    // Max listings to add
+    private static final int COUNT = 1;
 
+    // You can add listings to the list here
     static {
         // Add some sample items.
         for (int i = 1; i <= COUNT; i++) {
@@ -36,9 +38,10 @@ public class MainHousingListing_ListingDetail {
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
     }
-
+    // TODO: Create DummyItem with details here
+    //      id, title, details
     private static DummyItem createDummyItem(int position) {
-        return new DummyItem(String.valueOf(position), "Item " + position, makeDetails(position));
+        return new DummyItem(String.valueOf(position), "Title", "Item " + position, makeDetails(position));
     }
 
     private static String makeDetails(int position) {
@@ -53,13 +56,16 @@ public class MainHousingListing_ListingDetail {
     /**
      * A dummy item representing a piece of content.
      */
+
     public static class DummyItem {
         public final String id;
+        public final String title;
         public final String content;
         public final String details;
 
-        public DummyItem(String id, String content, String details) {
+        public DummyItem(String id, String title, String content, String details) {
             this.id = id;
+            this.title = title;
             this.content = content;
             this.details = details;
         }

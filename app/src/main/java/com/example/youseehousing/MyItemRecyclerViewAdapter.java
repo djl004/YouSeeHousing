@@ -7,11 +7,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.youseehousing.ItemFragment.OnListFragmentInteractionListener;
-import com.example.youseehousing.MainHousingListing_ListingDetail.DummyItem;
+import com.example.youseehousing.MainHousingListing_PopulateList.DummyItem;
 
 import java.util.List;
 
 /**
+ * This function handles populating and displaying the list of housing.
+ * Note: Class ViewHolder is what sets the text of the listing thumbnail.
+ *
+ * Template Description:
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
@@ -33,11 +37,21 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         return new ViewHolder(view);
     }
 
+
+    /**
+     * Sets the text in the listing thumbnail.
+     *
+     * @param holder: the listing thumbnail object
+     * @param position: the position in the array
+     */
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
+
+        // Set text here
         holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mTitleView.setText(mValues.get(position).title);
+        holder.mDetailsView.setText(mValues.get(position).details);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,22 +70,33 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         return mValues.size();
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
-        public final TextView mContentView;
+        public final TextView mTitleView;
+        public final TextView mDetailsView;
         public DummyItem mItem;
 
+        /**
+         * @param mIdView: unseen id # of item
+         * @param mTitleView: title of listing thumbnail
+         * @param mDetailsView: caption of listing thumbnail
+         *
+         */
+        // TODO: Parameters for listing thumbnail here
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.title);
+            mTitleView = (TextView) view.findViewById(R.id.title);
+            mDetailsView = (TextView) view.findViewById(R.id.details);
+
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mTitleView.getText() + "'";
         }
     }
 }
