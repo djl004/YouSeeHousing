@@ -7,25 +7,25 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.youseehousing.ItemFragment.OnListFragmentInteractionListener;
-import com.example.youseehousing.MainHousingListing_PopulateList.DummyItem;
+import com.example.youseehousing.MainHousingListing_PopulateList.ListingDetails;
 
 import java.util.List;
 
 /**
- * This function handles populating and displaying the list of housing.
+ * This class handles populating and displaying the list of housing in MainHousingListing.
  * Note: Class ViewHolder is what sets the text of the listing thumbnail.
  *
  * Template Description:
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link ListingDetails} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<ListingDetails> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyItemRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyItemRecyclerViewAdapter(List<MainHousingListing_PopulateList.ListingDetails> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -51,7 +51,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         // Set text here
         holder.mIdView.setText(mValues.get(position).id);
         holder.mTitleView.setText(mValues.get(position).title);
-        holder.mDetailsView.setText(mValues.get(position).details);
+        holder.mDetailsView.setText(mValues.get(position).caption);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +76,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         public final TextView mIdView;
         public final TextView mTitleView;
         public final TextView mDetailsView;
-        public DummyItem mItem;
+        public ListingDetails mItem;
 
         /**
          * @param mIdView: unseen id # of item
