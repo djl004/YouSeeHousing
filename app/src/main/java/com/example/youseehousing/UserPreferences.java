@@ -10,4 +10,5 @@ public class UserPreferences extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_preferences);
     }
+
 }
