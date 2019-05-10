@@ -10,22 +10,61 @@ public class Filtering{
 
     private static final int MAX_RADIUS = 10;   // max radius for the "location"
 
+
+
+
+
     // This static method is called to sort the ArrayList of Listing objects
+    /**
+     * This static method is called to sort the ArrayList of Listing objects
+     * @param theFilters: A Map of String keys to String values. Should look like this:
+     *           In general, there are two types of filters.
+     *                  1. Filters that check a boolean value. The value should be either the string
+     *                         "true" representing the boolean true, or the string "false"
+     *                         representing the boolean false.
+     *                  2. Filters that check the instance variables to be inside a range. They are
+     *                         formatted as such. lowBound + "-" + highBound. If there is no
+     *                         lowBound, pass in 0. If there is no highBound, pass in a really large
+     *                         number, say MAX_VALUE or something.
+     *
+     *           Examples:
+     *           Key: "price",         Value: "500-1000
+     *           Key: "distance",      Value: "0-3"
+     *           Key: "numRooms",      Value: "2-4"
+     *           Key: "size",          Value: "0-1000"
+     *           Key: "numBaths",      Value: "1-3"
+     *           Key: "numVacancies",  Value: "1-4"
+     *           Key: "leaseDuration", Value: "9-12"
+     *           Key: "hasWD",         Value: "true"
+     *           Key: "hasPets",       Value: "false"
+     *           Key: "hasFurniture",  Value: "true"
+     *           Key: "hasUtils",      Value: "true"
+     * @return the filtered ArrayList of Listings
+     */
     public static ArrayList<Listing> filter(Map<String, String> theFilters){
+
+
+        // Store the filtered list here to return
         ArrayList<Listing> results = new ArrayList<Listing>();
+
+
         if(theFilters.containsKey("price")){            // should make a maximum default value, so this should always be true
             int value = Integer.parseInt(theFilters.get("price"));  // this is the value that is going to be the upper limit to our results. It comes from the filters applied by the user
+                                                                    // reason we may not need a lower bound is people tend to always be open to cheaper options
 //            results = database.populate(value);         // not sure how we will grab data, so this is only temporary, will comment out for compilation purposes
         }
 
-        if(theFilters.get("hasWD").equals("true")){
-            for(Listing result: results){
-                if(result.isHasWD()) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
+        if(theFilters.containsKey("hasWD")){
+            for(Listing result: results){   // the if statement in this should give correct filtering if they want it, if they don't want any filtering with this then don't put the key in
+                //  logic: if they have it set to wanting one, then the .equals evaluates to true, and the if statement will increment those that are set to true
+                //          if they have it set to not want one, then the right statement evaluates to false, and it increments all of the ones that have it set to false
+                //          if we don't like this, we can have three separate values that we check for instead to make it more clear
+                if(result.isHasWD() == theFilters.get("hasWD").equals("true")) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
             }
         }
 
         if(theFilters.containsKey("numRooms")){
-            // for every listing that has more than the requested number of rooms, increment the math filter number
+            // for every listing that has more than the requested number of rooms, increment the match filter number
             for(Listing result: results){
                 if(result.getNumRooms() >= Integer.parseInt(theFilters.get("numRooms"))) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
             }
@@ -43,27 +82,61 @@ public class Filtering{
             }
         }
 
-        if(theFilters.get("hasPets").equals("true")){
+        if(theFilters.containsKey("hasPets")){
             for(Listing result: results){
-                if(result.isHasPets()) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
+                if(result.isHasPets() == theFilters.get("hasPets").equals("true")) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
             }
         }
 
-        if(theFilters.get("fruniture").equals("true")){
+        if(theFilters.containsKey("hasFurniture")){
             for(Listing result: results){
-                if(result.isHasFurniture()) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
+                if(result.isHasFurniture() == theFilters.get("hasFurniture").equals("true")) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
             }
         }
 
 
 
-        if(theFilters.containsKey("location")){         // TODO: this is a lot more complicated than meets the eye
-
+        if(theFilters.containsKey("distance")){
+            String delims = "[-]+";
+            String[] priceBounds = theFilters.get("distance").split(delims);
+            for(Listing result: results) {
+                if(result.getDistance() <= Double.parseDouble(priceBounds[1]) && result.getDistance() >= Double.parseDouble(priceBounds[0]))
+                    result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
+            }
         }
 
 
         return results;
     }
+
+
+
+
+
+
+
+
+
+    /** NOTE: Doesn't look as practical as what we have in SetDistance.java
+     *
+     *
+     * One implementation of setDistances using google maps to calculate the distances between
+     * the listing's address and the user-entered address. It may take too long, in which case we
+     * will swap this implementation for another one.
+     *
+     * @param listings: the listings whose distance to "address" will be calculated
+     * @param address: the user-entered address
+     */
+
+    /**
+    public void setDistancesGoogleMaps(ArrayList<Listing> listings, String address){
+
+
+        return;
+    } // end of public void setDistances()
+
+    */
+
 
 
 
