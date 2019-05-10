@@ -115,19 +115,18 @@ public class SignUpPage extends AppCompatActivity {
             //Intent myIntent = new Intent(SignUpPage.this, MainHousingListing.class);
 
             //record down the information into account.txt
-            if(createAccount(email,pw) == true) {
+            createAccount(email,pw);
+            if(pass == 0) {
+                Log.d(TAG,"enter success process");
                 String name = fName + lName;
-                //profileSetUp(name, email, dof, Uid);
+                profileSetUp(name, email, dof, Uid);
                 Intent myIntent = new Intent(SignUpPage.this, AccountCreation.class);
                 startActivity(myIntent);
-            }
-            else{
-                //do nothing
             }
         }
     }
 
-    private boolean createAccount(String email, String password){
+    private void createAccount(String email, String password){
         Log.d(TAG,"creatAccount:" + email);
 
         mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this
@@ -137,9 +136,9 @@ public class SignUpPage extends AppCompatActivity {
                         if(task.isSuccessful()) {
                             Log.d(TAG,"createUserWithEmail:success");
                             //record down user Id
-                         /*
+
                             Uid = getUid();
-                            */
+                            Log.d(TAG,Uid);
                             pass = 1;
 
 
@@ -152,16 +151,19 @@ public class SignUpPage extends AppCompatActivity {
                         }
                     }
                 });
+        /*
         if(pass!=1) {
             return false;
         }
         else{
             return true;
         }
+        */
     }
-/*
+
 
    private void profileSetUp(String name,String email, String birth,String Uid){
+        Log.d(TAG,"Entering profilesetup#1");
         Account user = new Account();
         user.setName(name);
         user.setEmail(email);
@@ -171,8 +173,11 @@ public class SignUpPage extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"data not written to account or missing uid",Toast.LENGTH_SHORT);
         }
         else {
+            Log.d(TAG,"Entering profilesetup#2");
             //write in to firebase
-            mDatabase.setValue(user);
+            Log.d(TAG,Uid);
+            mDatabase.push().child("users").child(Uid).setValue(user);
+            Log.d(TAG,"Entering profilesetup#3");
         }
     }
 
@@ -185,7 +190,7 @@ public class SignUpPage extends AppCompatActivity {
         }
         return "";
     }
-*/
+
 
     // This function checks if the input username is a valid email address format
     public boolean validFormat(String email) {
