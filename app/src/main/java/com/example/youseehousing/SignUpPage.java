@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,7 +52,7 @@ public class SignUpPage extends AppCompatActivity {
         //initialize auth
         mAuth = FirebaseAuth.getInstance();
         //initialize mDatabase
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference("users/");
 
     }
 
@@ -149,6 +150,7 @@ public class SignUpPage extends AppCompatActivity {
                                     "Authentication failed.", Toast.LENGTH_SHORT).show();
                             pass = 0;
                         }
+
                     }
                 });
         /*
@@ -159,6 +161,8 @@ public class SignUpPage extends AppCompatActivity {
             return true;
         }
         */
+        Log.d(TAG, " onComplete ended, pass: " + pass);
+        Uid = mAuth.getCurrentUser().getUid();
     }
 
 
@@ -166,19 +170,29 @@ public class SignUpPage extends AppCompatActivity {
         Log.d(TAG,"Entering profilesetup#1");
         Account user = new Account();
         user.setName(name);
+        user.setGender("male");
         user.setEmail(email);
         user.setBirth(birth);
+        //Log.d(TAG,  user.getBirth());
+        Log.d(TAG, Uid);
 
-        if(user.getBirth() == null || Uid == null){
-            Toast.makeText(getApplicationContext(),"data not written to account or missing uid",Toast.LENGTH_SHORT);
-        }
-        else {
+        //if(user.getBirth() == null || Uid == null){
+        //    Toast.makeText(getApplicationContext(),"data not written to account or missing uid",Toast.LENGTH_SHORT);
+        //}
+        //else {
             Log.d(TAG,"Entering profilesetup#2");
             //write in to firebase
             Log.d(TAG,Uid);
-            mDatabase.push().child("users").child(Uid).setValue(user);
+            //mDatabase.child(Uid).setValue(user);  //doesn't work
+            //mDatabase.child("name").setValue(name); //works
+            mDatabase.child(Uid).child("name: ").setValue(name); //works
+            mDatabase.child(Uid).child("email: ").setValue(email); //works
+            mDatabase.child(Uid).child("date of birth: ").setValue(dof); //works
+            mDatabase.child(Uid).child("gender: ").setValue(user.getGender()); //works
+            mDatabase.child(Uid).push();
+
             Log.d(TAG,"Entering profilesetup#3");
-        }
+        //}
     }
 
     private String getUid(){

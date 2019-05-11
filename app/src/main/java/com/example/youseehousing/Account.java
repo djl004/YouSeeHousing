@@ -1,64 +1,57 @@
 package com.example.youseehousing;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 /**
  *  Account class for firebase realtime database setup
  *
  */
+@IgnoreExtraProperties
 public class Account {
-    String Uid;
-    String Name;
-    String Email;
-    String Birth;
-    String Gender;
+    private String name;
+    private String email;
+    private String birth;
+    private String gender;
 
     public Account() {
     }
 
-    public Account(String name, String email, String birth, String gender, String uid) {
-        Name = name;
-        Email = email;
-        Birth = birth;
-        Gender = gender;
-        Uid = uid;
+    public Account(String name, String email, String birth, String gender) {
+        name = name;
+        email = email;
+        birth = birth;
+        gender = gender;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        name = name;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        email = email;
     }
 
     public String getBirth() {
-        return Birth;
+        return birth;
     }
 
     public void setBirth(String birth) {
-        Birth = birth;
+        birth = birth;
     }
 
     public String getGender() {
-        return Gender;
+        return gender;
     }
 
     public void setGender(String gender) {
-        Gender = gender;
-    }
-
-    public String getUid() {
-        return Uid;
-    }
-
-    public void setUid(String uid) {
-        Uid = uid;
+        gender = gender;
     }
 }
