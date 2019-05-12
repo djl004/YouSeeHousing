@@ -219,7 +219,8 @@ public class SetDistanceTests {
      * Test the speed of setDistances()
      *
      * Conclusion: setDistances() works pretty quickly.
-     *     About 0.5 seconds for 1000 listings.
+     *     About 0.5 seconds for 1000 listings. Probably most of it was getting the coordinates for
+     *         the user-entered address.
      */
     public void testSetDistancesSpeed(){
 
@@ -257,7 +258,7 @@ public class SetDistanceTests {
 
 
 
-        System.out.println("Start of "+ loop + " Haversine calculations");
+        System.out.println("\nStart of "+ loop + " Haversine calculations");
         long startTime = System.nanoTime();
 
         SetDistance.setDistances(list, userAddress);
