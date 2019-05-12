@@ -219,15 +219,15 @@ public class SetDistanceTests {
      * Test the speed of setDistances()
      *
      * Conclusion: setDistances() works pretty quickly.
-     *     About 0.5 seconds for 1000 listings. Probably most of it was getting the coordinates for
-     *         the user-entered address.
+     *     About 0.5 seconds for 1000 listings. 0.6 for 10000 listings. Very quick, most of the time
+     *     is getting the coordinates for the user-entered address.
      */
     public void testSetDistancesSpeed(){
 
         // Test variables
 
         // Variable for how many times to run
-        int loop = 1000;
+        int loop = 10000;
 
         // Create an ArrayList of one listings to test
         ArrayList<Listing> list = new ArrayList<>();
