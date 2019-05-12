@@ -166,4 +166,53 @@ public class SetDistanceTests {
 
 
 
+
+    @Test
+    /**
+     * Test that SetDistances finds the correct distance instance variable
+     */
+    public void testCorrectDistances(){
+
+        // Test variables
+
+        // Create an ArrayList of two listings to test
+        ArrayList<Listing> list = new ArrayList<>();
+        list.add( new Listing("4198 Combe Way, San Diego, CA 92122"));
+        list.add(new Listing("6698 Red Deer St, San Diego, CA 92122"));
+
+        // Create a user-entered address to test against
+        String userAddress = "10001 Pacific Heights Blvd, San Diego, CA 92121";
+
+        // Check on google maps for distances. SetDistance's results should be less than google's.
+        double arr[] = new double[2];
+        arr[0] = 5.9;     // user address and combe way
+        arr[1] = 6.2;     // user address and red deer street
+
+
+        // Set coords for list
+        SetDistance.setCoords(list);
+        SetDistance.setDistances(list, userAddress);
+
+
+        // Check list to make sure its distances kind of match up. (Google maps returns the fastest
+        // route by driving; our function returns direct distance)
+        boolean testResult = true;
+        for(int i = 0; i < list.size(); i++){
+
+            // Print the calculated value and goolge's value, if you want to manually check
+            System.out.println("Google: " + arr[i] + "     Ours: " + list.get(i).getDistance());
+
+            // Check .distance < google's value
+            testResult = testResult && (list.get(i).getDistance() < arr[i]);
+        }
+
+
+
+
+        // return result
+        assert(testResult == true);
+    }
+
+
+
 } // end of public class SetDistanceTests
