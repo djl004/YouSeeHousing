@@ -9,9 +9,10 @@
 
 package com.example.youseehousing.forlisting;
 
-// Various classes needed for geocoding
-// If these imports cause build issues, go to java\lib\json-simple-1.1.1.jar.
-// Right-click the .jar file, and select add as library
+/** SECOND NOTE: Various classes needed for geocoding
+ * If these imports cause build issues, go to java\lib\json-simple-1.1.1.jar.
+ * Right-click the .jar file, and select add as library
+ */
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
