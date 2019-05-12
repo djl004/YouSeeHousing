@@ -35,6 +35,10 @@ import java.util.logging.Logger;
  *     1. Set the latitude and longitude of our ArrayList of Listings (if they aren't already set)
  *     2. Set the instance variable "distance" of the Listings in our ArrayList based on a
  *        user-entered address.
+ *
+ *     Important methods:
+ *         1. setDistances(ArrayList<Listing>, address) to set the "distance" instance var
+ *         2. setCoords(ArrayList<Listing>) to set the coordinates. Use when storing in database.
  */
 public class SetDistance {
 
