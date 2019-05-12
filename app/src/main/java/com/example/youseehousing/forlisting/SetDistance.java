@@ -10,6 +10,8 @@
 package com.example.youseehousing.forlisting;
 
 // Various classes needed for geocoding
+// If these imports cause build issues, go to com.example.youseehousing.lib.json-simple-1.1.1.jar.
+// Right-click the .jar file, and select add as library
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -80,7 +82,7 @@ public class SetDistance {
         lat = arr[LAT_INDEX];
         lng = arr[LNG_INDEX];
 
-        // If "lat" and "lng" = -1000, indicating coords not found, then return false
+        // If "lat" and "lng" = -1000, indicating coords not found, then return false.
         if(lat == NO_LATITUDE || lng == NO_LONGITUDE){
             return false;
         }
