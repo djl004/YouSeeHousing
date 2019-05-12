@@ -161,7 +161,7 @@ public class SetDistanceTests {
         // Get the coordinates for listing.
         arr = SetDistance.getCoords(listing.getAddress());
 
-        assert(equalCoords(arr[LAT_INDEX], arr[LNG_INDEX], NO_LAT, NO_LNG) == false);
+        assert(equalCoords(arr[LAT_INDEX], arr[LNG_INDEX], NO_LAT, NO_LNG) == true);
     }
 
 

@@ -352,7 +352,8 @@ class OpenStreetMapUtils {
         }
 
 
-        if (queryResult == null) {
+        // If nothing was got from the query. "[]" means no return.
+        if (queryResult == null || queryResult.equals("[]")) {
             arr[LAT_INDEX] = NO_LATITUDE;
             arr[LNG_INDEX] = NO_LONGITUDE;
             return arr;
