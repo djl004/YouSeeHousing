@@ -29,7 +29,7 @@ public class Filtering{
      *
      *           Examples:
      *           Key: "price",         Value: "500-1000
-     *           Key: "distance",      Value: "0-3"
+     *           Key: "distance",      Value: "0-3"      Note: Must call SetDistance.setDistances() first
      *           Key: "numRooms",      Value: "2-4"
      *           Key: "size",          Value: "0-1000"
      *           Key: "numBaths",      Value: "1-3"
