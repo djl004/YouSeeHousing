@@ -42,7 +42,13 @@ public class Filtering{
      * @return the filtered ArrayList of Listings
      */
     public static ArrayList<Listing> filter(Map<String, String> theFilters, ArrayList<Listing> l){
-        String delims = "[-]+";
+
+        // Important variables
+        String delims = "[-]+";              // Used for separating low and high bounds
+        int numFilters = theFilters.size();  // Number of filters applied
+
+
+        // If statements update the numFilters in the listings in l
         if(theFilters.containsKey("price")){            // should make a maximum default value, so this should always be true
             String[] bounds = theFilters.get("price").split(delims);
             int upper = Integer.parseInt(bounds[0]);    // this is the value that is going to be the upper limit to our results. It comes from the filters applied by the user
@@ -105,7 +111,6 @@ public class Filtering{
         }
 
 
-
         if(theFilters.containsKey("distance")){
             String[] bounds = theFilters.get("distance").split(delims);
             double upper = Double.parseDouble(bounds[1]);
@@ -117,7 +122,24 @@ public class Filtering{
         }
 
 
-        return l;
+
+
+        // Create a new list containing only listings that meet filter requirements
+        ArrayList<Listing> filtered = new ArrayList<>();
+
+        // Add listings to "filtered" if they passed all filters
+        for(int i = 0; i < l.size(); i++){
+            // Get reference to the current Listing
+            Listing curr = l.get(i);
+            if(curr.getNumOfFilterMatching() == numFilters){
+                filtered.add(curr);
+            }
+        }
+
+
+
+        //Return the filtered list
+        return filtered;
     }
 
 
