@@ -33,7 +33,7 @@ public class FilteringTests {
     public void testSingleVariableDouble() {
 
 
-        // Important variables
+        // TEST PRICE
         ArrayList<Listing> testList = new ArrayList<Listing>();    // list to use in testing
         boolean testPassed = true;                           // boolean to keep track of success
         HashMap<String, String> filter = new HashMap<>();    // What to filter
@@ -43,25 +43,201 @@ public class FilteringTests {
             testList.add(new Listing("meaninglessAddress"));
         }
 
-
         // Fill in the price instance variable with random numbers
         for(int i = 0; i < testSize; i++){
             testList.get(i).setPrice(Math.random()* 1000);
         }
 
-
-
-
         // Filter out prices outside 500-800 inclusive
         filter.put("price", "500-800");
         testList = Filtering.filter(filter, testList);
-
-
 
         // Go through testList, check that no prices outside 500-800
         for(Listing l: testList){
             testPassed = testPassed && l.getPrice() >= 500 && l.getPrice() <= 800;
         }
+
+
+        // TEST DISTANCE
+        testList = new ArrayList<Listing>();                 // list to use in testing
+        filter = new HashMap<>();    // What to filter
+
+        // Add a testSize objects to testList
+        for(int i = 0; i < testSize; i++){
+            testList.add(new Listing("meaninglessAddress"));
+        }
+
+        // Fill in the price instance variable with random numbers
+        for(int i = 0; i < testSize; i++){
+            testList.get(i).setDistance(Math.random()* 1000);
+        }
+
+        // Filter out prices outside 500-800 inclusive
+        filter.put("distance", "500-800");
+        testList = Filtering.filter(filter, testList);
+
+        // Go through testList, check that no prices outside 500-800
+        for(Listing l: testList){
+            testPassed = testPassed && l.getDistance() >= 500 && l.getDistance() <= 800;
+        }
+
+
+
+
+
+        // TEST SIZE
+        testList = new ArrayList<Listing>();                 // list to use in testing
+        filter = new HashMap<>();    // What to filter
+
+        // Add a testSize objects to testList
+        for(int i = 0; i < testSize; i++){
+            testList.add(new Listing("meaninglessAddress"));
+        }
+
+        // Fill in the price instance variable with random numbers
+        for(int i = 0; i < testSize; i++){
+            testList.get(i).setSize(Math.random()* 1000);
+        }
+
+        // Filter out prices outside 500-800 inclusive
+        filter.put("size", "500-800");
+        testList = Filtering.filter(filter, testList);
+
+        // Go through testList, check that no prices outside 500-800
+        for(Listing l: testList){
+            testPassed = testPassed && l.getSize() >= 500 && l.getSize() <= 800;
+        }
+
+
+
+
+        // TEST SIZE
+        testList = new ArrayList<Listing>();                 // list to use in testing
+        filter = new HashMap<>();    // What to filter
+
+        // Add a testSize objects to testList
+        for(int i = 0; i < testSize; i++){
+            testList.add(new Listing("meaninglessAddress"));
+        }
+
+        // Fill in the price instance variable with random numbers
+        for(int i = 0; i < testSize; i++){
+            testList.get(i).setSize(Math.random()* 1000);
+        }
+
+        // Filter out prices outside 500-800 inclusive
+        filter.put("size", "500-800");
+        testList = Filtering.filter(filter, testList);
+
+        // Go through testList, check that no prices outside 500-800
+        for(Listing l: testList){
+            testPassed = testPassed && l.getSize() >= 500 && l.getSize() <= 800;
+        }
+
+
+
+
+        // TEST NUM_ROOMS
+        testList = new ArrayList<Listing>();                 // list to use in testing
+        filter = new HashMap<>();    // What to filter
+
+        // Add a testSize objects to testList
+        for(int i = 0; i < testSize; i++){
+            testList.add(new Listing("meaninglessAddress"));
+        }
+
+        // Fill in the price instance variable with random numbers
+        for(int i = 0; i < testSize; i++){
+            testList.get(i).setNumRooms((int)(Math.random()* 1000));
+        }
+
+        // Filter out prices outside 500-800 inclusive
+        filter.put("numRooms", "500-800");
+        testList = Filtering.filter(filter, testList);
+
+        // Go through testList, check that no prices outside 500-800
+        for(Listing l: testList){
+            testPassed = testPassed && l.getNumRooms() >= 500 && l.getNumRooms() <= 800;
+        }
+
+
+
+        // TEST NUM_BATHROOMS
+        testList = new ArrayList<Listing>();                 // list to use in testing
+        filter = new HashMap<>();    // What to filter
+
+        // Add a testSize objects to testList
+        for(int i = 0; i < testSize; i++){
+            testList.add(new Listing("meaninglessAddress"));
+        }
+
+        // Fill in the price instance variable with random numbers
+        for(int i = 0; i < testSize; i++){
+            testList.get(i).setNumBaths((int)(Math.random()* 1000));
+        }
+
+        // Filter out prices outside 500-800 inclusive
+        filter.put("numBaths", "500-800");
+        testList = Filtering.filter(filter, testList);
+
+        // Go through testList, check that no prices outside 500-800
+        for(Listing l: testList){
+            testPassed = testPassed && l.getNumBaths() >= 500 && l.getNumBaths() <= 800;
+        }
+
+
+
+
+
+        // TEST NUM_VACANCIES
+        testList = new ArrayList<Listing>();                 // list to use in testing
+        filter = new HashMap<>();    // What to filter
+
+        // Add a testSize objects to testList
+        for(int i = 0; i < testSize; i++){
+            testList.add(new Listing("meaninglessAddress"));
+        }
+
+        // Fill in the price instance variable with random numbers
+        for(int i = 0; i < testSize; i++){
+            testList.get(i).setNumVacancies((int)(Math.random()* 1000));
+        }
+
+        // Filter out prices outside 500-800 inclusive
+        filter.put("numVacancies", "500-800");
+        testList = Filtering.filter(filter, testList);
+
+        // Go through testList, check that no prices outside 500-800
+        for(Listing l: testList){
+            testPassed = testPassed && l.getNumVacancies() >= 500 && l.getNumVacancies() <= 800;
+        }
+
+
+
+
+        // TEST LEASE_DURATION
+        testList = new ArrayList<Listing>();                 // list to use in testing
+        filter = new HashMap<>();    // What to filter
+
+        // Add a testSize objects to testList
+        for(int i = 0; i < testSize; i++){
+            testList.add(new Listing("meaninglessAddress"));
+        }
+
+        // Fill in the price instance variable with random numbers
+        for(int i = 0; i < testSize; i++){
+            testList.get(i).setLeaseDuration((int)(Math.random()* 1000));
+        }
+
+        // Filter out prices outside 500-800 inclusive
+        filter.put("leaseDuration", "500-800");
+        testList = Filtering.filter(filter, testList);
+
+        // Go through testList, check that no prices outside 500-800
+        for(Listing l: testList){
+            testPassed = testPassed && l.getLeaseDuration() >= 500 && l.getLeaseDuration() <= 800;
+        }
+
 
 
 
