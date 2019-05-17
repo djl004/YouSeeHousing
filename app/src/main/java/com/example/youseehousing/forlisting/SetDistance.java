@@ -9,7 +9,10 @@
 
 package com.example.youseehousing.forlisting;
 
-// Various classes needed for geocoding
+/** SECOND NOTE: Various classes needed for geocoding
+ * If these imports cause build issues, go to java\lib\json-simple-1.1.1.jar.
+ * Right-click the .jar file, and select add as library
+ */
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -32,6 +35,10 @@ import java.util.logging.Logger;
  *     1. Set the latitude and longitude of our ArrayList of Listings (if they aren't already set)
  *     2. Set the instance variable "distance" of the Listings in our ArrayList based on a
  *        user-entered address.
+ *
+ *     Important methods:
+ *         1. setDistances(ArrayList<Listing>, address) to set the "distance" instance var
+ *         2. setCoords(ArrayList<Listing>) to set the coordinates. Use when storing in database.
  */
 public class SetDistance {
 
@@ -80,7 +87,7 @@ public class SetDistance {
         lat = arr[LAT_INDEX];
         lng = arr[LNG_INDEX];
 
-        // If "lat" and "lng" = -1000, indicating coords not found, then return false
+        // If "lat" and "lng" = -1000, indicating coords not found, then return false.
         if(lat == NO_LATITUDE || lng == NO_LONGITUDE){
             return false;
         }
@@ -192,7 +199,7 @@ public class SetDistance {
      */
     public static double dBetweenCoords(double lat1, double lng1, double lat2, double lng2){
 
-        // If any of the coords are invalid, return -1
+        // If any of the coords are invalid, return -1, NO_DISTANCE
         if(lat1 == NO_LATITUDE || lat2 == NO_LATITUDE || lng1 == NO_LONGITUDE
                 || lng2 == NO_LONGITUDE){
             return NO_DISTANCE;
@@ -350,7 +357,8 @@ class OpenStreetMapUtils {
         }
 
 
-        if (queryResult == null) {
+        // If nothing was got from the query. "[]" means no return.
+        if (queryResult == null || queryResult.equals("[]")) {
             arr[LAT_INDEX] = NO_LATITUDE;
             arr[LNG_INDEX] = NO_LONGITUDE;
             return arr;
