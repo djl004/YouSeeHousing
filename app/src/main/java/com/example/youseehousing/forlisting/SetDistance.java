@@ -199,7 +199,7 @@ public class SetDistance {
      */
     public static double dBetweenCoords(double lat1, double lng1, double lat2, double lng2){
 
-        // If any of the coords are invalid, return -1
+        // If any of the coords are invalid, return -1, NO_DISTANCE
         if(lat1 == NO_LATITUDE || lat2 == NO_LATITUDE || lng1 == NO_LONGITUDE
                 || lng2 == NO_LONGITUDE){
             return NO_DISTANCE;
