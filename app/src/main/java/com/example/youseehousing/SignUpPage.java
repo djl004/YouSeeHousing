@@ -121,7 +121,7 @@ public class SignUpPage extends AppCompatActivity {
                 Log.d(TAG,"enter success process");
                 String name = fName + lName;
                 profileSetUp(name, email, dof, Uid);
-                Intent myIntent = new Intent(SignUpPage.this, AccountCreation.class);
+                Intent myIntent = new Intent(SignUpPage.this, UserPreferences.class);
                 startActivity(myIntent);
             }
         }
@@ -176,23 +176,11 @@ public class SignUpPage extends AppCompatActivity {
         //Log.d(TAG,  user.getBirth());
         Log.d(TAG, Uid);
 
-        //if(user.getBirth() == null || Uid == null){
-        //    Toast.makeText(getApplicationContext(),"data not written to account or missing uid",Toast.LENGTH_SHORT);
-        //}
-        //else {
-            Log.d(TAG,"Entering profilesetup#2");
-            //write in to firebase
-            Log.d(TAG,Uid);
-            //mDatabase.child(Uid).setValue(user);  //doesn't work
-            //mDatabase.child("name").setValue(name); //works
-            mDatabase.child(Uid).child("name: ").setValue(name); //works
-            mDatabase.child(Uid).child("email: ").setValue(email); //works
-            mDatabase.child(Uid).child("date of birth: ").setValue(dof); //works
-            mDatabase.child(Uid).child("gender: ").setValue(user.getGender()); //works
-            mDatabase.child(Uid).push();
-
-            Log.d(TAG,"Entering profilesetup#3");
-        //}
+        Log.d(TAG,"Entering profilesetup#2");
+        //write in to firebase
+        Log.d(TAG,Uid);
+        mDatabase.child(Uid).setValue(user);
+        Log.d(TAG,"Entering profilesetup#3");
     }
 
     private String getUid(){

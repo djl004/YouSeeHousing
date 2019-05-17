@@ -1,5 +1,7 @@
 package com.example.youseehousing;
 
+import android.util.Log;
+
 import com.google.firebase.database.IgnoreExtraProperties;
 
 /**
@@ -8,6 +10,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
  */
 @IgnoreExtraProperties
 public class Account {
+    private static final String TAG = "Account";
     private String name;
     private String email;
     private String birth;
@@ -17,10 +20,10 @@ public class Account {
     }
 
     public Account(String name, String email, String birth, String gender) {
-        name = name;
-        email = email;
-        birth = birth;
-        gender = gender;
+        this.name = name;
+        this.email = email;
+        this.birth = birth;
+        this.gender = gender;
     }
 
     public String getName() {
@@ -28,7 +31,9 @@ public class Account {
     }
 
     public void setName(String name) {
-        name = name;
+
+        //Log.d(TAG,"Ctor name: " + this.name + ", passed in name:" + name);
+        this.name = name;
     }
 
     public String getEmail() {
@@ -36,7 +41,7 @@ public class Account {
     }
 
     public void setEmail(String email) {
-        email = email;
+        this.email = email;
     }
 
     public String getBirth() {
@@ -44,7 +49,7 @@ public class Account {
     }
 
     public void setBirth(String birth) {
-        birth = birth;
+        this.birth = birth;
     }
 
     public String getGender() {
@@ -52,6 +57,6 @@ public class Account {
     }
 
     public void setGender(String gender) {
-        gender = gender;
+        this.gender = gender;
     }
 }

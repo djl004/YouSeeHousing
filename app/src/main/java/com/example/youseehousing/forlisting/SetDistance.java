@@ -1,3 +1,11 @@
+/**
+ * NOTE:
+ *       The latitudes and longitudes MUST be stored in the database before setting distances can
+ *       be done. It takes far too long to get them on the go.
+ *       Call setCoords(ArrayList<Listing> list) to populate the ArrayList with coordinates, and
+ *       then store them in the database.
+ */
+
 
 package com.example.youseehousing.forlisting;
 
@@ -15,21 +23,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
-
-
-/**
- * NOTE:
- *       The latitudes and longitudes MUST be stored in the database before setting distances can
- *       be done. It takes far too long to get them on the go.
- *       Call setCoords(ArrayList<Listing> list) to populate the ArrayList with coordinates, and
- *       then store them in the database.
- */
-
-
-
-
-
-
 
 
 
@@ -63,9 +56,8 @@ public class SetDistance {
 
 
     /**
-     * IMPORTANT: Latitude and Longitude should be stored in the database. setCoords() takes very
-     *            long so we can't call it on demand.
-     * Call this function to set the distances in the ArrayList.
+     * Summary: Call this function to set the distances in the ArrayList relative to a user-entered
+     *          address.
      *
      * @param list: The ArrayList of Listings whose distance var will be filled
      * @param address: The user-entered address whose distance to Listings will be calculated.
@@ -88,7 +80,7 @@ public class SetDistance {
         lat = arr[LAT_INDEX];
         lng = arr[LNG_INDEX];
 
-        // If "lat" and "lng" = -1, indicating coords not found, then return false
+        // If "lat" and "lng" = -1000, indicating coords not found, then return false
         if(lat == NO_LATITUDE || lng == NO_LONGITUDE){
             return false;
         }
@@ -118,9 +110,8 @@ public class SetDistance {
 
 
     /**
-     * Function to set the coordinates of all the Listings in the ArrayList. Called from
-     * setDistances() automatically, but can also be called directly, if you desire. Maybe you would
-     * like to store these values in the database ahead of time.
+     * Function to set the coordinates of all the Listings in the ArrayList. Call to to get
+     * coordinates to fill in the database.
      *
      * Note: If a Listing in the ArrayList's coordinates cannot be found, then they will be set to
      *       -1.
@@ -195,10 +186,17 @@ public class SetDistance {
      * Helper function used to calculate the distance (in miles) between two sets of coordinates
      * Resource: https://rosettacode.org/wiki/Haversine_formula#Java
      *
+     * Error case: If any of the coordinates are invalid (-1000), then return -1
      *
      * @return the distance, in miles, between the two sets of coordinates
      */
     public static double dBetweenCoords(double lat1, double lng1, double lat2, double lng2){
+
+        // If any of the coords are invalid, return -1
+        if(lat1 == NO_LATITUDE || lat2 == NO_LATITUDE || lng1 == NO_LONGITUDE
+                || lng2 == NO_LONGITUDE){
+            return NO_DISTANCE;
+        }
 
 
         // Calculate this and return;
@@ -227,6 +225,9 @@ public class SetDistance {
 
 
 } // end of public class SetDistance
+
+
+
 
 
 
