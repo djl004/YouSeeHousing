@@ -79,7 +79,8 @@ public class Filtering{
             double upper = Double.parseDouble(bounds[1]);
             double lower = Double.parseDouble(bounds[0]);
             for(Listing result: l){
-                if(result.getSize() >= lower && result.getSize() <= upper) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
+                if(result.getSize() >= lower && result.getSize() <= upper)
+                    result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
             }
         }
 
@@ -88,19 +89,22 @@ public class Filtering{
             int upper = Integer.parseInt(bounds[1]);
             int lower = Integer.parseInt(bounds[0]);
             for(Listing result: l){
-                if(result.getNumBaths() >= lower && result.getNumBaths() <= upper) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
+                if(result.getNumBaths() >= lower && result.getNumBaths() <= upper)
+                    result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
             }
         }
 
         if(theFilters.containsKey("hasPets")){
             for(Listing result: l){
-                if(result.isHasPets() == theFilters.get("hasPets").equals("true")) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
+                if(result.isHasPets() == theFilters.get("hasPets").equals("true"))
+                    result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
             }
         }
 
         if(theFilters.containsKey("hasFurniture")){
             for(Listing result: l){
-                if(result.isHasFurniture() == theFilters.get("hasFurniture").equals("true")) result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
+                if(result.isHasFurniture() == theFilters.get("hasFurniture").equals("true"))
+                    result.setNumOfFilterMatching(result.getNumOfFilterMatching() + 1);
             }
         }
 
