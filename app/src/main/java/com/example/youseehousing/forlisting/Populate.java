@@ -9,7 +9,7 @@ public class Populate {
     public static ArrayList<Listing> populateTheList(){
 
         FirebaseDatabase poppingDB = FirebaseDatabase.getInstance();
-        DatabaseReference poppingRef = poppingDB.getReference("message");
+        DatabaseReference poppingRef = poppingDB.getReference("listing");
 
         return null;
 

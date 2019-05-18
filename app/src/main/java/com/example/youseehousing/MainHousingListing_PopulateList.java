@@ -2,7 +2,14 @@ package com.example.youseehousing;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.example.youseehousing.forlisting.Listing;
 import com.example.youseehousing.forlisting.Populate;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -79,6 +86,34 @@ public class MainHousingListing_PopulateList {
 
         return builder.toString();
     }
+
+    private void readDatabase() {
+        FirebaseDatabase poppingDB = FirebaseDatabase.getInstance();
+        DatabaseReference ref = poppingDB.getReference("listing");
+
+        // Attach a listener to read the data at our posts reference
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Listing post = dataSnapshot.getValue(Listing.class);
+                System.out.println(post);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+    }
+
+
+
+
+
+
+
+
+
 
     /**
      * A list item representing a piece of content.
