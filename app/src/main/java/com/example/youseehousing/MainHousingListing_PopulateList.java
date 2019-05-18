@@ -2,6 +2,7 @@ package com.example.youseehousing;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import com.example.youseehousing.forlisting.Populate;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
