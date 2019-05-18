@@ -265,26 +265,105 @@ public class FilteringTests {
             testList.add(new Listing("meaninglessAddress"));
         }
 
-
         // Fill in the price instance variable with random numbers
         for(int i = 0; i < testSize; i++){
 
             testList.get(i).setHasFurniture(Math.random() < 0.5);
         }
 
-
-
-
         // Filter out Listings without furniture
         filter.put("hasFurniture", "true");
         testList = Filtering.filter(filter, testList);
-
-
 
         // Go through testList, check Listing has furniture
         for(Listing l: testList){
             testPassed = testPassed && l.isHasFurniture();
         }
+
+
+
+
+
+
+        // TEST HAS PETS
+        testList = new ArrayList<Listing>();    // list to use in testing
+        filter = new HashMap<>();    // What to filter
+
+        // Add a testSize objects to testList
+        for(int i = 0; i < testSize; i++){
+            testList.add(new Listing("meaninglessAddress"));
+        }
+
+        // Fill in the price instance variable with random numbers
+        for(int i = 0; i < testSize; i++){
+
+            testList.get(i).setHasPets(Math.random() < 0.5);
+        }
+
+        // Filter out Listings without furniture
+        filter.put("hasPets", "true");
+        testList = Filtering.filter(filter, testList);
+
+        // Go through testList, check Listing has furniture
+        for(Listing l: testList){
+            testPassed = testPassed && l.isHasPets();
+        }
+
+
+
+
+        // TEST HAS UTILS
+        testList = new ArrayList<Listing>();    // list to use in testing
+        filter = new HashMap<>();    // What to filter
+
+        // Add a testSize objects to testList
+        for(int i = 0; i < testSize; i++){
+            testList.add(new Listing("meaninglessAddress"));
+        }
+
+        // Fill in the price instance variable with random numbers
+        for(int i = 0; i < testSize; i++){
+
+            testList.get(i).setHasUtils(Math.random() < 0.5);
+        }
+
+        // Filter out Listings without furniture
+        filter.put("hasUtils", "true");
+        testList = Filtering.filter(filter, testList);
+
+        // Go through testList, check Listing has furniture
+        for(Listing l: testList){
+            testPassed = testPassed && l.isHasUtils();
+        }
+
+
+
+
+        // TEST HAS W/D
+        testList = new ArrayList<Listing>();    // list to use in testing
+        filter = new HashMap<>();    // What to filter
+
+        // Add a testSize objects to testList
+        for(int i = 0; i < testSize; i++){
+            testList.add(new Listing("meaninglessAddress"));
+        }
+
+        // Fill in the price instance variable with random numbers
+        for(int i = 0; i < testSize; i++){
+
+            testList.get(i).setHasWD(Math.random() < 0.5);
+        }
+
+        // Filter out Listings without furniture
+        filter.put("hasWD", "true");
+        testList = Filtering.filter(filter, testList);
+
+        // Go through testList, check Listing has furniture
+        for(Listing l: testList){
+            testPassed = testPassed && l.isHasWD();
+        }
+
+
 
 
 
