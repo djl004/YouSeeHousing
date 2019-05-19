@@ -49,9 +49,9 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         holder.mItem = mValues.get(position);
 
         // Set text here
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mTitleView.setText(mValues.get(position).address);
-        holder.mDetailsView.setText(mValues.get(position).caption);
+//        holder.mIdView.setText(mValues.get(position).getId());
+        holder.mTitleView.setText(mValues.get(position).getAddress());
+        holder.mDetailsView.setText(mValues.get(position).getBath());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

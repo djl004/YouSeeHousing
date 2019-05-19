@@ -46,9 +46,9 @@ public class MainListingPage extends AppCompatActivity {
 
         // Set parameters
         try {
-            addressView.setText(listing.address);
-            captionView.setText(listing.caption);
-            descriptionView.setText(listing.description);
+            addressView.setText(listing.getAddress());
+            captionView.setText(listing.getBath() + " " + listing.getBed());
+            descriptionView.setText(listing.getDesc());
         }
         catch (NullPointerException e1) {
             // Nothing was passed from previous activity
