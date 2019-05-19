@@ -25,7 +25,7 @@ public class MainHousingListing extends AppCompatActivity implements ItemFragmen
     /*
         This function handles selecting a listing thumbnail.
     */
-    public void onListFragmentInteraction(MainHousingListing_PopulateList.ListingDetails item) {
+    public void onListFragmentInteraction(ListingDetails item) {
         // TODO: Switching to an activity from a fragment doesn't work this way
         selectListingFxn(item);
     }
@@ -37,7 +37,7 @@ public class MainHousingListing extends AppCompatActivity implements ItemFragmen
             MainListingPage that has the details of the listing.
 
      */
-    private void selectListingFxn(MainHousingListing_PopulateList.ListingDetails item) {
+    private void selectListingFxn(ListingDetails item) {
         // Throw an exception if the activity is not found
         // Doesn't crash, just doesn't do anything
         try {

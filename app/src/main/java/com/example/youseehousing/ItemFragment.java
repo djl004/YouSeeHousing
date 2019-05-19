@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.youseehousing.MainHousingListing_PopulateList.ListingDetails;
+import com.example.youseehousing.ListingDetails;
 
 /**
  * A fragment representing a list of Items.

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.youseehousing.ItemFragment.OnListFragmentInteractionListener;
-import com.example.youseehousing.MainHousingListing_PopulateList.ListingDetails;
+import com.example.youseehousing.ListingDetails;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     private final List<ListingDetails> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyItemRecyclerViewAdapter(List<MainHousingListing_PopulateList.ListingDetails> items, OnListFragmentInteractionListener listener) {
+    public MyItemRecyclerViewAdapter(List<ListingDetails> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -50,7 +50,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
         // Set text here
         holder.mIdView.setText(mValues.get(position).id);
-        holder.mTitleView.setText(mValues.get(position).title);
+        holder.mTitleView.setText(mValues.get(position).address);
         holder.mDetailsView.setText(mValues.get(position).caption);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {

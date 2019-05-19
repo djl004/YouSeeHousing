@@ -11,6 +11,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,20 +42,25 @@ import java.util.Set;
  * <p>
  */
 public class MainHousingListing_PopulateList {
+        private FirebaseDatabase database;
+        private FirebaseAuth mAuth;
+        private FirebaseAuth.AuthStateListener mAuthListener;
+        private DatabaseReference myRef;
+        private String Uid;
 
     /**
      * An array of listing thumbnails
      */
-    public static final List<ListingDetails> ITEMS = new ArrayList<ListingDetails>();
+    public static List<ListingDetails> ITEMS = new ArrayList<ListingDetails>();
 
     /**
      * A map of  listing details items, by ID.
      */
-    public static final Map<String, ListingDetails> ITEM_MAP = new HashMap<String, ListingDetails>();
+    public static Map<String, ListingDetails> ITEM_MAP = new HashMap<String, ListingDetails>();
 
     // Max listings to add to page. This can be the number of items from the database that fit
     // the search query for example.
-    private static final int COUNT = 20;
+    private static int COUNT = 20;
 
     // You can add listings to the list here
     static {
@@ -50,6 +73,29 @@ public class MainHousingListing_PopulateList {
     private static void addItem(ListingDetails item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
+    }
+
+    private void setUp() {
+        //declare all the variables
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("listing");
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
+                Log.d("in MHL_PL,", "Value is " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("in MHL_PL,", "Failed to read value.", error.toException());
+            }
+        });
     }
 
 
@@ -87,99 +133,26 @@ public class MainHousingListing_PopulateList {
         return builder.toString();
     }
 
-    private void readDatabase() {
-        FirebaseDatabase poppingDB = FirebaseDatabase.getInstance();
-        DatabaseReference ref = poppingDB.getReference("listing");
 
-        // Attach a listener to read the data at our posts reference
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Listing post = dataSnapshot.getValue(Listing.class);
-                System.out.println(post);
-            }
+    private void showData(DataSnapshot dataSnapshot) {
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("listing");
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
+//        for(DataSnapshot ds : dataSnapshot.getChildren()){
+//            ListingDetails uInfo = new ListingDetails();
+//            Log.d(TAG,"Before set name: " + ds.child(Uid).getValue(Account.class).getName());
+////            uInfo.setAddress( ds.child(Uid).getValue(Account.class).getName()); //set the name
+////            uInfo.setEmail(ds.child(Uid).getValue(Account.class).getEmail()); //set the email
+//            Log.d("Debug", "name:" + ds.child(Uid).getValue());
+//            //display all the information
+//            Log.d(TAG, "showData: name: " + uInfo.getName());
+//            Log.d(TAG, "showData: email: " + uInfo.getEmail());
+//
+////            final TextView name = (TextView) findViewById(R.id.name);
+////            name.setText(uInfo.getName());
+////            final TextView userEmail = (TextView) findViewById(R.id.email);
+////            userEmail.setText(uInfo.getEmail());
+
+        }
     }
 
-
-
-
-
-
-
-
-
-
-    /**
-     * A list item representing a piece of content.
-     * This class implements Parcelable so it can pass its data to the MainListingPage activity.
-     * TODO: This definitely deserves its own class where it dynamically pulls content from the database
-     *        based on its id and populates these parameters with that information.
-     */
-
-    public static class ListingDetails implements Parcelable {
-        public final String id;
-        public final String title;
-        public final String content;
-        public final String caption;
-        public final String description;
-
-        public ListingDetails(String id, String title, String content,
-                              String caption, String description) {
-            this.id = id;
-            this.title = title;
-            this.content = content;
-            this.caption = caption;
-            this.description = description;
-        }
-
-        protected ListingDetails(Parcel in) {
-            id = in.readString();
-            title = in.readString();
-            content = in.readString();
-            caption = in.readString();
-            description = in.readString();
-        }
-
-        @Override
-        public String toString() {
-            return content;
-        }
-
-        // Begin implemented Parcelable methods
-
-        public static final Creator<ListingDetails> CREATOR = new Creator<ListingDetails>() {
-            @Override
-            public ListingDetails createFromParcel(Parcel in) {
-                return new ListingDetails(in);
-            }
-
-            @Override
-            public ListingDetails[] newArray(int size) {
-                return new ListingDetails[size];
-            }
-        };
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(id);
-            dest.writeString(title);
-            dest.writeString(content);
-            dest.writeString(caption);
-            dest.writeString(description);
-        }
-
-        // End implemented Parcelable methods
-
-    }
-}

@@ -24,10 +24,10 @@ import android.widget.TextView;
 public class MainListingPage extends AppCompatActivity {
 
     private ImageView imagesView;
-    private TextView titleView;
+    private TextView addressView;
     private TextView captionView;
     private TextView descriptionView;
-    private MainHousingListing_PopulateList.ListingDetails listing;
+    private ListingDetails listing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +35,18 @@ public class MainListingPage extends AppCompatActivity {
         setContentView(R.layout.activity_listing);
 
         imagesView = (ImageView) findViewById(R.id.image);
-        titleView = (TextView) findViewById(R.id.title);
+        addressView = (TextView) findViewById(R.id.title);
         captionView = (TextView) findViewById(R.id.caption);
         descriptionView = (TextView) findViewById(R.id.description);
 
         // Get data passed from previous activity
         // Check if members are null when setting parameters
-        listing = (MainHousingListing_PopulateList.ListingDetails)
+        listing = (ListingDetails)
                 getIntent().getParcelableExtra("parcel_data");
 
         // Set parameters
         try {
-            titleView.setText(listing.title);
+            addressView.setText(listing.address);
             captionView.setText(listing.caption);
             descriptionView.setText(listing.description);
         }
