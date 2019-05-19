@@ -74,10 +74,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logInFxn() {
+//        Intent myIntent = new Intent(MainActivity.this, MainHousingListing.class);
+//        startActivity(myIntent);
+        // Call async task which will switch activity
+        MainHousingListing_PopulateList list = new MainHousingListing_PopulateList(MainActivity.this);
+        list.execute();
+    }
+
+    public void changeToMainHousingListingPage() {
         //Intent myIntent = new Intent(MainActivity.this, MainHousingListing.class);
         Intent myIntent = new Intent(MainActivity.this, ActivityFragmentOrigin.class);
         startActivity(myIntent);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

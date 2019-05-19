@@ -35,7 +35,9 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_list_item, parent, false);
         return new ViewHolder(view);
+
     }
+
 
 
     /**

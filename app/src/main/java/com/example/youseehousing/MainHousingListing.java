@@ -5,24 +5,29 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-/*
+/**
     MainHousingListing
     This is the page that has thumbnails of all the listings you can see.
 
-
- */
+ **/
 
 
 public class MainHousingListing extends AppCompatActivity implements ItemFragment.OnListFragmentInteractionListener {
-
-    MainHousingListing_PopulateList list = new MainHousingListing_PopulateList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_page);
+
     }
 
+    /**
+     * Redraw the activity.
+     */
+    private void refreshActivity() {
+        finish();
+        startActivity(getIntent());
+    }
 
     /*
         This function handles selecting a listing thumbnail.
@@ -30,6 +35,10 @@ public class MainHousingListing extends AppCompatActivity implements ItemFragmen
     public void onListFragmentInteraction(ListingDetails item) {
         // TODO: Switching to an activity from a fragment doesn't work this way
         selectListingFxn(item);
+    }
+
+    public void onListUpdate() {
+        refreshActivity();
     }
 
 

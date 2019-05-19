@@ -59,4 +59,9 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
     public void onListFragmentInteraction(ListingDetails item) {
 
     }
+
+    @Override
+    public void onListUpdate() {
+
+    }
 }

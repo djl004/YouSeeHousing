@@ -103,5 +103,6 @@ public class ItemFragment extends Fragment {
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(ListingDetails item);
+        void onListUpdate();
     }
 }
