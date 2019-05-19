@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "483034878798-ec1d5801ud5ign8r2dk3hacln9lucads.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.youseehousing",
+            "certificate_hash": "8c003137269162e54ffbeb970df72e6cac36afd1"
+          }
+        },
+        {
           "client_id": "483034878798-bvlhk2rdtg5qk1ng7h04nkbrlghnfl4h.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
