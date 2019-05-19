@@ -15,6 +15,8 @@ import android.util.Log;
 
 public class MainHousingListing extends AppCompatActivity implements ItemFragment.OnListFragmentInteractionListener {
 
+    MainHousingListing_PopulateList list = new MainHousingListing_PopulateList();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

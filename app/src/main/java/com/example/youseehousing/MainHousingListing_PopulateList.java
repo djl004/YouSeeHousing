@@ -43,8 +43,6 @@ import java.util.Set;
  */
 public class MainHousingListing_PopulateList {
         private FirebaseDatabase database;
-        private FirebaseAuth mAuth;
-        private FirebaseAuth.AuthStateListener mAuthListener;
         private DatabaseReference myRef;
         private String Uid;
 
@@ -60,15 +58,23 @@ public class MainHousingListing_PopulateList {
 
     // Max listings to add to page. This can be the number of items from the database that fit
     // the search query for example.
-    private static int COUNT = 20;
+    private static int COUNT = 1;
 
-    // You can add listings to the list here
-    static {
-        // Add some sample items.
+    public MainHousingListing_PopulateList() {
+        setUp();
         for (int i = 1; i <= COUNT; i++) {
             addItem(createListingDetails(i));
         }
     }
+
+
+//    // You can add listings to the list here
+//    static {
+//        // Add some sample items.
+//        for (int i = 1; i <= COUNT; i++) {
+//            addItem(createListingDetails(i));
+//        }
+//    }
 
     private static void addItem(ListingDetails item) {
         ITEMS.add(item);
@@ -77,7 +83,6 @@ public class MainHousingListing_PopulateList {
 
     private void setUp() {
         //declare all the variables
-        mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("listing");
 
@@ -101,7 +106,8 @@ public class MainHousingListing_PopulateList {
 
     // Create ListingDetails with details here
     //      id, title, details, description
-    private static ListingDetails createListingDetails(int position) {
+    private ListingDetails createListingDetails(int position) {
+        setUp();
         return new ListingDetails (String.valueOf(position),
                               "Listing " + position,
                             "Item " + position,
