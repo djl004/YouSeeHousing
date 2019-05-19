@@ -162,7 +162,7 @@ public class SignUpPage extends AppCompatActivity {
         }
         */
         Log.d(TAG, " onComplete ended, pass: " + pass);
-        Uid = mAuth.getCurrentUser().getUid();
+        Uid = mAuth.getInstance().getCurrentUser().getUid();
     }
 
 
