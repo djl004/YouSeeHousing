@@ -18,6 +18,7 @@ public class MainHousingListing extends AppCompatActivity implements ItemFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_page);
+
     }
 
     /**

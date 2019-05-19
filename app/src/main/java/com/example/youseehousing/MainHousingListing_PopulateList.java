@@ -1,6 +1,9 @@
 package com.example.youseehousing;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -17,14 +20,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.transform.Result;
+
 /**
  * Helper class for providing sample content for user interfaces created by
  * Android template wizards.
  * <p>
  */
-public class MainHousingListing_PopulateList {
+public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Void> {
+    private MainActivity callingActivity;
     private FirebaseFirestore db;
     private String TAG = "MainHousingListing";
+
+    // Async task methods
+    @Override
+    protected Void doInBackground(Void... voids) {
+        // Access a Cloud Firestore instance from your Activity
+        queryDatabase();
+        return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        // Code to refresh list
+        callingActivity.changeToMainHousingListingPage();
+    }
+    // End Async Task methods
 
     /**
      * An array of listing thumbnails
@@ -41,10 +62,8 @@ public class MainHousingListing_PopulateList {
     private static int COUNT = 10;
     ItemFragment.OnListFragmentInteractionListener mListener;
 
-    public MainHousingListing_PopulateList(ItemFragment.OnListFragmentInteractionListener mListener) {
-        this.mListener = mListener;
-        // Access a Cloud Firestore instance from your Activity
-        queryDatabase();
+    public MainHousingListing_PopulateList(MainActivity callingActivity) {
+        this.callingActivity = callingActivity;
     }
 
 
@@ -63,10 +82,13 @@ public class MainHousingListing_PopulateList {
 
     /**
      * This method queries the Cloud Firestore database for COUNT listings.
+     * And calls addListingToPage for each retrieved
+     * Returns true if query was successful
+     * Returns false otherwise
      * TODO: Paginate data https://firebase.google.com/docs/firestore/query-data/query-cursors
      * TODO: Querying database probably deserves its own class
      **/
-    private void queryDatabase() {
+    private boolean queryDatabase() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         if (db != null) {
             db.collection("listing")
@@ -87,9 +109,11 @@ public class MainHousingListing_PopulateList {
                             }
                         }
                     });
+            return true;
         }
         else {
             Log.e("TAG", "db reference is null!");
+            return false;
         }
     }
 
