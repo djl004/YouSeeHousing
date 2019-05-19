@@ -37,18 +37,25 @@ public class ListingDetails implements Parcelable {
         description = in.readString();
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-    public String gstId() {
+
+    //getters
+    public String getId() {
         return this.id;
-    }
-    public void setAddress(String address) {
-        this.address = address;
     }
     public String getAddress() {
         return this.address;
     }
+
+
+    //setters
+    public void setId(String id) {
+        this.id = id;
+    }
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+
 //        private void showData(DataSnapshot dataSnapshot) {
 //            for(DataSnapshot ds : dataSnapshot.getChildren()){
 //                Account uInfo = new Account();
