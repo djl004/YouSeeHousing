@@ -1,8 +1,10 @@
 package com.example.youseehousing;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.google.android.gms.common.data.DataBufferObserver;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -22,7 +24,6 @@ import java.util.Map;
  */
 public class MainHousingListing_PopulateList {
     private FirebaseFirestore db;
-    private String Uid = "1027 Felspar St, San Diego, CA 92109 – San Diego  Unit: 0.5"; //TODO : Replace me
     private String TAG = "MainHousingListing";
 
     /**
@@ -37,12 +38,16 @@ public class MainHousingListing_PopulateList {
 
     // Max listings to add to page. This can be the number of items from the database that fit
     // the search query for example.
-    private static int COUNT = 1;
+    private static int COUNT = 10;
+    ItemFragment.OnListFragmentInteractionListener mListener;
 
-    public MainHousingListing_PopulateList() {
+    public MainHousingListing_PopulateList(ItemFragment.OnListFragmentInteractionListener mListener) {
+        this.mListener = mListener;
         // Access a Cloud Firestore instance from your Activity
         queryDatabase();
     }
+
+
     /**
      * This method takes as input a document snapshot from the database and adds a listing to the
      * page.
@@ -103,11 +108,30 @@ public class MainHousingListing_PopulateList {
             String dim = document.get("dim").toString(); // dim
             String link = document.get("link").toString(); // link
             String parking = document.get("parking").toString(); // parking
+            // TODO: Pass a default array with a length > 0 if this is null
             ArrayList<String> pictures = (ArrayList<String>) document.get("pictures"); // parking
             String pet = document.get("pet").toString(); // pet
             String price = document.get("price").toString(); // dim
             String unitLease = document.get("unitLease").toString(); // Bath
             String washerDryer = document.get("washerDryer").toString(); // Bath
+
+/*
+        Listing details constructor
+        public ListingDetails(String address,
+                    String bath,
+                    String bed,
+                    String buildingLease,
+                    String contact,
+                    String desc,
+                    String dim,
+                    String link,
+                    String parking,
+                    ArrayList<String> pictures,
+                    String pet,
+                    String price,
+                    String unitLease,
+                    String washerDryer) { ... }
+*/
 
             return new ListingDetails(address, bath, bed, buildingLease, contact,
                     desc, dim, link, parking, pictures, pet, price, unitLease, washerDryer);

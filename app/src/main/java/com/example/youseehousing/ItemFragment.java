@@ -67,7 +67,8 @@ public class ItemFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             // TODO: Listings are inserted into the display list here
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(MainHousingListing_PopulateList.ITEMS, mListener));
+             MainHousingListing_PopulateList list = new MainHousingListing_PopulateList(mListener);
+            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(list.ITEMS, mListener));
         }
         return view;
     }
@@ -103,5 +104,6 @@ public class ItemFragment extends Fragment {
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(ListingDetails item);
+        void onListUpdate();
     }
 }
