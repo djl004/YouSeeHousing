@@ -3,4 +3,10 @@
     <string name="action_settings">Settings</string>
     <string name="default_listing_title">Undefined Housing Listing</string>
     <string name="default_listing_caption">$0.00/mo 0BR/0BA</string>
+    <string name="bottombar_preferences">Preferences</string>
+    <string name="bottombar_listing">Listing</string>
+    <string name="bottombar_favorites">Favorites</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

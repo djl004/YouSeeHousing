@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_favorites_page"
+    android:name="com.example.youseehousing.ItemFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_DefaultBG"
+    android:clipChildren="false"
+    android:clipToPadding="true"
+    android:paddingLeft="@dimen/list_padding"
+    android:paddingTop="@dimen/list_padding"
+    android:paddingEnd="@dimen/list_padding"
+    android:paddingRight="@dimen/list_padding"
+    app:layoutManager="LinearLayoutManager"
+    tools:context=".ItemFragment"
+    tools:listitem="@layout/fragment_list_item" />

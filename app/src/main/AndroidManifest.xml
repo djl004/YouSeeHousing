@@ -8,7 +8,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserPreferences"></activity>
+        <activity android:name=".ActivityFragmentOrigin"></activity>
+        <activity android:name=".UserPreferences" />
         <activity
             android:name=".AccountCreation"
             android:parentActivityName=".SignUpPage" /> <!-- The meta-data tag is required if you support API level 15 and lower -->
@@ -40,6 +41,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

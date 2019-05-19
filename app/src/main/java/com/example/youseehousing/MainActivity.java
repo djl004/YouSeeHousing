@@ -74,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logInFxn() {
-        Intent myIntent = new Intent(MainActivity.this, MainHousingListing.class);
+        //Intent myIntent = new Intent(MainActivity.this, MainHousingListing.class);
+        Intent myIntent = new Intent(MainActivity.this, ActivityFragmentOrigin.class);
         startActivity(myIntent);
     }
     @Override
