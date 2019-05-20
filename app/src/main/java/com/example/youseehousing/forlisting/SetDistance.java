@@ -65,7 +65,8 @@ public class SetDistance {
 
 
     /**
-     * Summary: Call this function to set the distances in the ArrayList.
+     * Summary: Call this function to set the distances in the ArrayList. The distance will be the
+     *          distance from the Listing to UCSD (9500 Gilman Dr, La Jolla, CA 92093)
      *
      * @param list: The ArrayList of Listings whose distance var will be filled
      *
