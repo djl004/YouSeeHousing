@@ -38,8 +38,6 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
     }
 
-
-
     /**
      * Sets the text in the listing thumbnail.
      *
@@ -71,6 +69,11 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     public int getItemCount() {
         return mValues.size();
     }
+
+    public void refreshViewHolder() {
+        notifyDataSetChanged();
+    }
+
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -1,8 +1,14 @@
 package com.example.youseehousing;
 
+import android.app.Activity;
+import android.app.FragmentTransaction;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 /**
@@ -13,20 +19,48 @@ import android.util.Log;
 
 
 public class MainHousingListing extends AppCompatActivity implements ItemFragment.OnListFragmentInteractionListener {
+    private android.support.v4.app.Fragment itemFragment;
+    private String TAG = "MainHousingListing";
+    private MyItemRecyclerViewAdapter adapter;
+    MainHousingListing_PopulateList queryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_page);
 
+        itemFragment = (Fragment) getSupportFragmentManager().findFragmentById(R.id.fragment_list);
+
+//        RecyclerView recyclerView = findViewById(R.id.fragment_list);
+//        adapter = new MyItemRecyclerViewAdapter(MainHousingListing_PopulateList.ITEMS, mListener);
+//        adapter.setClickListener(this);
+//
+//        Intent intent = getIntent();
+//        String activity = intent.getStringExtra("from");
+//
+//        if(activity == null) {
+//            queryList = new MainHousingListing_PopulateList(this);
+//            queryList.execute();
+//        }
+//        else if (activity == "MainHousingListing") {
+//            queryList.cancel(true);
+//            Log.i(TAG,"coming from MainHousingListing");
+//
+//        }
     }
 
     /**
      * Redraw the activity.
      */
-    private void refreshActivity() {
+    public void refreshList() {
         finish();
-        startActivity(getIntent());
+        android.support.v4.app.Fragment newfrag = new ItemFragment();
+        android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_list, newfrag);
+        transaction.addToBackStack(null);
+        Intent i = new Intent(this, MainHousingListing.class);
+        i.putExtra("from","MainHousingListing");
+        startActivity(i);
     }
 
     /*
@@ -35,10 +69,6 @@ public class MainHousingListing extends AppCompatActivity implements ItemFragmen
     public void onListFragmentInteraction(ListingDetails item) {
         // TODO: Switching to an activity from a fragment doesn't work this way
         selectListingFxn(item);
-    }
-
-    public void onListUpdate() {
-        refreshActivity();
     }
 
 

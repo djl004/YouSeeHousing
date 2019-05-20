@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.youseehousing.ListingDetails;
-
 /**
  * A fragment representing a list of Items.
  * <p/>
@@ -67,10 +65,12 @@ public class ItemFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             // TODO: Listings are inserted into the display list here
+
             recyclerView.setAdapter(new MyItemRecyclerViewAdapter(MainHousingListing_PopulateList.ITEMS, mListener));
         }
         return view;
     }
+
 
 
     @Override
@@ -88,6 +88,7 @@ public class ItemFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+
     }
 
     /**
@@ -103,6 +104,5 @@ public class ItemFragment extends Fragment {
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(ListingDetails item);
-        void onListUpdate();
     }
 }

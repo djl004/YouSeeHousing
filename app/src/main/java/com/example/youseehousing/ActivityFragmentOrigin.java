@@ -13,7 +13,8 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
     private BottomNavigationView bottomNavigationView;
 
     final Fragment fragment1 = new UserPreferencesFragment();
-    final Fragment fragment2 = new ActivityListPageFragment();
+//    final Fragment fragment2 = new ActivityListPageFragment();
+    final Fragment fragment2 = new ItemFragment();
     final Fragment fragment3 = new FavoritesFragment();
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragment2;
@@ -57,11 +58,6 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
 
     @Override
     public void onListFragmentInteraction(ListingDetails item) {
-
-    }
-
-    @Override
-    public void onListUpdate() {
 
     }
 }
