@@ -67,8 +67,15 @@ public class ItemFragment extends Fragment {
             // TODO: Listings are inserted into the display list here
 
             recyclerView.setAdapter(new MyItemRecyclerViewAdapter(MainHousingListing_PopulateList.ITEMS, mListener));
+
+//            // Experimental
+//            recyclerView.getAdapter().notifyDataSetChanged();
         }
         return view;
+    }
+
+    public void refreshList() {
+        onCreateView(getLayoutInflater(),(ViewGroup)getView().getParent(), new Bundle());
     }
 
 

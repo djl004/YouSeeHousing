@@ -14,7 +14,7 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
 
     final Fragment fragment1 = new UserPreferencesFragment();
 //    final Fragment fragment2 = new ActivityListPageFragment();
-    final Fragment fragment2 = new ItemFragment();
+    final ItemFragment fragment2 = new ItemFragment();
     final Fragment fragment3 = new FavoritesFragment();
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragment2;
@@ -45,6 +45,7 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
                             case R.id.bottombaritem_listing:
                                 fm.beginTransaction().hide(active).show(fragment2).commit();
                                 active = fragment2;
+                                fragment2.refreshList();
                                 return true;
                             case R.id.bottombaritem_favorites:
                                 fm.beginTransaction().hide(active).show(fragment3).commit();
