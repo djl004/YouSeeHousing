@@ -21,10 +21,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 
 public class SignUpPage extends AppCompatActivity {
-
-    String email, pw, confirmPw, fName, lName, dof, city,Uid;
     EditText emailInput, pwInput, pwInput2, fNameInput, lNameInput, dofInput, cityInput;
-    int pass;
+    String email, pw, confirmPw, fName, lName, dof, city, uid;
+
     //used to store all user info for firebase database
     //Account newUser = new Account();
 
@@ -41,13 +40,13 @@ public class SignUpPage extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up_page);
 
         //grab inputs from user
-        emailInput = (EditText) findViewById(R.id.createEmail);
-        pwInput = (EditText) findViewById(R.id.createPw);
-        pwInput2 = (EditText) findViewById(R.id.createPw2);
-        fNameInput = (EditText) findViewById(R.id.firstname);
-        lNameInput = (EditText) findViewById(R.id.lastname);
-        dofInput = (EditText) findViewById(R.id.dateofbirth);
-        cityInput = (EditText) findViewById(R.id.city);
+        emailInput = findViewById(R.id.createEmail);
+        pwInput = findViewById(R.id.createPw);
+        pwInput2 = findViewById(R.id.createPw2);
+        fNameInput = findViewById(R.id.firstname);
+        lNameInput = findViewById(R.id.lastname);
+        dofInput = findViewById(R.id.dateofbirth);
+        cityInput = findViewById(R.id.city);
 
         //initialize auth
         mAuth = FirebaseAuth.getInstance();
@@ -58,6 +57,7 @@ public class SignUpPage extends AppCompatActivity {
 
 
     public void createAccountonClick(View view) {
+
         email = emailInput.getText().toString();
         pw = pwInput.getText().toString();
         confirmPw = pwInput2.getText().toString();
@@ -87,8 +87,8 @@ public class SignUpPage extends AppCompatActivity {
         */
 
         // Check if both the password and confirm password are entered
-        else if(pw.length() == 0 || confirmPw.length() == 0) {
-            Toast.makeText(getApplicationContext(), "Please enter your password and confirm it.",
+        else if(pw.length() < 6 || confirmPw.length() < 6) {
+            Toast.makeText(getApplicationContext(), "Password should be at least 6 characters",
                      Toast.LENGTH_LONG).show();
         }
         // Check if the password matches with the confirm password.
@@ -114,72 +114,52 @@ public class SignUpPage extends AppCompatActivity {
         // If everything is good, move onto the next screen
         else {
             //Intent myIntent = new Intent(SignUpPage.this, MainHousingListing.class);
-
             //record down the information into account.txt
-            createAccount(email,pw);
-            if(pass == 0) {
-                Log.d(TAG,"enter success process");
-                String name = fName + lName;
-                profileSetUp(name, email, dof, Uid);
-                Intent myIntent = new Intent(SignUpPage.this, UserPreferences.class);
-                startActivity(myIntent);
-            }
+            createAccount();
         }
     }
 
-    private void createAccount(String email, String password){
-        Log.d(TAG,"creatAccount:" + email);
+    private void  createAccount(){
+        Log.d(TAG,"Creating an account: " + email);
 
-        mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this
+        mAuth.createUserWithEmailAndPassword(email, pw).addOnCompleteListener(this
                 , new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
                             Log.d(TAG,"createUserWithEmail:success");
-                            //record down user Id
-
-                            Uid = getUid();
-                            Log.d(TAG,Uid);
-                            pass = 1;
-
+                            uid = mAuth.getInstance().getCurrentUser().getUid();
+                            Log.d(TAG,uid);
+                            profileSetUp();
+                            Intent myIntent = new Intent(SignUpPage.this, UserPreferences.class);
+                            startActivity(myIntent);
 
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(getApplicationContext(),
                                     "Authentication failed.", Toast.LENGTH_SHORT).show();
-                            pass = 0;
                         }
 
                     }
                 });
-        /*
-        if(pass!=1) {
-            return false;
-        }
-        else{
-            return true;
-        }
-        */
-        Log.d(TAG, " onComplete ended, pass: " + pass);
-        Uid = mAuth.getInstance().getCurrentUser().getUid();
     }
 
 
-   private void profileSetUp(String name,String email, String birth,String Uid){
+   private void profileSetUp(){
         Log.d(TAG,"Entering profilesetup#1");
         Account user = new Account();
-        user.setName(name);
+        user.setName(fName + " " + lName);
         user.setGender("male");
         user.setEmail(email);
-        user.setBirth(birth);
+        user.setBirth(dof);
         //Log.d(TAG,  user.getBirth());
-        Log.d(TAG, Uid);
+        Log.d(TAG, uid);
 
         Log.d(TAG,"Entering profilesetup#2");
         //write in to firebase
-        Log.d(TAG,Uid);
-        mDatabase.child(Uid).setValue(user);
+        Log.d(TAG,uid);
+        mDatabase.child(uid).setValue(user);
         Log.d(TAG,"Entering profilesetup#3");
     }
 
@@ -199,13 +179,9 @@ public class SignUpPage extends AppCompatActivity {
 
         // Find '@' from the input email. indexOf() returns -1 if the char is found in the string.
         int indexOfAt = email.indexOf('@');
-
-        // Check if '@' is included && in their domain, we should expect exactly
-        // 3 chars after '.' (ie. .com, .edu, .gov and so on).
-        if((indexOfAt != -1) && (email.length() - 1 - email.indexOf('.', indexOfAt) == 3)) {
-            return true;     // Email is in a valid format
-        }
-        return false;   // Email is not in a valid format
+        // Check if '@' is included && in their domain, we should expect more than
+        // 1 character after '.' (ie. .com, .edu, .gov and so on).
+        return (indexOfAt != -1) && ((email.length() - 1 - email.indexOf('.', indexOfAt)) > 1);
     }
 
 }
