@@ -24,13 +24,16 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_origin);
 
+        // Call AsyncTask execute to populate listing list
+        MainHousingListing_PopulateList list = new MainHousingListing_PopulateList(ActivityFragmentOrigin.this);
+        list.execute();
+
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_nav);
         bottomNavigationView.setSelectedItemId(R.id.bottombaritem_listing);
 
         fm.beginTransaction().add(R.id.frameLayout, fragment3, "1").hide(fragment1).commit();
         fm.beginTransaction().add(R.id.frameLayout, fragment2, "3").hide(fragment3).commit();
         fm.beginTransaction().add(R.id.frameLayout,fragment1, "2").commit();
-
 
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
@@ -43,9 +46,10 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
                                 active = fragment1;
                                 return true;
                             case R.id.bottombaritem_listing:
-                                fm.beginTransaction().hide(active).show(fragment2).commit();
-                                active = fragment2;
-                                fragment2.refreshList();
+                                switchToListingView();
+//                                fm.beginTransaction().hide(active).show(fragment2).commit();
+//                                active = fragment2;
+//                                fragment2.refreshList();
                                 return true;
                             case R.id.bottombaritem_favorites:
                                 fm.beginTransaction().hide(active).show(fragment3).commit();
@@ -55,6 +59,41 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
                         return false;
                     }
                 });
+    }
+
+    public void redrawList() {
+//        MainHousingListing_PopulateList list = new MainHousingListing_PopulateList(fragment2);
+//        list.execute();
+        switchToListingView();
+        runThread();
+//        fragment2.refreshList();
+    }
+
+    private void switchToListingView() {
+        fm.beginTransaction().hide(active).show(fragment2).commit();
+        active = fragment2;
+
+    }
+
+    private void runThread() {
+        new Thread() {
+            public void run() {
+                int i = 0;
+//                while (i++ < 1000) {
+                    try {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                fragment2.refreshList();
+                            }
+                        });
+                        Thread.sleep(300);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+//            }
+        }.start();
     }
 
     @Override

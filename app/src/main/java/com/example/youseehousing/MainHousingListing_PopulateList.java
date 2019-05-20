@@ -24,6 +24,8 @@ import java.util.Map;
  */
 public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Void> {
     private MainActivity callingActivity;
+    private ActivityFragmentOrigin afoActivity;
+    private ItemFragment listFragment;
     private FirebaseFirestore db;
     private String TAG = "MainHousingListing";
 
@@ -39,25 +41,40 @@ public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Vo
 
     // Max listings to add to page. This can be the number of items from the database that fit
     // the search query for example.
-    private static int COUNT = 1;
+    private static int COUNT = 5;
 
     /**
      * Constructor
      * @param callingActivity
      */
-//    public MainHousingListing_PopulateList() {
-//        queryDatabase();
+//    public MainHousingListing_PopulateList(Activity callingActivity) {
+//        if(callingActivity != null) {
+//            try {
+//                this.callingActivity = (MainActivity) callingActivity;
+//            } catch (ClassCastException e) {
+//                this.callingActivity = null;
+//                throw e;
+//            }
+//        }
 //    }
-    public MainHousingListing_PopulateList(Activity callingActivity) {
-        if(callingActivity != null) {
+
+    public MainHousingListing_PopulateList(Activity activityFragmentOrigin) {
+        if(activityFragmentOrigin != null) {
             try {
-                this.callingActivity = (MainActivity) callingActivity;
+                this.afoActivity = (ActivityFragmentOrigin) activityFragmentOrigin;
             } catch (ClassCastException e) {
-                this.callingActivity = null;
+                this.afoActivity = null;
                 throw e;
             }
         }
     }
+
+//    public MainHousingListing_PopulateList(ItemFragment fragment) {
+//        if (fragment == null) {
+//            throw new NullPointerException();
+//        }
+//        this.listFragment = fragment;
+//    }
 
     // Async task methods
     @Override
@@ -73,10 +90,19 @@ public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Vo
 
     @Override
     protected void onPostExecute(Void aVoid) {
+
         // Code to refresh list
-        if (callingActivity != null && !isCancelled()) {
-            callingActivity.changeToMainHousingListingPage();
+//        if (callingActivity != null && !isCancelled()) {
+//            callingActivity.changeToMainHousingListingPage();
+//        }
+////         try redrawing list from ActivtyFragmentOrigin
+        if (afoActivity != null) {
+            afoActivity.redrawList();
         }
+        // doesn't work
+//        if(listFragment != null) {
+//            listFragment.refreshList();
+//        }
     }
 
     // End Async Task methods
@@ -93,7 +119,9 @@ public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Vo
             if ( newListing != null ) {
                 ITEMS.add(newListing);
             }
-
+        if (afoActivity != null) {
+            afoActivity.redrawList();
+        }
     }
 
     /**

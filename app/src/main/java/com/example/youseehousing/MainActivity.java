@@ -77,8 +77,9 @@ public class MainActivity extends AppCompatActivity {
 //        Intent myIntent = new Intent(MainActivity.this, MainHousingListing.class);
 //        startActivity(myIntent);
         // Call async task which will switch activity
-        MainHousingListing_PopulateList list = new MainHousingListing_PopulateList(MainActivity.this);
-        list.execute();
+//        MainHousingListing_PopulateList list = new MainHousingListing_PopulateList(MainActivity.this);
+//        list.execute();
+        changeToMainHousingListingPage();
     }
 
     public void changeToMainHousingListingPage() {

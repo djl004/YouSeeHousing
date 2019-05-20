@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +21,15 @@ public class ItemFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
+    private final String TAG = "ItemFragment";
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    private LayoutInflater inflater;
+    private ViewGroup container;
+    private Bundle savedInstanceState;
+    private View createdView;
+    private RecyclerView recyclerView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -48,17 +55,19 @@ public class ItemFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+        this.savedInstanceState = savedInstanceState;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list_page, container, false);
+//        View view = inflater.inflate(R.layout.fragment_list_page, container, false);
+        createdView = inflater.inflate(R.layout.fragment_list_page, container, false);
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+        if (createdView instanceof RecyclerView) {
+            Context context = createdView.getContext();
+            recyclerView = (RecyclerView) createdView;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
@@ -68,17 +77,21 @@ public class ItemFragment extends Fragment {
 
             recyclerView.setAdapter(new MyItemRecyclerViewAdapter(MainHousingListing_PopulateList.ITEMS, mListener));
 
-//            // Experimental
-//            recyclerView.getAdapter().notifyDataSetChanged();
+            // Experimental
+            recyclerView.getAdapter().notifyDataSetChanged();
         }
-        return view;
+        return createdView;
     }
 
+    /**
+     * Redraw the list.
+     */
     public void refreshList() {
-        onCreateView(getLayoutInflater(),(ViewGroup)getView().getParent(), new Bundle());
+//        doesn't work
+//        onCreateView(getLayoutInflater(),(ViewGroup)getView().getParent(), new Bundle());
+        Log.i(TAG, "redrawing ItemFragment!!!");
+        recyclerView.getAdapter().notifyDataSetChanged();
     }
-
-
 
     @Override
     public void onAttach(Context context) {
