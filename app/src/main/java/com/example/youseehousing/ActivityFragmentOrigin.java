@@ -17,7 +17,6 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
     private final String TAG = "ActivityFragmentOrigin";
 
     final Fragment fragment1 = new UserPreferencesFragment();
-//    final Fragment fragment2 = new ActivityListPageFragment();
     final ItemFragment fragment2 = new ItemFragment();
     final Fragment fragment3 = new FavoritesFragment();
     final FragmentManager fm = getSupportFragmentManager();
@@ -28,10 +27,6 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_origin);
 
-        // Call AsyncTask execute to populate listing list
-        MainHousingListing_PopulateList list = new MainHousingListing_PopulateList(ActivityFragmentOrigin.this);
-        list.execute();
-
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_nav);
         bottomNavigationView.setSelectedItemId(R.id.bottombaritem_listing);
 
@@ -39,6 +34,8 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
         fm.beginTransaction().add(R.id.frameLayout, fragment2, "3").hide(fragment3).commit();
         fm.beginTransaction().add(R.id.frameLayout,fragment1, "2").commit();
 
+        // Run task
+        createAndPopulateListingPage();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -62,11 +59,26 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
                 });
     }
 
+    /**
+     * Changes the current displayed fragment to the main housing listing page, and
+     * redraws the page.
+     */
     private void switchToListingView() {
         fm.beginTransaction().hide(active).show(fragment2).commit();
         active = fragment2;
         redrawList();
     }
+
+    /**
+     * Creates a new MainHousingListing_PopulateList object and runs the AsyncTask that handles
+     * querying the database and populating the list.
+     */
+    private void createAndPopulateListingPage() {
+        // Call AsyncTask execute to populate listing list
+        MainHousingListing_PopulateList list = new MainHousingListing_PopulateList(ActivityFragmentOrigin.this);
+        list.execute();
+    }
+
 
     /**
      * Redraws the main housing list.
@@ -75,21 +87,18 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
     public void redrawList() {
         new Thread() {
             public void run() {
-                int i = 0;
-//                while (i++ < 1000) {
-                    try {
+//                    try {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 fragment2.refreshList();
                             }
                         });
-                        Thread.sleep(300);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+//                        Thread.sleep(1);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
                 }
-//            }
         }.start();
     }
 
@@ -108,13 +117,11 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
      */
     private void selectListingFxn(ListingDetails item) {
         // Throw an exception if the activity is not found
-        // Doesn't crash, just doesn't do anything
+        // Doesn't crash, just doesn't do anything :(
         try {
             Intent intent_f = new Intent(ActivityFragmentOrigin.this, MainListingPage.class);
-
             // Pass selected listing's data to the next activity
             intent_f.putExtra("parcel_data", item);
-
             startActivity(intent_f);
         } catch (android.content.ActivityNotFoundException e) {
             e.printStackTrace();

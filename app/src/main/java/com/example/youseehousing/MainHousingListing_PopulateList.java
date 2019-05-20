@@ -1,7 +1,6 @@
 package com.example.youseehousing;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -18,9 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Helper class for providing sample content for user interfaces created by
- * Android template wizards.
- * <p>
+ *  This class handles querying the database and
  */
 public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Void> {
     private MainActivity callingActivity;
@@ -29,19 +26,9 @@ public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Vo
     private FirebaseFirestore db;
     private String TAG = "MainHousingListing";
 
-    /**
-     * An array of listing thumbnails
-     */
     public static List<ListingDetails> ITEMS = new ArrayList<ListingDetails>();
 
-    /**
-     * A map of  listing details items, by ID.
-     */
-    public static Map<String, ListingDetails> ITEM_MAP = new HashMap<String, ListingDetails>();
-
-    // Max listings to add to page. This can be the number of items from the database that fit
-    // the search query for example.
-    private static int COUNT = 5;
+    private static int COUNT = 5; // Max number of listings to query from the database.
 
     /**
      * Constructor
@@ -122,6 +109,7 @@ public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Vo
         return null;
     }
 
+    // This doesn't get called for a reason I can't figure out...
     @Override
     protected void onPostExecute(Void aVoid) {
 //         try redrawing list from ActivtyFragmentOrigin

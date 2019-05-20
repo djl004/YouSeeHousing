@@ -77,8 +77,6 @@ public class ItemFragment extends Fragment {
 
             recyclerView.setAdapter(new MyItemRecyclerViewAdapter(MainHousingListing_PopulateList.ITEMS, mListener));
 
-            // Experimental
-            recyclerView.getAdapter().notifyDataSetChanged();
         }
         return createdView;
     }
