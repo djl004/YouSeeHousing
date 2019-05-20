@@ -271,4 +271,30 @@ public class ListingDetails implements Parcelable {
             return null;
         }
     }
+
+    /**
+     * Returns a valid image URL.
+     * @param item - the ListingDetails object
+     * @param index - the index of the image to get
+     * @return Returns an image URL at the index, or "" if there is no image url
+     */
+    public static String getImageURL(ListingDetails item, int index) {
+        String defaultURL = "";
+        List<String> pictureList = item.getPictures();
+        int numPictures = pictureList.size();
+
+        // Case where pictures is empty
+        if(numPictures <= 0) {
+            return defaultURL;
+        }
+        // Case where index is greater than numPictures : Return last image in list
+        if(index > numPictures-1){
+            return pictureList.get(numPictures-1);
+        }
+        // Case where index is less than 0 : Return first image in list
+        if(index < 0){
+            return pictureList.get(0);
+        }
+        return pictureList.get(index);
+    }
 }

@@ -12,7 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 /**
- *                                              DEPRECATED!!!!
+ *   DEPRECATED!!!!DEPRECATED!!!!DEPRECATED!!!!DEPRECATED!!!!DEPRECATED!!!!DEPRECATED!!!!
  *  Replaced by ActivityFragmentOrigin
     MainHousingListing
     This is the page that has thumbnails of all the listings you can see.
