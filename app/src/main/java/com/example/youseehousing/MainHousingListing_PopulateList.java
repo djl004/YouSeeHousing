@@ -30,7 +30,7 @@ public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Vo
 
     public static List<ListingDetails> ITEMS = new ArrayList<ListingDetails>();
 
-     private static final int COUNT = 15; // Max number of listings to query at once from database.
+     private static final int COUNT = 30; // Max number of listings to query at once from database.
 
     /**
      * Constructor
