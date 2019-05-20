@@ -2,6 +2,9 @@ package com.example.youseehousing;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
+
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +18,7 @@ import java.util.List;
 
 public class ListingDetails implements Parcelable {
 
+    private static final String TAG = "ListingDetails";
 //    private String id;
     private String address;
     private String bath;
@@ -221,7 +225,39 @@ public class ListingDetails implements Parcelable {
         dest.writeString(washerDryer);
 
     }
-
     // End implemented Parcelable methods
 
+    /**
+     * Creates a ListingDetails object from a QueryDocumentSnapshot object returned from a
+     * Cloud Firestore query.
+     *
+     * @param document
+     * @return
+     */
+    public static ListingDetails makeListingDetailsFromDocumentSnapshot(QueryDocumentSnapshot document) {
+        if (document.exists()) {
+            String address = document.get("address").toString(); // Address
+            String bath = document.get("bath").toString(); // Bath
+            String bed = document.get("bed").toString(); // bed
+            String buildingLease = document.get("buildingLease").toString(); // Bath
+            String contact = document.get("contact").toString(); // contact
+            String desc = document.get("desc").toString(); // desc
+            String dim = document.get("dim").toString(); // dim
+            String link = document.get("link").toString(); // link
+            String parking = document.get("parking").toString(); // parking
+            // TODO: Pass a default array with a length > 0 if this is null
+            ArrayList<String> pictures = (ArrayList<String>) document.get("pictures"); // parking
+            String pet = document.get("pet").toString(); // pet
+            String price = document.get("price").toString(); // dim
+            String unitLease = document.get("unitLease").toString(); // Bath
+            String washerDryer = document.get("washerDryer").toString(); // Bath
+
+            Log.i(TAG, "Queried db: " + address);
+
+            return new ListingDetails(address, bath, bed, buildingLease, contact,
+                    desc, dim, link, parking, pictures, pet, price, unitLease, washerDryer);
+        } else {
+            return null;
+        }
+    }
 }
