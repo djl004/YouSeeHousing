@@ -100,6 +100,11 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * TODO: Reimplement sign in logic. Disabled for testing.
+     * @param email
+     * @param password
+     */
    private void signIn(String email,String password){
 //        Log.d(TAG,"signIn:" + email);
 //        if(password.length() == 0) {

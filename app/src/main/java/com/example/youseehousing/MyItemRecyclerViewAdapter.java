@@ -4,12 +4,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.youseehousing.ItemFragment.OnListFragmentInteractionListener;
-import com.example.youseehousing.ListingDetails;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import static com.example.youseehousing.ListingDetails.getImageURL;
 
 /**
  * This class handles populating and displaying the list of housing in MainHousingListing.
@@ -39,7 +42,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     }
 
     /**
-     * Sets the text in the listing thumbnail.
+     * Sets the text and image in the listing item on the main listing page.
      *
      * @param holder: the listing thumbnail object
      * @param position: the position in the array
@@ -48,10 +51,9 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
 
-        // Set text here
-//        holder.mIdView.setText(mValues.get(position).getId());
-        holder.mTitleView.setText(mValues.get(position).getAddress());
-        holder.mDetailsView.setText(mValues.get(position).getBath());
+        setThumbnailImage(holder); // Set image
+        holder.mTitleView.setText(mValues.get(position).getAddress()); // Set title "100 Addr Pl."
+        holder.mDetailsView.setText(mValues.get(position).getPrice()); // Set detail text "$1,959"
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +67,15 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         });
     }
 
+    private void setThumbnailImage(ViewHolder holder) {
+        //        String imageURL = "https://i.imgur.com/vrmywgE.jpg";
+        ListingDetails item = holder.mItem;
+        String imageURL = getImageURL(item, 0);
+        if (!imageURL.isEmpty()) {
+            Picasso.get().load(imageURL).resize(holder.mThumbnailView.getWidth(),500).centerCrop().into(holder.mThumbnailView);
+        }
+    }
+
     @Override
     public int getItemCount() {
         return mValues.size();
@@ -73,12 +84,14 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
+        public final ImageView mThumbnailView;
         public final TextView mTitleView;
         public final TextView mDetailsView;
         public ListingDetails mItem;
 
         /**
          * @param mIdView: unseen id # of item
+         * @param mThumbnailView: image
          * @param mTitleView: title of listing thumbnail
          * @param mDetailsView: caption of listing thumbnail
          *
@@ -88,6 +101,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
             super(view);
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.item_number);
+            mThumbnailView = (ImageView) view.findViewById(R.id.thumbnail);
             mTitleView = (TextView) view.findViewById(R.id.title);
             mDetailsView = (TextView) view.findViewById(R.id.details);
 

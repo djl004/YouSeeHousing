@@ -17,7 +17,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *  This class handles querying the database and
+ *
+ *  This class handles querying the database and populating the list of items
+ *
  */
 public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Void> {
     private MainActivity callingActivity;
@@ -28,7 +30,7 @@ public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Vo
 
     public static List<ListingDetails> ITEMS = new ArrayList<ListingDetails>();
 
-    private static int COUNT = 5; // Max number of listings to query from the database.
+     private static final int COUNT = 30; // Max number of listings to query at once from database.
 
     /**
      * Constructor
@@ -56,9 +58,27 @@ public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Vo
             if ( newListing != null ) {
                 ITEMS.add(newListing);
             }
+
         if (afoActivity != null) {
             afoActivity.redrawList();
         }
+    }
+
+    /**
+     * Clears the list for a new query.
+     */
+    private void clearList() {
+        ITEMS.clear();
+        if (afoActivity != null) {
+            afoActivity.redrawList();
+        }
+    }
+
+    /**
+     * Gets ready for a new database query
+     */
+    private void newQuery() {
+
     }
 
     /**
@@ -74,7 +94,7 @@ public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Vo
         if (db != null) {
             db.collection("listing")
                     .limit(COUNT)
-                    .orderBy("address")
+                    .orderBy("price")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override

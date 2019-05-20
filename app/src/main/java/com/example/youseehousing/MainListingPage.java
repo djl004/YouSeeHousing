@@ -6,6 +6,8 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 /**
  * This is the page that has a detailed description of a listing.
  * There will be a swipeable image list, title and description, and buttons
@@ -46,6 +48,10 @@ public class MainListingPage extends AppCompatActivity {
 
         // Set parameters
         try {
+            String image_0 = listing.getPictures().get(0);
+            if(image_0.length() > 0) {
+                Picasso.get().load(listing.getPictures().get(0)).into(imagesView);
+            }
             addressView.setText(listing.getAddress());
             captionView.setText(listing.getBath() + " " + listing.getBed());
             descriptionView.setText(listing.getDesc());
