@@ -35,6 +35,12 @@ public class ListingDetails implements Parcelable {
     private String unitLease;
     private String washerDryer;
 
+    private final String[] queryList = {    "address", "bath", "bed",
+                                            "buildingLease", "contact", "desc",
+                                            "dim", "link", "parking",
+                                            "pictures", "pet", "price",
+                                            "unitLease", "washerDryer"};
+
     public ListingDetails() {}
 
     public ListingDetails(String address,
@@ -69,9 +75,7 @@ public class ListingDetails implements Parcelable {
     }
 
     protected ListingDetails(Parcel in) {
-//        id = in.readString();
-        address = in.readString();
-//        this.id = in.readString();
+//      this.id = in.readString();
         this.address = in.readString();
         this.bath = in.readString();
         this.bed = in.readString();
@@ -141,9 +145,6 @@ public class ListingDetails implements Parcelable {
     }
 
     //setters
-//    public void setId(String id) {
-//        this.id = id;
-//    }
     public void setAddress(String address) {
         this.address = address;
     }
@@ -235,6 +236,11 @@ public class ListingDetails implements Parcelable {
      * @return
      */
     public static ListingDetails makeListingDetailsFromDocumentSnapshot(QueryDocumentSnapshot document) {
+//                "address", "bath", "bed",
+//                "buildingLease", "contact", "desc",
+//                "dim", "link", "parking",
+//                "pictures", "pet", "price",
+//                "unitLease", "washerDryer"
         if (document.exists()) {
             String address = document.get("address").toString(); // Address
             String bath = document.get("bath").toString(); // Bath
@@ -245,8 +251,13 @@ public class ListingDetails implements Parcelable {
             String dim = document.get("dim").toString(); // dim
             String link = document.get("link").toString(); // link
             String parking = document.get("parking").toString(); // parking
-            // TODO: Pass a default array with a length > 0 if this is null
+
+            // ass a default array with a length > 0 if this is null
             ArrayList<String> pictures = (ArrayList<String>) document.get("pictures"); // parking
+            if(pictures.isEmpty()) {
+                pictures.add("");
+            }
+
             String pet = document.get("pet").toString(); // pet
             String price = document.get("price").toString(); // dim
             String unitLease = document.get("unitLease").toString(); // Bath

@@ -17,7 +17,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *  This class handles querying the database and
+ *
+ *  This class handles querying the database and populating the list of items
+ *
  */
 public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Void> {
     private MainActivity callingActivity;
@@ -56,6 +58,7 @@ public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Vo
             if ( newListing != null ) {
                 ITEMS.add(newListing);
             }
+
         if (afoActivity != null) {
             afoActivity.redrawList();
         }
