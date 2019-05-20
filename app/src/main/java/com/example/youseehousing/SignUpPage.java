@@ -56,15 +56,15 @@ public class SignUpPage extends AppCompatActivity {
     }
 
 
-    public void createAccountonClick(View view) {
+    public void createAccountOnClick(View view) {
 
-        email = emailInput.getText().toString();
+        email = emailInput.getText().toString().toLowerCase();
         pw = pwInput.getText().toString();
         confirmPw = pwInput2.getText().toString();
-        fName = fNameInput.getText().toString();
-        lName = lNameInput.getText().toString();
+        fName = capFirstChar(fNameInput.getText().toString());
+        lName = capFirstChar(lNameInput.getText().toString());
         dof = dofInput.getText().toString();
-        city = cityInput.getText().toString();
+        city = capFirstChar(cityInput.getText().toString());
 
 
         // Email address is not entered
@@ -184,4 +184,13 @@ public class SignUpPage extends AppCompatActivity {
         return (indexOfAt != -1) && ((email.length() - 1 - email.indexOf('.', indexOfAt)) > 1);
     }
 
+    public String capFirstChar(String name) {
+        int indexOfSpace = name.indexOf(' ');
+        if(indexOfSpace != -1) {
+            return name.substring(0,1).toUpperCase() +
+                    name.substring(1, indexOfSpace).toLowerCase() + " " +
+                    capFirstChar(name.substring(indexOfSpace+1));
+        }
+        return name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
+    }
 }
