@@ -180,18 +180,16 @@ public class SetDistanceTests {
         list.add( new Listing("4198 Combe Way, San Diego, CA 92122"));
         list.add(new Listing("6698 Red Deer St, San Diego, CA 92122"));
 
-        // Create a user-entered address to test against
-        String userAddress = "10001 Pacific Heights Blvd, San Diego, CA 92121";
 
         // Check on google maps for distances. SetDistance's results should be less than google's.
         double arr[] = new double[2];
-        arr[0] = 5.9;     // user address and combe way
-        arr[1] = 6.2;     // user address and red deer street
+        arr[0] = 3.7;     // user address and combe way
+        arr[1] = 3.9;     // user address and red deer street
 
 
         // Set coords for list
         SetDistance.setCoords(list);
-        SetDistance.setDistances(list, userAddress);
+        SetDistance.setDistances(list);
 
 
         // Check list to make sure its distances kind of match up. (Google maps returns the fastest
@@ -218,9 +216,7 @@ public class SetDistanceTests {
     /**
      * Test the speed of setDistances()
      *
-     * Conclusion: setDistances() works pretty quickly.
-     *     About 0.5 seconds for 1000 listings. 0.6 for 10000 listings. Very quick, most of the time
-     *     is getting the coordinates for the user-entered address.
+     * Conclusion: Fast
      */
     public void testSetDistancesSpeed(){
 
@@ -234,8 +230,6 @@ public class SetDistanceTests {
         list.add( new Listing("4198 Combe Way, San Diego, CA 92122"));
 
 
-        // Create a user-entered address to test against
-        String userAddress = "10001 Pacific Heights Blvd, San Diego, CA 92121";
 
         // Set coords for list
         SetDistance.setCoords(list);
@@ -261,7 +255,7 @@ public class SetDistanceTests {
         System.out.println("\nStart of "+ loop + " Haversine calculations");
         long startTime = System.nanoTime();
 
-        SetDistance.setDistances(list, userAddress);
+        SetDistance.setDistances(list);
 
         long duration = System.nanoTime() - startTime;
         System.out.println("End of "+ loop  + " Haversine calculations: " + duration / 1000000 + " ms");

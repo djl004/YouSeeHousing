@@ -1,9 +1,7 @@
 /**
  * NOTE:
- *       The latitudes and longitudes MUST be stored in the database before setting distances can
- *       be done. It takes far too long to get them on the go.
- *       Call setCoords(ArrayList<Listing> list) to populate the ArrayList with coordinates, and
- *       then store them in the database.
+ *       Call setDistances() to set the distance variable in each Listing. Do it when scraping and
+ *       storing into the database.
  */
 
 
@@ -59,20 +57,22 @@ public class SetDistance {
     public static final double R = 6372.8;             // In kilometers
     public static final double KM_CONSTANT = 0.621371; // How many miles in a kilometer
 
+    // UCSD info
+    public static final String UCSD_ADDRESS = "9500 Gilman Dr, La Jolla, CA 92093";
+    public static final double UCSD_LAT = 32.877651;
+    public static final double UCSD_LNG = -117.240044;
 
 
 
     /**
-     * Summary: Call this function to set the distances in the ArrayList relative to a user-entered
-     *          address.
+     * Summary: Call this function to set the distances in the ArrayList.
      *
      * @param list: The ArrayList of Listings whose distance var will be filled
-     * @param address: The user-entered address whose distance to Listings will be calculated.
      *
      * return: True if the distances have been set relative to "address". False if the coordinates
      *               for "address" could not be found.
      */
-    public static boolean setDistances(ArrayList<Listing> list, String address){
+    public static boolean setDistances(ArrayList<Listing> list){
 
 
         // Important variables
@@ -81,16 +81,9 @@ public class SetDistance {
         double arr[] = new double[2]; // Array for storing result of getCoords()
 
 
+        // Call setCoords()
+        setCoords(list);
 
-        // Now, set "lat" and "lng" for the parameter "address"
-        arr = getCoords(address);
-        lat = arr[LAT_INDEX];
-        lng = arr[LNG_INDEX];
-
-        // If "lat" and "lng" = -1000, indicating coords not found, then return false.
-        if(lat == NO_LATITUDE || lng == NO_LONGITUDE){
-            return false;
-        }
 
 
         // Now, calculate and set distances for Listings in list
@@ -99,7 +92,7 @@ public class SetDistance {
             Listing curr = list.get(i);
 
             // Set curr's distance
-            curr.setDistance(dBetweenCoords(curr.getLat(), curr.getLng(), lat, lng) );
+            curr.setDistance(dBetweenCoords(curr.getLat(), curr.getLng(), UCSD_LAT, UCSD_LNG) );
         }
 
 
@@ -116,9 +109,12 @@ public class SetDistance {
 
 
 
+
+
+
+
     /**
-     * Function to set the coordinates of all the Listings in the ArrayList. Call to to get
-     * coordinates to fill in the database.
+     * Helper Function to set the coordinates of all the Listings in the ArrayList.
      *
      * Note: If a Listing in the ArrayList's coordinates cannot be found, then they will be set to
      *       -1.
