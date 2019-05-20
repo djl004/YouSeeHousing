@@ -30,7 +30,7 @@ public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Vo
 
     public static List<ListingDetails> ITEMS = new ArrayList<ListingDetails>();
 
-    private static int COUNT = 5; // Max number of listings to query from the database.
+     private static final int COUNT = 15; // Max number of listings to query at once from database.
 
     /**
      * Constructor
@@ -65,6 +65,23 @@ public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Vo
     }
 
     /**
+     * Clears the list for a new query.
+     */
+    private void clearList() {
+        ITEMS.clear();
+        if (afoActivity != null) {
+            afoActivity.redrawList();
+        }
+    }
+
+    /**
+     * Gets ready for a new database query
+     */
+    private void newQuery() {
+
+    }
+
+    /**
      * This method queries the Cloud Firestore database for COUNT listings.
      * And calls addListingToPage for each retrieved
      * Returns true if query was successful
@@ -77,7 +94,7 @@ public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Vo
         if (db != null) {
             db.collection("listing")
                     .limit(COUNT)
-                    .orderBy("address")
+                    .orderBy("price")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
