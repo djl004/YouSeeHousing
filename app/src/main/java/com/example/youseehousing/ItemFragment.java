@@ -87,8 +87,6 @@ public class ItemFragment extends Fragment {
      * Redraw the list.
      */
     public void refreshList() {
-//        doesn't work
-//        onCreateView(getLayoutInflater(),(ViewGroup)getView().getParent(), new Bundle());
         Log.i(TAG, "redrawing ItemFragment!!!");
         recyclerView.getAdapter().notifyDataSetChanged();
     }

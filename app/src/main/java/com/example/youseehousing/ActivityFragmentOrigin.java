@@ -1,16 +1,20 @@
 package com.example.youseehousing;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFragment.OnListFragmentInteractionListener {
 
     private BottomNavigationView bottomNavigationView;
+
+    private final String TAG = "ActivityFragmentOrigin";
 
     final Fragment fragment1 = new UserPreferencesFragment();
 //    final Fragment fragment2 = new ActivityListPageFragment();
@@ -47,9 +51,6 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
                                 return true;
                             case R.id.bottombaritem_listing:
                                 switchToListingView();
-//                                fm.beginTransaction().hide(active).show(fragment2).commit();
-//                                active = fragment2;
-//                                fragment2.refreshList();
                                 return true;
                             case R.id.bottombaritem_favorites:
                                 fm.beginTransaction().hide(active).show(fragment3).commit();
@@ -61,21 +62,17 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
                 });
     }
 
-    public void redrawList() {
-//        MainHousingListing_PopulateList list = new MainHousingListing_PopulateList(fragment2);
-//        list.execute();
-        switchToListingView();
-        runThread();
-//        fragment2.refreshList();
-    }
-
     private void switchToListingView() {
         fm.beginTransaction().hide(active).show(fragment2).commit();
         active = fragment2;
-
+        redrawList();
     }
 
-    private void runThread() {
+    /**
+     * Redraws the main housing list.
+     * Called by AsyncTask MainHousingList_PopulateList when finished querying database.
+     */
+    public void redrawList() {
         new Thread() {
             public void run() {
                 int i = 0;
@@ -96,8 +93,32 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
         }.start();
     }
 
+    /**
+     * Handle interaction with list fragment items
+     * @param item : the selected listing
+     */
     @Override
     public void onListFragmentInteraction(ListingDetails item) {
+        selectListingFxn(item);
+    }
 
+    /**
+     * What happens when a listing is selected
+     * @param item : the selected listing
+     */
+    private void selectListingFxn(ListingDetails item) {
+        // Throw an exception if the activity is not found
+        // Doesn't crash, just doesn't do anything
+        try {
+            Intent intent_f = new Intent(ActivityFragmentOrigin.this, MainListingPage.class);
+
+            // Pass selected listing's data to the next activity
+            intent_f.putExtra("parcel_data", item);
+
+            startActivity(intent_f);
+        } catch (android.content.ActivityNotFoundException e) {
+            e.printStackTrace();
+            Log.e(TAG, "exception: " + e);
+        }
     }
 }

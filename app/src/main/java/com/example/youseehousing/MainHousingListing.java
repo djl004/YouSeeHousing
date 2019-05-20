@@ -29,7 +29,7 @@ public class MainHousingListing extends AppCompatActivity implements ItemFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_page);
 
-        itemFragment = (Fragment) getSupportFragmentManager().findFragmentById(R.id.fragment_list);
+//        itemFragment = (Fragment) getSupportFragmentManager().findFragmentById(R.id.fragment_list);
 
 //        RecyclerView recyclerView = findViewById(R.id.fragment_list);
 //        adapter = new MyItemRecyclerViewAdapter(MainHousingListing_PopulateList.ITEMS, mListener);
@@ -49,19 +49,19 @@ public class MainHousingListing extends AppCompatActivity implements ItemFragmen
 //        }
     }
 
-    /**
-     * Redraw the activity.
-     */
-    public void refreshList() {
-        finish();
-        android.support.v4.app.Fragment newfrag = new ItemFragment();
-        android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_list, newfrag);
-        transaction.addToBackStack(null);
-        Intent i = new Intent(this, MainHousingListing.class);
-        i.putExtra("from","MainHousingListing");
-        startActivity(i);
-    }
+//    /**
+//     * Redraw the activity.
+//     */
+//    public void refreshList() {
+//        finish();
+//        android.support.v4.app.Fragment newfrag = new ItemFragment();
+//        android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.fragment_list, newfrag);
+//        transaction.addToBackStack(null);
+//        Intent i = new Intent(this, MainHousingListing.class);
+//        i.putExtra("from","MainHousingListing");
+//        startActivity(i);
+//    }
 
     /*
         This function handles selecting a listing thumbnail.
@@ -70,7 +70,6 @@ public class MainHousingListing extends AppCompatActivity implements ItemFragmen
         // TODO: Switching to an activity from a fragment doesn't work this way
         selectListingFxn(item);
     }
-
 
     /*
         This function handles what happens when a listing thumbnail is selected.

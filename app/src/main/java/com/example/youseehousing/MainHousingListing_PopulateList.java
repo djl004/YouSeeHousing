@@ -45,19 +45,8 @@ public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Vo
 
     /**
      * Constructor
-     * @param callingActivity
+     * @param activityFragmentOrigin : the activity to which this object belongs
      */
-//    public MainHousingListing_PopulateList(Activity callingActivity) {
-//        if(callingActivity != null) {
-//            try {
-//                this.callingActivity = (MainActivity) callingActivity;
-//            } catch (ClassCastException e) {
-//                this.callingActivity = null;
-//                throw e;
-//            }
-//        }
-//    }
-
     public MainHousingListing_PopulateList(Activity activityFragmentOrigin) {
         if(activityFragmentOrigin != null) {
             try {
@@ -68,45 +57,6 @@ public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Vo
             }
         }
     }
-
-//    public MainHousingListing_PopulateList(ItemFragment fragment) {
-//        if (fragment == null) {
-//            throw new NullPointerException();
-//        }
-//        this.listFragment = fragment;
-//    }
-
-    // Async task methods
-    @Override
-    protected Void doInBackground(Void... voids) {
-        // Access a Cloud Firestore instance from your Activity
-        if (isCancelled()) { return null; }
-        Log.i(TAG,"Querying database!");
-
-        queryDatabase();
-
-        return null;
-    }
-
-    @Override
-    protected void onPostExecute(Void aVoid) {
-
-        // Code to refresh list
-//        if (callingActivity != null && !isCancelled()) {
-//            callingActivity.changeToMainHousingListingPage();
-//        }
-////         try redrawing list from ActivtyFragmentOrigin
-        if (afoActivity != null) {
-            afoActivity.redrawList();
-        }
-        // doesn't work
-//        if(listFragment != null) {
-//            listFragment.refreshList();
-//        }
-    }
-
-    // End Async Task methods
-
 
     /**
      * This method takes as input a document snapshot from the database and adds a listing to the
@@ -156,7 +106,7 @@ public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Vo
             return true;
         }
         else {
-            Log.e("TAG", "db reference is null!");
+            Log.e(TAG, "db reference is null!");
             return false;
         }
     }
@@ -183,7 +133,7 @@ public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Vo
             String unitLease = document.get("unitLease").toString(); // Bath
             String washerDryer = document.get("washerDryer").toString(); // Bath
 
-            Log.i(TAG,"Querying db: " + address);
+            Log.i(TAG,"Queried db: " + address);
 
             return new ListingDetails(address, bath, bed, buildingLease, contact,
                     desc, dim, link, parking, pictures, pet, price, unitLease, washerDryer);
@@ -192,5 +142,29 @@ public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Vo
             return null;
         }
     }
+
+
+    /**
+     *      Async task methods
+     **/
+    @Override
+    protected Void doInBackground(Void... voids) {
+        if (isCancelled()) { return null; }
+        Log.i(TAG,"Querying database!");
+        queryDatabase();
+        return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+//         try redrawing list from ActivtyFragmentOrigin
+        if (afoActivity != null) {
+            afoActivity.redrawList();
+        }
+    }
+    /**
+     *      End Async task methods
+     **/
+
 }
 
