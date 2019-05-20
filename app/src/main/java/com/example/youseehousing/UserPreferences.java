@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -87,7 +88,9 @@ public class UserPreferences extends AppCompatActivity {
     }
 
     public void doneUserPreferencesOnClick(View view) {
-        Intent myIntent = new Intent(UserPreferences.this, MainHousingListing.class);
+        Intent myIntent = new Intent(UserPreferences.this, MainActivity.class);
         startActivity(myIntent);
+        Toast.makeText(getApplicationContext(), "Please log in",
+                Toast.LENGTH_LONG).show();
     }
 }
