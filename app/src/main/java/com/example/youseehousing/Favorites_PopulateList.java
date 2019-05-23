@@ -20,50 +20,46 @@ import java.util.List;
  */
 public class Favorites_PopulateList extends ListPage {
     private ActivityFragmentOrigin afoActivity;
-    private String TAG = "MainHousingListing";
+    private String TAG = "Favorites";
 
-
-    public static List<ListingDetails> ITEMS = new ArrayList<ListingDetails>();
-
-    private static final int COUNT = 30; // Max number of listings to query at once from database.
-    private final ListPage.ListType TYPE = ListType.FAVORITES;
+    private static final int COUNT = 5; // Max number of listings to query at once from database.
+    private final ListPageFragment.ListType TYPE = ListPageFragment.ListType.FAVORITES;
 
     /**
      * Constructor
      * @param activityFragmentOrigin : the activity to which this object belongs
      */
-    public Favorites_PopulateList(Activity activityFragmentOrigin) {
-        super(activityFragmentOrigin);
+    public Favorites_PopulateList(Activity activityFragmentOrigin, RefreshableListFragmentPage fragment) {
+        super(activityFragmentOrigin, fragment);
         afoActivity = super.getActivityFragmentOrigin();
+        super.clearList();
         queryDatabase();
+
     }
 
-    /**
-     * This method takes as input a document snapshot from the database and adds a listing to the
-     * page.
-     * TODO: Paginate data https://firebase.google.com/docs/firestore/query-data/query-cursors
-     * TODO: Querying database probably deserves its own class
-     **/
-    private void addListingToPage(QueryDocumentSnapshot document) {
-            ListingDetails newListing = ListingDetails.makeListingDetailsFromDocumentSnapshot(document);
-            if ( newListing != null ) {
-                ITEMS.add(newListing);
-            }
-
-        if (afoActivity != null) {
-            afoActivity.redrawLists();
-        }
-    }
-
-    /**
-     * Clears the list for a new query.
-     */
-    private void clearList() {
-        ITEMS.clear();
-        if (afoActivity != null) {
-            afoActivity.redrawLists();
-        }
-    }
+//    /**
+//     * This method takes as input a document snapshot from the database and adds a listing to the
+//     * page.
+//     * TODO: Paginate data https://firebase.google.com/docs/firestore/query-data/query-cursors
+//     * TODO: Querying database probably deserves its own class
+//     **/
+//    private void addListingToPage(QueryDocumentSnapshot document) {
+//            ListingDetails newListing = ListingDetails.makeListingDetailsFromDocumentSnapshot(document);
+//            if ( newListing != null ) {
+//                ITEMS.add(newListing);
+//                super.getRefreshableFragment().refreshPage();
+//            }
+//    }
+//
+//    /**
+//     * Clears the list for a new query.
+//     */
+//    private void clearList() {
+//        ITEMS.clear();
+//        if (afoActivity != null) {
+//            afoActivity.redrawLists();
+//        }
+//    }
 
     /**
      * This method queries the Cloud Firestore database for COUNT listings.
@@ -78,7 +74,7 @@ public class Favorites_PopulateList extends ListPage {
         if (db != null) {
             db.collection("listing")
                     .limit(COUNT)
-                    .orderBy("price")
+                    .orderBy("address")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -86,7 +82,9 @@ public class Favorites_PopulateList extends ListPage {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     // call function to get listing details
+//                                    addListingToPage(document);
                                     addListingToPage(document);
+                                    getRefreshableFragment().refreshPage();
                                 }
                             } else {
                                 Log.w(TAG, "Error getting documents.", task.getException());

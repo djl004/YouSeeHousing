@@ -17,9 +17,10 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
     private final String TAG = "ActivityFragmentOrigin";
 
     private ListPage activeList;
+    private ListPage favoritesList;
 
     final Fragment fragment1 = new UserPreferencesFragment();
-    final ListPageFragment fragment2 = new ItemFragment();
+    final ListPageFragment fragment2 = new MainListingPageFragment();
     final ListPageFragment fragment3 = new FavoritesFragment();
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragment2;
@@ -36,8 +37,9 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         fm.beginTransaction().add(R.id.frameLayout, fragment2, "3").hide(fragment3).commit();
         fm.beginTransaction().add(R.id.frameLayout,fragment1, "2").commit();
 
-//        // Run task
-//        createAndPopulateListingPage();
+        // Create listing pages
+        createAndPopulateListingPage(ListPageFragment.ListType.MAIN_LISTING_PAGE);
+        createAndPopulateListingPage(ListPageFragment.ListType.FAVORITES);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -49,11 +51,10 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                                 active = fragment1;
                                 return true;
                             case R.id.bottombaritem_listing:
-                                switchToListingView();
+                                switchToView(fragment2);
                                 return true;
                             case R.id.bottombaritem_favorites:
-                                fm.beginTransaction().hide(active).show(fragment3).commit();
-                                active = fragment3;
+                                switchToView(fragment3);
                                 return true;
                         }
                         return false;
@@ -65,29 +66,30 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
      * Changes the current displayed fragment to the main housing listing page, and
      * redraws the page.
      */
-    private void switchToListingView() {
-        fm.beginTransaction().hide(active).show(fragment2).commit();
-        active = fragment2;
-        redrawList(fragment2);
+    private void switchToView(ListPageFragment pageFragment) {
+        fm.beginTransaction().hide(active).show(pageFragment).commit();
+        active = pageFragment;
+//        createAndPopulateListingPage(pageFragment.getListType());
     }
 
     /**
      * Creates a new ListPage object.
      */
-    private void createAndPopulateListingPage(ListPage.ListType TYPE) {
-        // Call AsyncTask execute to populate listing list
-        switch(TYPE) {
-            case FAVORITES:
-                activeList =
-                        new MainHousingListing_PopulateList(ActivityFragmentOrigin.this);
-                break;
-            case MAIN_LISTING_PAGE:
-                activeList =
-                        new Favorites_PopulateList(ActivityFragmentOrigin.this);
-                break;
-
-        }
-
+    private void createAndPopulateListingPage(ListPageFragment.ListType TYPE) {
+//        // Call AsyncTask execute to populate listing list
+//        switch(TYPE) {
+//            case MAIN_LISTING_PAGE:
+//                activeList =
+//                        new MainHousingListing_PopulateList(ActivityFragmentOrigin.this, fragment2);
+//                break;
+//            case FAVORITES:
+//                activeList =
+//                        new Favorites_PopulateList(ActivityFragmentOrigin.this, fragment3);
+//                break;
+//
+//        }
+        activeList = new MainHousingListing_PopulateList(ActivityFragmentOrigin.this, fragment2);
+        favoritesList = new Favorites_PopulateList(ActivityFragmentOrigin.this, fragment3);
     }
 
 

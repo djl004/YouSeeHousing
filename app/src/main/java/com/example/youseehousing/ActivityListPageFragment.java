@@ -22,7 +22,7 @@ public class ActivityListPageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ItemFragment fragment = new ItemFragment();
+        MainListingPageFragment fragment = new MainListingPageFragment();
         getFragmentManager().beginTransaction().add(R.id.fragment_holder, fragment).commit();
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_activity_list_page, container, false);

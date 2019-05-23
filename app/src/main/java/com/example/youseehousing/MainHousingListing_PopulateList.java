@@ -22,47 +22,47 @@ public class MainHousingListing_PopulateList extends ListPage {
     private ActivityFragmentOrigin afoActivity;
     private String TAG = "MainHousingListing";
 
-    public static List<ListingDetails> ITEMS = new ArrayList<ListingDetails>();
+//    public static List<ListingDetails> ITEMS = new ArrayList<ListingDetails>();
 
-    private static final int COUNT = 30; // Max number of listings to query at once from database.
-    private final ListPage.ListType TYPE = ListType.MAIN_LISTING_PAGE;
+    private static final int COUNT = 5; // Max number of listings to query at once from database.
+    private final ListPageFragment.ListType TYPE = ListPageFragment.ListType.MAIN_LISTING_PAGE;
 
     /**
      * Constructor
      * @param activityFragmentOrigin : the activity to which this object belongs
      */
-    public MainHousingListing_PopulateList(Activity activityFragmentOrigin) {
-        super(activityFragmentOrigin);
+    public MainHousingListing_PopulateList(Activity activityFragmentOrigin, RefreshableListFragmentPage fragment) {
+        super(activityFragmentOrigin, fragment);
         afoActivity = super.getActivityFragmentOrigin();
+        super.clearList();
         queryDatabase();
     }
 
-    /**
-     * This method takes as input a document snapshot from the database and adds a listing to the
-     * page.
-     * TODO: Paginate data https://firebase.google.com/docs/firestore/query-data/query-cursors
-     * TODO: Querying database probably deserves its own class
-     **/
-    private void addListingToPage(QueryDocumentSnapshot document) {
-            ListingDetails newListing = ListingDetails.makeListingDetailsFromDocumentSnapshot(document);
-            if ( newListing != null ) {
-                ITEMS.add(newListing);
-            }
-
-        if (afoActivity != null) {
-            afoActivity.redrawLists();
-        }
-    }
-
-    /**
-     * Clears the list for a new query.
-     */
-    private void clearList() {
-        ITEMS.clear();
-        if (afoActivity != null) {
-            afoActivity.redrawLists();
-        }
-    }
+//    /**
+//     * This method takes as input a document snapshot from the database and adds a listing to the
+//     * page.
+//     * TODO: Paginate data https://firebase.google.com/docs/firestore/query-data/query-cursors
+//     **/
+//    private void addListingToPage(QueryDocumentSnapshot document) {
+//            ListingDetails newListing = ListingDetails.makeListingDetailsFromDocumentSnapshot(document);
+//            if ( newListing != null ) {
+//                ITEMS.add(newListing);
+//            }
+//
+//        if (afoActivity != null) {
+//            afoActivity.redrawLists();
+//        }
+//    }
+//
+//    /**
+//     * Clears the list for a new query.
+//     */
+//    private void clearList() {
+//        super.ITEMS.clear();
+//        if (afoActivity != null) {
+//            afoActivity.redrawLists();
+//        }
+//    }
 
     /**
      * This method queries the Cloud Firestore database for COUNT listings.
@@ -92,6 +92,7 @@ public class MainHousingListing_PopulateList extends ListPage {
                             }
                         }
                     });
+            getRefreshableFragment().refreshPage();
             return true;
         }
         else {

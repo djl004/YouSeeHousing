@@ -2,7 +2,6 @@ package com.example.youseehousing;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,9 +15,14 @@ public class ListPageFragment extends RefreshableListFragmentPage {
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
 
-    private final String TAG = "ItemFragment";
+    private final String TAG = "MainListingPageFragment";
 
-    private ListPage.ListType type = ListPage.ListType.MAIN_LISTING_PAGE;
+    private ListType type = ListType.MAIN_LISTING_PAGE;
+
+    // The types of list
+    public enum ListType {
+        FAVORITES, MAIN_LISTING_PAGE
+    }
 
     // TODO: Customize parameters
     private int mColumnCount = 1;
@@ -29,8 +33,8 @@ public class ListPageFragment extends RefreshableListFragmentPage {
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static ItemFragment newInstance(int columnCount) {
-        ItemFragment fragment = new ItemFragment();
+    public static MainListingPageFragment newInstance(int columnCount) {
+        MainListingPageFragment fragment = new MainListingPageFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -102,23 +106,26 @@ public class ListPageFragment extends RefreshableListFragmentPage {
 
     @Override
     public void refreshPage() {
-        new Thread() {
-            public void run() {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.i(TAG, "redrawing ItemFragment!!!");
-                        recyclerView.getAdapter().notifyDataSetChanged();
-                    }
-                });
-            }
-        }.start();
+        if (getActivity() != null) {
+            new Thread() {
+                public void run() {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.i(TAG, "Redrawing " + getListType() + "!!!");
+                            recyclerView.getAdapter().notifyDataSetChanged();
+                        }
+                    });
+                }
+            }.start();
+        }
     }
 
     @Override
-    public ListPage.ListType getListType() {
+    public ListType getListType() {
         return type;
     }
+
 
     /**
      * This interface must be implemented by activities that contain this

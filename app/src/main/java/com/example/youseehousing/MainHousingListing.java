@@ -1,14 +1,8 @@
 package com.example.youseehousing;
 
-import android.app.Activity;
-import android.app.FragmentTransaction;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 /**
@@ -20,7 +14,7 @@ import android.util.Log;
  **/
 
 
-public class MainHousingListing extends AppCompatActivity implements ItemFragment.OnListFragmentInteractionListener {
+public class MainHousingListing extends AppCompatActivity implements MainListingPageFragment.OnListFragmentInteractionListener {
     private android.support.v4.app.Fragment itemFragment;
     private String TAG = "MainHousingListing";
     private MyItemRecyclerViewAdapter adapter;

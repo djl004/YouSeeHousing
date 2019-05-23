@@ -1,13 +1,7 @@
 package com.example.youseehousing;
 
 
-import android.content.ClipData;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 
 /**
@@ -15,17 +9,14 @@ import android.view.ViewGroup;
  */
 public class FavoritesFragment extends ListPageFragment {
 
-    private ListPage.ListType type = ListPage.ListType.FAVORITES;
+    private ListType type = ListPageFragment.ListType.FAVORITES;
 
     public FavoritesFragment() {
         super();
     }
 
     @Override
-    public ListPage.ListType getListType() {
+    public ListType getListType() {
         return type;
     }
-
-
-
 }
