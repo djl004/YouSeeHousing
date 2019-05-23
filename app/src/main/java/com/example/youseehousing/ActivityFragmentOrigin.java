@@ -76,7 +76,7 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
     private void createAndPopulateListingPage() {
         // Call AsyncTask execute to populate listing list
         MainHousingListing_PopulateList list = new MainHousingListing_PopulateList(ActivityFragmentOrigin.this);
-        list.execute();
+//        list.execute();
     }
 
 
@@ -87,17 +87,12 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
     public void redrawList() {
         new Thread() {
             public void run() {
-//                    try {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 fragment2.refreshList();
                             }
                         });
-//                        Thread.sleep(1);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
                 }
         }.start();
     }

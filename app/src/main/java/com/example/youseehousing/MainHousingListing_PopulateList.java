@@ -21,7 +21,8 @@ import java.util.Map;
  *  This class handles querying the database and populating the list of items
  *
  */
-public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Void> {
+public class MainHousingListing_PopulateList {
+//public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Void> {
     private MainActivity callingActivity;
     private ActivityFragmentOrigin afoActivity;
     private ItemFragment listFragment;
@@ -45,6 +46,7 @@ public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Vo
                 throw e;
             }
         }
+        queryDatabase();
     }
 
     /**
@@ -72,13 +74,6 @@ public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Vo
         if (afoActivity != null) {
             afoActivity.redrawList();
         }
-    }
-
-    /**
-     * Gets ready for a new database query
-     */
-    private void newQuery() {
-
     }
 
     /**
@@ -118,28 +113,28 @@ public class MainHousingListing_PopulateList extends AsyncTask<Void, Integer, Vo
         }
     }
 
-    /**
-     *      Async task methods
-     **/
-    @Override
-    protected Void doInBackground(Void... voids) {
-        if (isCancelled()) { return null; }
-        Log.i(TAG,"Querying database!");
-        queryDatabase();
-        return null;
-    }
-
-    // This doesn't get called for a reason I can't figure out...
-    @Override
-    protected void onPostExecute(Void aVoid) {
-//         try redrawing list from ActivtyFragmentOrigin
-        if (afoActivity != null) {
-            afoActivity.redrawList();
-        }
-    }
-    /**
-     *      End Async task methods
-     **/
+//    /**
+//     *      Async task methods
+//     **/
+//    @Override
+//    protected Void doInBackground(Void... voids) {
+//        if (isCancelled()) { return null; }
+//        Log.i(TAG,"Querying database!");
+//        queryDatabase();
+//        return null;
+//    }
+//
+//    // This doesn't get called for a reason I can't figure out...
+//    @Override
+//    protected void onPostExecute(Void aVoid) {
+////         try redrawing list from ActivtyFragmentOrigin
+//        if (afoActivity != null) {
+//            afoActivity.redrawList();
+//        }
+//    }
+//    /**
+//     *      End Async task methods
+//     **/
 
 }
 
