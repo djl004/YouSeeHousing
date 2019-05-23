@@ -86,13 +86,14 @@ public class MainHousingListing_PopulateList extends ListPage {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     // call function to get listing details
                                     addListingToPage(document);
+                                    getRefreshableFragment().refreshPage();
                                 }
                             } else {
                                 Log.w(TAG, "Error getting documents.", task.getException());
                             }
                         }
                     });
-            getRefreshableFragment().refreshPage();
+
             return true;
         }
         else {

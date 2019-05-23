@@ -10,6 +10,12 @@ import java.util.List;
 public class ListPage {
     private ActivityFragmentOrigin afoActivity;
     private RefreshableListFragmentPage refreshableFragment;
+
+    public ListPageFragment.ListType getListType() {
+        return type;
+    }
+
+    private ListPageFragment.ListType type = ListPageFragment.ListType.MAIN_LISTING_PAGE;
     public static List<ListingDetails> ITEMS = new ArrayList<ListingDetails>();
 
 

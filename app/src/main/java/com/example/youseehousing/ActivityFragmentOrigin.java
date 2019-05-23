@@ -38,8 +38,8 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         fm.beginTransaction().add(R.id.frameLayout,fragment1, "2").commit();
 
         // Create listing pages
-        createAndPopulateListingPage(ListPageFragment.ListType.MAIN_LISTING_PAGE);
-        createAndPopulateListingPage(ListPageFragment.ListType.FAVORITES);
+        activeList = new MainHousingListing_PopulateList(ActivityFragmentOrigin.this, fragment2);
+        favoritesList = new MainHousingListing_PopulateList(ActivityFragmentOrigin.this, fragment2);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -69,41 +69,29 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
     private void switchToView(ListPageFragment pageFragment) {
         fm.beginTransaction().hide(active).show(pageFragment).commit();
         active = pageFragment;
-//        createAndPopulateListingPage(pageFragment.getListType());
+        createAndPopulateListingPage(pageFragment.getListType());
     }
 
     /**
      * Creates a new ListPage object.
      */
     private void createAndPopulateListingPage(ListPageFragment.ListType TYPE) {
-//        // Call AsyncTask execute to populate listing list
-//        switch(TYPE) {
-//            case MAIN_LISTING_PAGE:
+        // Call AsyncTask execute to populate listing list
+        switch(TYPE) {
+            case MAIN_LISTING_PAGE:
+                activeList = new MainHousingListing_PopulateList(ActivityFragmentOrigin.this, fragment2);
 //                activeList =
 //                        new MainHousingListing_PopulateList(ActivityFragmentOrigin.this, fragment2);
-//                break;
-//            case FAVORITES:
+                break;
+            case FAVORITES:
+                favoritesList = new Favorites_PopulateList(ActivityFragmentOrigin.this, fragment3);
 //                activeList =
 //                        new Favorites_PopulateList(ActivityFragmentOrigin.this, fragment3);
-//                break;
-//
-//        }
-        activeList = new MainHousingListing_PopulateList(ActivityFragmentOrigin.this, fragment2);
-        favoritesList = new Favorites_PopulateList(ActivityFragmentOrigin.this, fragment3);
-    }
+                break;
 
-
-    /**
-     * Redraws the main housing list.
-     * Called by AsyncTask MainHousingList_PopulateList when finished querying database.
-     */
-    public void redrawLists() {
-        fragment2.refreshPage();
-        fragment3.refreshPage();
-    }
-
-    public void redrawList(RefreshableListFragmentPage fragment) {
-        fragment.refreshPage();
+        }
+//        activeList = new MainHousingListing_PopulateList(ActivityFragmentOrigin.this, fragment2);
+//        favoritesList = new Favorites_PopulateList(ActivityFragmentOrigin.this, fragment3);
     }
 
     /**
