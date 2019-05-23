@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.youseehousing.ItemFragment.OnListFragmentInteractionListener;
+import com.example.youseehousing.ListPageFragment.OnListFragmentInteractionListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -26,9 +26,9 @@ import static com.example.youseehousing.ListingDetails.getImageURL;
 public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
 
     private final List<ListingDetails> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private final ListPageFragment.OnListFragmentInteractionListener mListener;
 
-    public MyItemRecyclerViewAdapter(List<ListingDetails> items, OnListFragmentInteractionListener listener) {
+    public MyItemRecyclerViewAdapter(List<ListingDetails> items, ListPageFragment.OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }

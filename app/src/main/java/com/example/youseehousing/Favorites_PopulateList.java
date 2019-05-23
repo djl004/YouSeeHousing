@@ -18,20 +18,21 @@ import java.util.List;
  *  This class handles querying the database and populating the list of items
  *
  */
-public class MainHousingListing_PopulateList extends ListPage {
+public class Favorites_PopulateList extends ListPage {
     private ActivityFragmentOrigin afoActivity;
     private String TAG = "MainHousingListing";
+
 
     public static List<ListingDetails> ITEMS = new ArrayList<ListingDetails>();
 
     private static final int COUNT = 30; // Max number of listings to query at once from database.
-    private final ListPage.ListType TYPE = ListType.MAIN_LISTING_PAGE;
+    private final ListPage.ListType TYPE = ListType.FAVORITES;
 
     /**
      * Constructor
      * @param activityFragmentOrigin : the activity to which this object belongs
      */
-    public MainHousingListing_PopulateList(Activity activityFragmentOrigin) {
+    public Favorites_PopulateList(Activity activityFragmentOrigin) {
         super(activityFragmentOrigin);
         afoActivity = super.getActivityFragmentOrigin();
         queryDatabase();
@@ -99,5 +100,7 @@ public class MainHousingListing_PopulateList extends ListPage {
             return false;
         }
     }
+
+
 }
 

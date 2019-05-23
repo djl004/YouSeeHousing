@@ -1,8 +1,10 @@
 package com.example.youseehousing;
 
 
+import android.content.ClipData;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +13,19 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FavoritesFragment extends Fragment {
+public class FavoritesFragment extends ListPageFragment {
 
+    private ListPage.ListType type = ListPage.ListType.FAVORITES;
 
     public FavoritesFragment() {
-        // Required empty public constructor
+        super();
     }
-
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorites, container, false);
+    public ListPage.ListType getListType() {
+        return type;
     }
+
+
 
 }

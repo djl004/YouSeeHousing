@@ -10,15 +10,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
-public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFragment.OnListFragmentInteractionListener {
+public class ActivityFragmentOrigin extends AppCompatActivity implements ListPageFragment.OnListFragmentInteractionListener {
 
     private BottomNavigationView bottomNavigationView;
 
     private final String TAG = "ActivityFragmentOrigin";
 
+    private ListPage activeList;
+
     final Fragment fragment1 = new UserPreferencesFragment();
-    final ItemFragment fragment2 = new ItemFragment();
-    final Fragment fragment3 = new FavoritesFragment();
+    final ListPageFragment fragment2 = new ItemFragment();
+    final ListPageFragment fragment3 = new FavoritesFragment();
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragment2;
 
@@ -34,8 +36,8 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
         fm.beginTransaction().add(R.id.frameLayout, fragment2, "3").hide(fragment3).commit();
         fm.beginTransaction().add(R.id.frameLayout,fragment1, "2").commit();
 
-        // Run task
-        createAndPopulateListingPage();
+//        // Run task
+//        createAndPopulateListingPage();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -66,17 +68,26 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
     private void switchToListingView() {
         fm.beginTransaction().hide(active).show(fragment2).commit();
         active = fragment2;
-        redrawList();
+        redrawList(fragment2);
     }
 
     /**
-     * Creates a new MainHousingListing_PopulateList object and runs the AsyncTask that handles
-     * querying the database and populating the list.
+     * Creates a new ListPage object.
      */
-    private void createAndPopulateListingPage() {
+    private void createAndPopulateListingPage(ListPage.ListType TYPE) {
         // Call AsyncTask execute to populate listing list
-        MainHousingListing_PopulateList list = new MainHousingListing_PopulateList(ActivityFragmentOrigin.this);
-//        list.execute();
+        switch(TYPE) {
+            case FAVORITES:
+                activeList =
+                        new MainHousingListing_PopulateList(ActivityFragmentOrigin.this);
+                break;
+            case MAIN_LISTING_PAGE:
+                activeList =
+                        new Favorites_PopulateList(ActivityFragmentOrigin.this);
+                break;
+
+        }
+
     }
 
 
@@ -84,17 +95,13 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
      * Redraws the main housing list.
      * Called by AsyncTask MainHousingList_PopulateList when finished querying database.
      */
-    public void redrawList() {
-        new Thread() {
-            public void run() {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                fragment2.refreshList();
-                            }
-                        });
-                }
-        }.start();
+    public void redrawLists() {
+        fragment2.refreshPage();
+        fragment3.refreshPage();
+    }
+
+    public void redrawList(RefreshableListFragmentPage fragment) {
+        fragment.refreshPage();
     }
 
     /**
