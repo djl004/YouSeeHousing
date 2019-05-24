@@ -6,6 +6,7 @@
     <string name="bottombar_preferences">Preferences</string>
     <string name="bottombar_listing">Listing</string>
     <string name="bottombar_favorites">Favorites</string>
+    <string name="prompt">Select…</string>
 
     <string-array name="testList">
         <item>alpha…</item>
@@ -90,6 +91,15 @@
         <item>charlie</item>
         <item>delta</item>
     </string-array>
+
+    <string-array name="smokingList">
+        <item>alpha…</item>
+        <item>beta</item>
+        <item>charlie</item>
+        <item>delta</item>
+    </string-array>
+
+
 
     <string name="drawer_open">Drawer Opened</string>
     <string name="drawer_close">Drawer Closed</string>
