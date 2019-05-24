@@ -55,6 +55,7 @@
                         android:layout_weight="1"
                         android:orientation="horizontal">
 
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -163,27 +164,12 @@
                             android:text="Smoking:"
                             android:textSize="18sp" />
 
-                        <TextView
-                            android:id="@+id/textView38"
-                            android:layout_width="wrap_content"
+                        <android.support.v7.widget.AppCompatSpinner
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="0sp"
-                            android:layout_marginTop="0sp"
-                            android:layout_weight="1"
-                            android:paddingLeft="8sp"
-                            android:paddingRight="8sp"
-                            android:text="Display Name:" />
-
-                        <TextView
-                            android:id="@+id/textView39"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="#FFFDF2"
-                            android:paddingLeft="8sp"
-                            android:paddingRight="8sp"
-                            android:text="Sandy"
-                            android:textAlignment="center" />
+                            android:drawSelectorOnTop="true"
+                            android:entries="@array/smokingList"
+                            android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
                     </LinearLayout>
 
                     <LinearLayout
@@ -201,27 +187,22 @@
                             android:text="Wake/Sleep:"
                             android:textSize="18sp" />
 
-                        <TextView
-                            android:id="@+id/textView41"
+                        <android.support.v7.widget.AppCompatSpinner
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="0sp"
-                            android:layout_marginTop="0sp"
-                            android:layout_weight="1"
-                            android:paddingLeft="8sp"
-                            android:paddingRight="8sp"
-                            android:text="Display Name:" />
+                            android:drawSelectorOnTop="true"
+                            android:entries="@array/smokingList"
+                            android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
 
-                        <TextView
-                            android:id="@+id/textView42"
+                        <android.support.v7.widget.AppCompatSpinner
+                            android:id="@+id/appCompatSpinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="#FFFDF2"
-                            android:paddingLeft="8sp"
-                            android:paddingRight="8sp"
-                            android:text="Sandy"
-                            android:textAlignment="center" />
+                            android:layout_weight="0"
+                            android:drawSelectorOnTop="true"
+                            android:entries="@array/smokingList"
+                            android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -239,27 +220,13 @@
                             android:text="Guest Policy:"
                             android:textSize="18sp" />
 
-                        <TextView
-                            android:id="@+id/textView23"
-                            android:layout_width="wrap_content"
+                        <android.support.v7.widget.AppCompatSpinner
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="0sp"
-                            android:layout_marginTop="0sp"
-                            android:layout_weight="1"
-                            android:paddingLeft="8sp"
-                            android:paddingRight="8sp"
-                            android:text="Display Name:" />
+                            android:drawSelectorOnTop="true"
+                            android:entries="@array/smokingList"
+                            android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
 
-                        <TextView
-                            android:id="@+id/textView22"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="#FFFDF2"
-                            android:paddingLeft="8sp"
-                            android:paddingRight="8sp"
-                            android:text="Sandy"
-                            android:textAlignment="center" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -277,27 +244,13 @@
                             android:text="Noise Level:"
                             android:textSize="18sp" />
 
-                        <TextView
-                            android:id="@+id/textView18"
-                            android:layout_width="wrap_content"
+                        <android.support.v7.widget.AppCompatSpinner
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="0sp"
-                            android:layout_marginTop="0sp"
-                            android:layout_weight="1"
-                            android:paddingLeft="8sp"
-                            android:paddingRight="8sp"
-                            android:text="Display Name:" />
+                            android:drawSelectorOnTop="true"
+                            android:entries="@array/smokingList"
+                            android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
 
-                        <TextView
-                            android:id="@+id/textView19"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="#FFFDF2"
-                            android:paddingLeft="8sp"
-                            android:paddingRight="8sp"
-                            android:text="Sandy"
-                            android:textAlignment="center" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -315,27 +268,15 @@
                             android:text="Miscellaneous:"
                             android:textSize="18sp" />
 
-                        <TextView
-                            android:id="@+id/textView25"
+                        <EditText
+                            android:id="@+id/editText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="0sp"
-                            android:layout_marginTop="0sp"
-                            android:layout_weight="1"
-                            android:paddingLeft="8sp"
-                            android:paddingRight="8sp"
-                            android:text="Display Name:" />
+                            android:layout_weight="0"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:text="Name" />
 
-                        <TextView
-                            android:id="@+id/textView27"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="#FFFDF2"
-                            android:paddingLeft="8sp"
-                            android:paddingRight="8sp"
-                            android:text="Sandy"
-                            android:textAlignment="center" />
 
                     </LinearLayout>
                 </LinearLayout>

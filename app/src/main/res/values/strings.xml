@@ -1,11 +1,108 @@
 <resources>
     <string name="app_name">YouSeeHousing</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_filters">Filters</string>
     <string name="default_listing_title">Undefined Housing Listing</string>
     <string name="default_listing_caption">$0.00/mo 0BR/0BA</string>
     <string name="bottombar_preferences">Preferences</string>
     <string name="bottombar_listing">Listing</string>
     <string name="bottombar_favorites">Favorites</string>
+    <string name="prompt">Select…</string>
+
+    <string-array name="testList">
+        <item>alpha…</item>
+        <item>beta</item>
+        <item>charlie</item>
+        <item>delta</item>
+    </string-array>
+
+    <string-array name="locationList">
+        <item>alpha…</item>
+        <item>beta</item>
+        <item>charlie</item>
+        <item>delta</item>
+    </string-array>
+
+    <string-array name="priceList">
+        <item>alpha…</item>
+        <item>beta</item>
+        <item>charlie</item>
+        <item>delta</item>
+    </string-array>
+
+    <string-array name="washdryList">
+        <item>alpha…</item>
+        <item>beta</item>
+        <item>charlie</item>
+        <item>delta</item>
+    </string-array>
+
+    <string-array name="furnishedList">
+        <item>alpha…</item>
+        <item>beta</item>
+        <item>charlie</item>
+        <item>delta</item>
+    </string-array>
+
+    <string-array name="sizeList">
+        <item>alpha…</item>
+        <item>beta</item>
+        <item>charlie</item>
+        <item>delta</item>
+    </string-array>
+
+    <string-array name="bedList">
+        <item>alpha…</item>
+        <item>beta</item>
+        <item>charlie</item>
+        <item>delta</item>
+    </string-array>
+
+    <string-array name="bathroomList">
+        <item>alpha…</item>
+        <item>beta</item>
+        <item>charlie</item>
+        <item>delta</item>
+    </string-array>
+
+    <string-array name="petsList">
+        <item>alpha…</item>
+        <item>beta</item>
+        <item>charlie</item>
+        <item>delta</item>
+    </string-array>
+
+    <string-array name="vacanciesList">
+        <item>alpha…</item>
+        <item>beta</item>
+        <item>charlie</item>
+        <item>delta</item>
+    </string-array>
+
+    <string-array name="utilitiesList">
+        <item>alpha…</item>
+        <item>beta</item>
+        <item>charlie</item>
+        <item>delta</item>
+    </string-array>
+
+    <string-array name="durationList">
+        <item>alpha…</item>
+        <item>beta</item>
+        <item>charlie</item>
+        <item>delta</item>
+    </string-array>
+
+    <string-array name="smokingList">
+        <item>alpha…</item>
+        <item>beta</item>
+        <item>charlie</item>
+        <item>delta</item>
+    </string-array>
+
+
+
+    <string name="drawer_open">Drawer Opened</string>
+    <string name="drawer_close">Drawer Closed</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
