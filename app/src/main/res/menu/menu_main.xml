@@ -1,10 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.youseehousing.MainActivity">
+    app:titleTextColor="@color/ucsdGold"
+    app:subtitleTextColor="@color/ucsdBlue">
+
+
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@+id/action_filters"
+        android:title="@string/action_filters"
+        app:showAsAction="always"
+        android:orderInCategory="0">
+
+        <menu>
+            <group>
+
+                <item
+                    android:id="@+id/action_dropdown_location"
+                    android:title="by Location" />
+
+                <item
+                    android:id="@+id/action_dropdown_price"
+                    android:title="by Price" />
+
+                <item
+                    android:id="@+id/action_dropdown_washerdryer"
+                    android:title="by Washer/Dryer" />
+
+                <item
+                    android:id="@+id/action_dropdown_furnishedaccommodations"
+                    android:title="by Furnished Accommodations" />
+
+                <item
+                    android:id="@+id/action_dropdown_sizebedsbathrooms"
+                    android:title="by Size/#Beds/#Bathrooms" />
+
+                <item
+                    android:id="@+id/action_dropdown_petsallowed"
+                    android:title="by Pets Allowed"/>
+
+                <item
+                    android:id="@+id/action_dropdown_vacancies"
+                    android:title="by # of Vacancies" />
+
+                <item
+                    android:id="@+id/action_dropdown_utilities"
+                    android:title="by Utilities Included" />
+
+                <item
+                    android:id="@+id/action_dropdown_lease"
+                    android:title="by Lease Duration" />
+
+            </group>
+        </menu>
+
+    </item>
 </menu>
