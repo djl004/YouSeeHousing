@@ -35,8 +35,8 @@ import java.util.logging.Logger;
  *        user-entered address.
  *
  *     Important methods:
- *         1. setDistances(ArrayList<Listing>, address) to set the "distance" instance var
- *         2. setCoords(ArrayList<Listing>) to set the coordinates. Use when storing in database.
+ *         1. setDistances(ArrayList<Listing>) to set the "distance" field relative to UCSD
+ *     Everything else is helper methods
  */
 public class SetDistance {
 
@@ -54,7 +54,7 @@ public class SetDistance {
 
 
     // Constants used for calculations (Haversine formula)
-    public static final double R = 6372.8;             // In kilometers
+    public static final double R = 6372.8;             // Constant used for Haversine formula
     public static final double KM_CONSTANT = 0.621371; // How many miles in a kilometer
 
     // UCSD info
@@ -65,8 +65,8 @@ public class SetDistance {
 
 
     /**
-     * Summary: Call this function to set the distances in the ArrayList. The distance will be the
-     *          distance from the Listing to UCSD (9500 Gilman Dr, La Jolla, CA 92093)
+     * Summary: CALL THIS. Call this function to set the distances in the ArrayList. The distance
+     * will be the distance from the Listing to UCSD (9500 Gilman Dr, La Jolla, CA 92093)
      *
      * @param list: The ArrayList of Listings whose distance var will be filled
      *
@@ -84,8 +84,6 @@ public class SetDistance {
 
         // Call setCoords()
         setCoords(list);
-
-
 
         // Now, calculate and set distances for Listings in list
         for(int i = 0; i < list.size(); i++){
@@ -139,8 +137,6 @@ public class SetDistance {
                 curr.setLat(arr[LAT_INDEX]);         // Latitude located in the 1st index
                 curr.setLng(arr[LNG_INDEX]);         // Longitude located in the 2nd index
             }
-
-
         }
 
 
@@ -166,10 +162,11 @@ public class SetDistance {
      */
     public static double[] getCoords(String address){
 
+        // Store the latitude and longitude here
         double arr[];
 
+        // Use OpenStreetMapUtils class to get coordinates for a particular address
         arr = OpenStreetMapUtils.getInstance().getCoordinates(address);
-
 
         return arr;
     } // end of getCoords()
@@ -219,7 +216,6 @@ public class SetDistance {
 
 
 
-
         // Convert answer in kilometers to miles, and return
         return distance * KM_CONSTANT;
 
@@ -247,8 +243,10 @@ public class SetDistance {
 
 
 /**
- * Contains methods for us to use to geocode.
+ * NOTE: Call "OpenStreetMapUtils.getInstance().getCoordinates(address)" to get coordinates from
+ *       an address. Everything else is helper methods.
  *
+ * Summary: Contains methods for us to use to geocode.
  * Source: http://julien.gunnm.org/geek/programming/2015/09/13/how-to-get-geocoding-information-in-java-without-google-maps-api/
  *
  */
@@ -267,17 +265,21 @@ class OpenStreetMapUtils {
     public static final int LAT_INDEX = 0;
     public static final int LNG_INDEX = 1;
 
+    // Constants related to website query
+    public static final int SUCCESS_RESPONSE_CODE = 200;
 
-
+    // Miscellaneous variables
     public final static Logger log = Logger.getLogger("OpenStreeMapUtils");
-
     private static OpenStreetMapUtils instance = null;
     private JSONParser jsonParser;
 
-    public OpenStreetMapUtils() {
+    // Private constructor, singleton pattern
+    private OpenStreetMapUtils() {
         jsonParser = new JSONParser();
     }
 
+
+    // Call this method to get an OpenStreetMapUtils object for use.
     public static OpenStreetMapUtils getInstance() {
         if (instance == null) {
             instance = new OpenStreetMapUtils();
@@ -285,32 +287,42 @@ class OpenStreetMapUtils {
         return instance;
     }
 
+
     /**
-     * Method for getting request from website
+     * Helper method for getting request from website
      */
     private String getRequest(String url) throws Exception {
 
+        // important local variables
         final URL obj = new URL(url);
         final HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
+        // Use a "get" request when using our url
         con.setRequestMethod("GET");
 
+        // If the website does not respond, then return null
         int responseCode = con.getResponseCode();
-        if (responseCode != 200) {
+        if (responseCode != SUCCESS_RESPONSE_CODE) {
             return null;
         }
 
+        // Read in the query result
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String inputLine;
         StringBuffer response = new StringBuffer();
 
+        // Store the query result in "response"
         while ((inputLine = in.readLine()) != null) {
             response.append(inputLine);
         }
         in.close();
 
+        // Turn the response into a string and return
         return response.toString();
     }
+
+
+
 
 
     /**
@@ -318,21 +330,19 @@ class OpenStreetMapUtils {
      */
     public double[] getCoordinates(String address) {
 
-        //Map<String, Double> res;
+        // Local variables
         double arr[] = new double[2];
-        StringBuffer query;
+        StringBuffer query;                          // Build the query here
         String[] split = address.split(" ");
-        String queryResult = null;
+        String queryResult = null;                   // Query return from the website
+        query = new StringBuffer();                  // Store query here to parse
 
-        query = new StringBuffer();
 
-
+        // Begin to build up the query url.
         query.append("https://nominatim.openstreetmap.org/search?q=");
-
         if (split.length == 0) {
             return null;
         }
-
         for (int i = 0; i < split.length; i++) {
             query.append(split[i]);
             if (i < (split.length - 1)) {
@@ -341,8 +351,9 @@ class OpenStreetMapUtils {
         }
         query.append("&format=json&addressdetails=1");
 
-        //log.debug("Query:" + query);
 
+
+        // Query with the url, and read the result
         try {
             queryResult = getRequest(query.toString());
         // If failure to get a query result, return error values
@@ -364,17 +375,18 @@ class OpenStreetMapUtils {
         Object obj = JSONValue.parse(queryResult);
         //log.debug("obj=" + obj);
 
+
+        // Use the JSONObject to parse the Json query result
         if (obj instanceof JSONArray) {
             JSONArray array = (JSONArray) obj;
             if (array.size() > 0) {
                 JSONObject jsonObject = (JSONObject) array.get(0);
 
+                // Retrieve the latitude and longitude
                 String lon = (String) jsonObject.get("lon");
                 String lat = (String) jsonObject.get("lat");
-                //log.debug("lon=" + lon);
-                //log.debug("lat=" + lat);
-                //res.put("lon", Double.parseDouble(lon));
-                //res.put("lat", Double.parseDouble(lat));
+
+                // Conver the latitude and longitude to doubles, store them, and return
                 arr[LAT_INDEX] = Double.parseDouble(lat);
                 arr[LNG_INDEX] = Double.parseDouble(lon);
 
@@ -382,7 +394,6 @@ class OpenStreetMapUtils {
         }
 
         return arr;
-        //return res;
     } // end of getCoordinates()
 } // end of class OpenStreetMapUtils
 

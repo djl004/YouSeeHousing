@@ -116,6 +116,8 @@ public class SetDistanceTests {
     @Test
     /**
      * This test will just run 10 queries. It prints when it begins, and when it stops.
+     *
+     * Conclusion: About 0.5 seconds per listing.
      */
     public void testGetCoordsSpeed(){
 
@@ -229,17 +231,14 @@ public class SetDistanceTests {
         ArrayList<Listing> list = new ArrayList<>();
         list.add( new Listing("4198 Combe Way, San Diego, CA 92122"));
 
-
-
         // Set coords for list
         SetDistance.setCoords(list);
-
-
 
         // Duplicate the first element "loop" many times
         for(int i = 0; i < loop; i++){
             Listing duplicate = new Listing("4198 Combe Way, San Diego, CA 92122");
-            duplicate.setDistance(list.get(0).getDistance());
+            duplicate.setLat(list.get(0).getLat());
+            duplicate.setLng(list.get(0).getLng());
 
             list.add(duplicate);
         }
@@ -247,11 +246,6 @@ public class SetDistanceTests {
 
 
         // Test the speed of setDistances
-
-
-
-
-
         System.out.println("\nStart of "+ loop + " Haversine calculations");
         long startTime = System.nanoTime();
 
