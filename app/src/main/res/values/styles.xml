@@ -31,6 +31,10 @@
         <item name="android:background">#5c8487</item>
     </style>
 
+    <style name="BarStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@android:color/white</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

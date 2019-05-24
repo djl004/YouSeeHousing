@@ -7,6 +7,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,6 +35,8 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragment2;
 
+    public static DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
 
 
     @Override
@@ -42,6 +46,30 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ItemFra
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+
+        // Setup Navigation Drawer Layout
+        mDrawerLayout=(DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, myToolbar, R.string.drawer_open, R.string.drawer_close) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+        };
+
+        mDrawerLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mDrawerToggle.syncState();
+            }
+        });
+
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_nav);
         bottomNavigationView.setSelectedItemId(R.id.bottombaritem_listing);
