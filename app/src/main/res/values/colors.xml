@@ -4,8 +4,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorCardBG">#FFFFFF</color>
-    <color name="color_DefaultBG">#F0F0F0</color>
-    <color name="SecondaryTextColor">#3F3F3F</color>
+    <color name="color_DefaultBG">#00F0F0F0</color>
+    <color name="SecondaryTextColor">#003F3F3F</color>
     <color name="ucsdBlue">#1295D8</color>
     <color name="ucsdDarkBlue">#005581</color>
     <color name="ucsdGold">#FFB511</color>

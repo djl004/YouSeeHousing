@@ -1,6 +1,8 @@
 package com.example.youseehousing;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
@@ -23,7 +25,7 @@ import com.squareup.picasso.Picasso;
  * https://www.techjini.com/blog/passing-objects-via-intent-in-android/
  *
  */
-public class MainListingPage extends AppCompatActivity {
+public class MainListingPage extends Activity {
 
     private ImageView imagesView;
     private TextView addressView;

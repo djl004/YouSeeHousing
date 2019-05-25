@@ -35,6 +35,8 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
     final Fragment fragment1 = new UserPreferencesFragment();
     final ListPageFragment fragment2 = new MainListingPageFragment();
     final ListPageFragment fragment3 = new FavoritesFragment();
+    final ListingDetailsOverlayFragment fragment4 = new ListingDetailsOverlayFragment();
+
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragment2;
 
@@ -77,6 +79,7 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_nav);
         bottomNavigationView.setSelectedItemId(R.id.bottombaritem_listing);
 
+        fm.beginTransaction().add(R.id.overlayLayout, fragment4, "4").hide(fragment4).commit(); //overlay
         fm.beginTransaction().add(R.id.frameLayout, fragment3, "3").hide(fragment3).commit();
         fm.beginTransaction().add(R.id.frameLayout, fragment1, "1").hide(fragment1).commit();
         fm.beginTransaction().add(R.id.frameLayout,fragment2, "2").commit();
@@ -96,10 +99,12 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                                 return true;
                             case R.id.bottombaritem_listing:
                                 switchToView(fragment2);
+                                toggleListingOverlay(false); // testing
                                 invalidateOptionsMenu();
                                 return true;
                             case R.id.bottombaritem_favorites:
                                 switchToView(fragment3);
+                                toggleListingOverlay(true); // testing
                                 invalidateOptionsMenu();
                                 return true;
                         }
@@ -112,6 +117,20 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         fm.beginTransaction().hide(active).show(fragment1).commit();
         active = fragment1;
     }
+
+    private void toggleListingOverlay(boolean visible) {
+        if (visible) {
+            fm.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                    .show(fragment4)
+                    .commit();
+        }
+        else {
+            fm.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                    .hide(fragment4)
+                    .commit();
+        }
+    }
+
 
     /**
      * Changes the current displayed fragment to the main housing listing page, and
