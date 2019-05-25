@@ -83,19 +83,12 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final ImageView mThumbnailView;
-        public final TextView mTitleView;
-        public final TextView mDetailsView;
+        public final TextView mIdView; // unseen id # of item
+        public final ImageView mThumbnailView; // mThumbnailView: image
+        public final TextView mTitleView; // title of listing thumbnail
+        public final TextView mDetailsView; // caption of listing thumbnail
         public ListingDetails mItem;
 
-        /**
-         * @param mIdView: unseen id # of item
-         * @param mThumbnailView: image
-         * @param mTitleView: title of listing thumbnail
-         * @param mDetailsView: caption of listing thumbnail
-         *
-         */
         // TODO: Parameters for listing thumbnail here
         public ViewHolder(View view) {
             super(view);
