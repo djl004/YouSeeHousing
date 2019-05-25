@@ -38,6 +38,9 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
     final ListPageFragment fragment2 = new MainListingPageFragment();
     final ListPageFragment fragment3 = new FavoritesFragment();
     final ListingDetailsOverlayFragment fragment4 = new ListingDetailsOverlayFragment();
+    final ListingDetailsOverlayFragment compare_top = new ListingDetailsOverlayFragment();
+    final ListingDetailsOverlayFragment compare_bottom = new ListingDetailsOverlayFragment();
+
 
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragment2;
@@ -81,6 +84,8 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_nav);
         bottomNavigationView.setSelectedItemId(R.id.bottombaritem_listing);
 
+        fm.beginTransaction().add(R.id.compare_bottom, compare_bottom, "6").hide(compare_bottom).commit(); //overlay
+        fm.beginTransaction().add(R.id.compare_top, compare_top, "5").hide(compare_top).commit(); //overlay
         fm.beginTransaction().add(R.id.overlayLayout, fragment4, "4").hide(fragment4).commit(); //overlay
         fm.beginTransaction().add(R.id.frameLayout, fragment3, "3").hide(fragment3).commit();
         fm.beginTransaction().add(R.id.frameLayout, fragment1, "1").hide(fragment1).commit();
@@ -118,6 +123,7 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         fm.beginTransaction().hide(active).show(fragment1).commit();
         active = fragment1;
         toggleListingOverlay(false); // testing
+        toggleCompareOverlay(false); // testing
     }
 
     /**
@@ -125,14 +131,23 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
      * @param visible - true to show, false to hide
      */
     private void toggleListingOverlay(boolean visible) {
-        if (visible) {
+            showOverlayFragment(visible, fragment4);
+    }
+
+    private void toggleCompareOverlay(boolean visible) {
+            showOverlayFragment(visible, compare_bottom);
+            showOverlayFragment(visible, compare_top);
+    }
+
+    private void showOverlayFragment(boolean visible, Fragment fragment) {
+        if(visible) {
             fm.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                    .show(fragment4)
+                    .show(fragment)
                     .commit();
         }
         else {
             fm.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                    .hide(fragment4)
+                    .hide(fragment)
                     .commit();
         }
     }
@@ -146,6 +161,11 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         if (checkIfFragmentIsVisible(fragment4)) {
             toggleListingOverlay(false);
         }
+
+        if (checkIfFragmentIsVisible(compare_bottom) || checkIfFragmentIsVisible(compare_top)) {
+            toggleCompareOverlay(false);
+        }
+
         else {
             super.onBackPressed();
         }
@@ -176,6 +196,7 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         active = pageFragment;
         createAndPopulateListingPage(pageFragment.getListType());
         toggleListingOverlay(false); // testing
+        toggleCompareOverlay(false); // testing
     }
 
     /**
@@ -210,24 +231,35 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
      * @param item : the selected listing
      */
     private void selectListingFxn(ListingDetails item) {
+        makeCompare(item, item); // pass this two different items to compare
+//        makeListingPage(item); // single item listing
+    }
+
+    private void makeListingPage(ListingDetails item) {
         Bundle bundle = new Bundle();
         bundle.putParcelable("ListingDetails", item);
+
         fragment4.setArguments(bundle);
         fragment4.refresh();
+
         toggleListingOverlay(true); // testing
+    }
+
+    private void makeCompare(ListingDetails item1, ListingDetails item2) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("ListingDetails", item1);
 
 
-//        // Throw an exception if the activity is not found
-//        // Doesn't crash, just doesn't do anything :(
-//        try {
-//            Intent intent_f = new Intent(ActivityFragmentOrigin.this, MainListingPage.class);
-//            // Pass selected listing's data to the next activity
-//            intent_f.putExtra("parcel_data", item);
-//            startActivity(intent_f);
-//        } catch (android.content.ActivityNotFoundException e) {
-//            e.printStackTrace();
-//            Log.e(TAG, "exception: " + e);
-//        }
+        compare_bottom.hideButtons(false);
+        compare_top.hideButtons(false);
+
+        compare_bottom.setArguments(bundle);
+        compare_top.setArguments(bundle);
+
+        compare_bottom.refresh();
+        compare_top.refresh();
+
+        toggleCompareOverlay(true);
     }
 
 

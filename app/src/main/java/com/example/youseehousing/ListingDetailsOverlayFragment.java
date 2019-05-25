@@ -1,17 +1,15 @@
 package com.example.youseehousing;
 
-import android.app.FragmentTransaction;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -22,6 +20,7 @@ public class ListingDetailsOverlayFragment extends Fragment {
     private TextView addressView;
     private TextView captionView;
     private TextView descriptionView;
+    private LinearLayout buttonsView;
     private ListingDetails item;
 
     @Override
@@ -32,12 +31,20 @@ public class ListingDetailsOverlayFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_compare_overlay, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_single_overlay, container, false);
 
         imagesView = (ImageView) rootView.findViewById(R.id.image);
         addressView = (TextView) rootView.findViewById(R.id.title);
         captionView = (TextView) rootView.findViewById(R.id.caption);
         descriptionView = (TextView) rootView.findViewById(R.id.description);
+        buttonsView = (LinearLayout) rootView.findViewById(R.id.buttons);
+
+
+        buttonsView.setVisibility(View.GONE);
+
+
+
+
         // Get data passed from previous activity
         // Check if members are null when setting parameters
 
@@ -80,5 +87,15 @@ public class ListingDetailsOverlayFragment extends Fragment {
 
     public void refresh() {
         getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+    }
+
+    public void hideButtons(boolean visible) {
+        if (visible) {
+            buttonsView.setVisibility(View.VISIBLE);
+        }
+        else {
+            buttonsView.setVisibility(View.GONE);
+        }
+        refresh();
     }
 }
