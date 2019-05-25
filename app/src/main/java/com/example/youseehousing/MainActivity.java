@@ -2,6 +2,7 @@ package com.example.youseehousing;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -11,11 +12,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
+import com.example.youseehousing.forlisting.Listing;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 public class MainActivity extends AppCompatActivity {
 
-    private boolean success;
     private Button signUp, logIn;
     private FirebaseAuth mAuth;
     private static final String TAG = "EmailPassword";
@@ -46,11 +56,11 @@ public class MainActivity extends AppCompatActivity {
         logIn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                email = emailInput.getText().toString();
+                email = emailInput.getText().toString().toLowerCase();
                 pw = pwInput.getText().toString();
                 //when no inputs
                 if(email.length() == 0 || pw.length() == 0){
-                    Toast.makeText(getApplicationContext(), "Input needs to be checked",
+                    Toast.makeText(getApplicationContext(), "Please enter email and password",
                             Toast.LENGTH_LONG).show();
                 }
                 else {
@@ -78,28 +88,54 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-   private void signIn(String email,String password){
-//        Log.d(TAG,"signIn:" + email);
-//        if(password.length() == 0) {
-//           Toast.makeText(getApplicationContext(), "Input needs to be checked",
-//                   Toast.LENGTH_LONG).show();
-//       }else if(email.length() == 0){
-//            Toast.makeText(getApplicationContext(), "Input needs to be checked",
-//                    Toast.LENGTH_LONG).show();
-//       }
-//        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this
-//                , new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if(task.isSuccessful()) {
+   private void signIn(String email, String password){
+        Log.d(TAG,"signIn:" + email);
+
+        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this
+                , new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()) {
                             Log.d(TAG, "signInWithEmail:success");
                             logInFxn();
-//                        }else {
-//                            Log.w(TAG,"signInWithEmail:failure",task.getException());
-//                            Toast.makeText(getApplicationContext(), "Input needs to be checked",
-//                                    Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-//                });
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() { // If authentication fails
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "signInWithEmail:failure");
+
+                String errorCode;
+                // Check for invalid email or password
+                if (e instanceof FirebaseAuthInvalidCredentialsException) {
+
+                    errorCode =  ((FirebaseAuthInvalidCredentialsException) e).getErrorCode();
+
+                    if (errorCode.equals("ERROR_INVALID_EMAIL")) {
+                        Toast.makeText(getApplicationContext(), "Email address is not in a valid format.",
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Invalid password",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+                // Check for invalid user
+                else if (e instanceof FirebaseAuthInvalidUserException) {
+
+                    errorCode = ((FirebaseAuthInvalidUserException) e).getErrorCode();
+
+                    if (errorCode.equals("ERROR_USER_NOT_FOUND")) {
+                        Toast.makeText(getApplicationContext(), "No matching account found",
+                                Toast.LENGTH_LONG).show();
+                    } else if (errorCode.equals("ERROR_USER_DISABLED")) {
+                        Toast.makeText(getApplicationContext(), "User account has been disabled",
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "An error occurred",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
    }
 }
