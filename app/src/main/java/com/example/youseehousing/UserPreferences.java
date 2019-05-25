@@ -65,22 +65,22 @@ public class UserPreferences extends AppCompatActivity {
     }
 
     private void showData(DataSnapshot dataSnapshot) {
-//        for(DataSnapshot ds : dataSnapshot.getChildren()){
-//            Account uInfo = new Account();
-//           // Log.d(TAG,"Before set name: " + ds.child(Uid).getValue(Account.class).getName());
-//            uInfo.setName( ds.child(Uid).getValue(Account.class).getName()); //set the name
-//            uInfo.setEmail(ds.child(Uid).getValue(Account.class).getEmail()); //set the email
-//            Log.d(TAG, "name:" + ds.child(Uid).getValue());
-//            //display all the information
-//            Log.d(TAG, "showData: name: " + uInfo.getName());
-//            Log.d(TAG, "showData: email: " + uInfo.getEmail());
-//
-//            final TextView name = (TextView) findViewById(R.id.name);
-//            name.setText(uInfo.getName());
-//            final TextView userEmail = (TextView) findViewById(R.id.email);
-//            userEmail.setText(uInfo.getEmail());
-//
-//        }
+        for(DataSnapshot ds : dataSnapshot.getChildren()){
+            Account uInfo = new Account();
+           // Log.d(TAG,"Before set name: " + ds.child(Uid).getValue(Account.class).getName());
+            uInfo.setName( ds.child(Uid).getValue(Account.class).getName()); //set the name
+            uInfo.setEmail(ds.child(Uid).getValue(Account.class).getEmail()); //set the email
+            Log.d(TAG, "name:" + ds.child(Uid).getValue());
+            //display all the information
+            Log.d(TAG, "showData: name: " + uInfo.getName());
+            Log.d(TAG, "showData: email: " + uInfo.getEmail());
+
+            final TextView name = (TextView) findViewById(R.id.name);
+            name.setText(uInfo.getName());
+            final TextView userEmail = (TextView) findViewById(R.id.email);
+            userEmail.setText(uInfo.getEmail());
+
+        }
     }
 
 }
