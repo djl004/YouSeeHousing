@@ -22,7 +22,6 @@ public class ListingDetailsOverlayFragment extends Fragment {
     private TextView addressView;
     private TextView captionView;
     private TextView descriptionView;
-
     private ListingDetails item;
 
     @Override

@@ -9,7 +9,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#3B2D34"
+        android:background="@color/color_DefaultBG"
         android:padding="16sp">
 
         <LinearLayout
@@ -248,9 +248,9 @@
 
 
                         <android.support.v7.widget.AppCompatSpinner
-                            android:layout_width="match_parent"
-
                             android:id="@+id/textView25"
+
+                            android:layout_width="match_parent"
 
                             android:layout_height="wrap_content"
                             android:drawSelectorOnTop="true"

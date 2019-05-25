@@ -57,7 +57,7 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         getSupportActionBar().setDisplayShowTitleEnabled(true);
 
         // Setup Navigation Drawer Layout
-        mDrawerLayout=(DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, myToolbar, R.string.drawer_open, R.string.drawer_close) {
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -113,12 +113,17 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                 });
     }
 
+
     private void openUserPreferencesPage() {
         fm.beginTransaction().hide(active).show(fragment1).commit();
         active = fragment1;
         toggleListingOverlay(false); // testing
     }
 
+    /**
+     * Shows/hides the listing overlay
+     * @param visible - true to show, false to hide
+     */
     private void toggleListingOverlay(boolean visible) {
         if (visible) {
             fm.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
@@ -130,6 +135,35 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                     .hide(fragment4)
                     .commit();
         }
+    }
+
+    /**
+     * If listing overlay is visible, back button hides listing overlay.
+     * Else, does what it would normally do.
+     */
+    @Override
+    public void onBackPressed() {
+        if (checkIfFragmentIsVisible(fragment4)) {
+            toggleListingOverlay(false);
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
+
+    /**
+     * Check if an arbitrary fragment is visible to the user.
+     * @param fragment - the fragment to check
+     * @return true if visible, false otherwise
+     */
+    private boolean checkIfFragmentIsVisible(Fragment fragment) {
+        if (fragment == null) {
+            return false;
+        }
+        else if (fragment.isAdded() && fragment.isVisible() && fragment.getUserVisibleHint()) {
+            return true;
+        }
+        else return false;
     }
 
 
