@@ -7,9 +7,14 @@
 
 package com.example.youseehousing.forlisting;
 
-/** SECOND NOTE: Various classes needed for geocoding
- * If these imports cause build issues, go to java\lib\json-simple-1.1.1.jar.
- * Right-click the .jar file, and select add as library
+/** NOTE: Various classes needed for geocoding
+ * POTENTIAL ISSUE: If these imports cause build issues, go to java\lib\json-simple-1.1.1.jar.
+ *                  Right-click the .jar file, and select add as library
+ *
+ * SECOND POTENTIAL ISSUE: If compilation still doesn't work, and java can't find the json classes,
+ *                         then duplicate the json-simple.jar file. Name the new one something new.
+ *                         Delete the old one. Add the new one as a library, and it should work.
+ *                         (I think this may have something to do with build.gradle or something)
  */
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
