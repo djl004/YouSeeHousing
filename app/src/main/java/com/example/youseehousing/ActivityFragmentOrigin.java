@@ -84,7 +84,7 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
 
         // Create listing pages
         activeList = new MainHousingListing_PopulateList(ActivityFragmentOrigin.this, fragment2);
-        favoritesList = new MainHousingListing_PopulateList(ActivityFragmentOrigin.this, fragment2);
+//        favoritesList = new MainHousingListing_PopulateList(ActivityFragmentOrigin.this, fragment2);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
