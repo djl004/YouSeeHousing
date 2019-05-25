@@ -32,7 +32,7 @@ public class ListPage {
         return afoActivity;
     }
 
-     public RefreshableListFragmentPage getRefreshableFragment() {
+    public RefreshableListFragmentPage getRefreshableFragment() {
          return refreshableFragment;
      }
 

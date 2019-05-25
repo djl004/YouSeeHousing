@@ -84,7 +84,6 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
 
         // Create listing pages
         activeList = new MainHousingListing_PopulateList(ActivityFragmentOrigin.this, fragment2);
-//        favoritesList = new MainHousingListing_PopulateList(ActivityFragmentOrigin.this, fragment2);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -92,8 +91,7 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.bottombaritem_preferences:
-                                fm.beginTransaction().hide(active).show(fragment1).commit();
-                                active = fragment1;
+                                openUserPreferencesPage();
                                 invalidateOptionsMenu();
                                 return true;
                             case R.id.bottombaritem_listing:
@@ -108,6 +106,11 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                         return false;
                     }
                 });
+    }
+
+    private void openUserPreferencesPage() {
+        fm.beginTransaction().hide(active).show(fragment1).commit();
+        active = fragment1;
     }
 
     /**

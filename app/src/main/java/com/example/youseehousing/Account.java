@@ -1,8 +1,8 @@
 package com.example.youseehousing;
 
-import android.util.Log;
-
 import com.google.firebase.database.IgnoreExtraProperties;
+
+import java.util.ArrayList;
 
 /**
  *  Account class for firebase realtime database setup
@@ -15,15 +15,17 @@ public class Account {
     private String email;
     private String birth;
     private String gender;
+    private ArrayList<String> favorites;
 
     public Account() {
     }
 
-    public Account(String name, String email, String birth, String gender) {
+    public Account(String name, String email, String birth, String gender, ArrayList<String> favorites) {
         this.name = name;
         this.email = email;
         this.birth = birth;
         this.gender = gender;
+        this.favorites = favorites;
     }
 
     public String getName() {
@@ -58,5 +60,17 @@ public class Account {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public ArrayList<String> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(ArrayList<String> favorites) {
+        this.favorites = favorites;
+    }
+
+    public static ArrayList<String> makeEmptyFavorites() {
+        return new ArrayList<String>();
     }
 }

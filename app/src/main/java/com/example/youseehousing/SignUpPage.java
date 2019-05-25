@@ -21,6 +21,8 @@ import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 
 public class SignUpPage extends AppCompatActivity {
     EditText emailInput, pwInput, pwInput2, fNameInput, lNameInput, dofInput, cityInput;
@@ -150,6 +152,7 @@ public class SignUpPage extends AppCompatActivity {
         user.setGender("male");
         user.setEmail(email);
         user.setBirth(dof);
+        user.setFavorites(Account.makeEmptyFavorites());
         //Log.d(TAG,  user.getBirth());
         Log.d(TAG, uid);
 
