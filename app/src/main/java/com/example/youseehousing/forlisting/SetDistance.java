@@ -40,7 +40,8 @@ import java.util.logging.Logger;
  *        user-entered address.
  *
  *     Important methods:
- *         1. setDistances(ArrayList<Listing>) to set the "distance" field relative to UCSD
+ *         1. setDistances(ArrayList<Listing>) to set the "distance" field relative to UCSD.
+ *            Call this while datascraping to store the "distance" fields
  *     Everything else is helper methods
  */
 public class SetDistance {
