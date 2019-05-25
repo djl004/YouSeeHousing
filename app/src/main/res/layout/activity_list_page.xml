@@ -14,7 +14,7 @@
 
         <fragment
             android:id="@+id/fragment_list"
-            android:name="com.example.youseehousing.ItemFragment"
+            android:name="com.example.youseehousing.MainListingPageFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

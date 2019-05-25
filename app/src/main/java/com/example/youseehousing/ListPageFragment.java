@@ -2,7 +2,6 @@ package com.example.youseehousing;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,37 +10,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
-public class ItemFragment extends Fragment {
+public class ListPageFragment extends RefreshableListFragmentPage {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    private final String TAG = "ItemFragment";
+
+    private final String TAG = "MainListingPageFragment";
+
+    private ListType type = ListType.MAIN_LISTING_PAGE;
+
+    // The types of list
+    public enum ListType {
+        FAVORITES, MAIN_LISTING_PAGE
+    }
+
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
-    private LayoutInflater inflater;
-    private ViewGroup container;
     private Bundle savedInstanceState;
     private View createdView;
     private RecyclerView recyclerView;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public ItemFragment() {
-    }
-
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static ItemFragment newInstance(int columnCount) {
-        ItemFragment fragment = new ItemFragment();
+    public static MainListingPageFragment newInstance(int columnCount) {
+        MainListingPageFragment fragment = new MainListingPageFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -58,10 +51,10 @@ public class ItemFragment extends Fragment {
         this.savedInstanceState = savedInstanceState;
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        View view = inflater.inflate(R.layout.fragment_list_page, container, false);
         createdView = inflater.inflate(R.layout.fragment_list_page, container, false);
 
         // Set the adapter
@@ -75,18 +68,22 @@ public class ItemFragment extends Fragment {
             }
             // TODO: Listings are inserted into the display list here
 
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(MainHousingListing_PopulateList.ITEMS, mListener));
-
+            // Create a new list page type based on the ListPage.ListType this object has
+            switch(this.getListType()) {
+                case MAIN_LISTING_PAGE:
+                    recyclerView.setAdapter
+                            (new MyItemRecyclerViewAdapter(
+                                    MainHousingListing_PopulateList.ITEMS, mListener));
+                    break;
+                case FAVORITES:
+                    recyclerView.setAdapter
+                            (new MyItemRecyclerViewAdapter(
+                                    Favorites_PopulateList.ITEMS, mListener));
+                    break;
+                default: throw new TypeNotPresentException("Invalid List Type", new Throwable());
+            }
         }
         return createdView;
-    }
-
-    /**
-     * Redraw the list.
-     */
-    public void refreshList() {
-        Log.i(TAG, "redrawing ItemFragment!!!");
-        recyclerView.getAdapter().notifyDataSetChanged();
     }
 
     @Override
@@ -106,6 +103,29 @@ public class ItemFragment extends Fragment {
         mListener = null;
 
     }
+
+    @Override
+    public void refreshPage() {
+        if (getActivity() != null) {
+            new Thread() {
+                public void run() {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.i(TAG, "Redrawing " + getListType() + "!!!");
+                            recyclerView.getAdapter().notifyDataSetChanged();
+                        }
+                    });
+                }
+            }.start();
+        }
+    }
+
+    @Override
+    public ListType getListType() {
+        return type;
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this

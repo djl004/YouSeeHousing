@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ActivityListPageFragment extends Fragment {
+public class FragmentNavigationDrawer extends Fragment {
 
 
-    public ActivityListPageFragment() {
+    public FragmentNavigationDrawer() {
         // Required empty public constructor
     }
 
@@ -22,10 +22,8 @@ public class ActivityListPageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        MainListingPageFragment fragment = new MainListingPageFragment();
-        getFragmentManager().beginTransaction().add(R.id.fragment_holder, fragment).commit();
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_activity_list_page, container, false);
+        return inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
     }
 
 }

@@ -18,47 +18,44 @@ import java.util.List;
  *  This class handles querying the database and populating the list of items
  *
  */
-public class MainHousingListing_PopulateList extends ListPage {
+public class Favorites_PopulateList extends ListPage {
     private ActivityFragmentOrigin afoActivity;
-    private String TAG = "MainHousingListing";
-
-//    public static List<ListingDetails> ITEMS = new ArrayList<ListingDetails>();
+    private String TAG = "Favorites";
 
     private static final int COUNT = 5; // Max number of listings to query at once from database.
-    private final ListPageFragment.ListType TYPE = ListPageFragment.ListType.MAIN_LISTING_PAGE;
+    private final ListPageFragment.ListType TYPE = ListPageFragment.ListType.FAVORITES;
 
     /**
      * Constructor
      * @param activityFragmentOrigin : the activity to which this object belongs
      */
-    public MainHousingListing_PopulateList(Activity activityFragmentOrigin, RefreshableListFragmentPage fragment) {
+    public Favorites_PopulateList(Activity activityFragmentOrigin, RefreshableListFragmentPage fragment) {
         super(activityFragmentOrigin, fragment);
         afoActivity = super.getActivityFragmentOrigin();
         super.clearList();
         queryDatabase();
+
     }
 
 //    /**
 //     * This method takes as input a document snapshot from the database and adds a listing to the
 //     * page.
 //     * TODO: Paginate data https://firebase.google.com/docs/firestore/query-data/query-cursors
+//     * TODO: Querying database probably deserves its own class
 //     **/
 //    private void addListingToPage(QueryDocumentSnapshot document) {
 //            ListingDetails newListing = ListingDetails.makeListingDetailsFromDocumentSnapshot(document);
 //            if ( newListing != null ) {
 //                ITEMS.add(newListing);
+//                super.getRefreshableFragment().refreshPage();
 //            }
-//
-//        if (afoActivity != null) {
-//            afoActivity.redrawLists();
-//        }
 //    }
 //
 //    /**
 //     * Clears the list for a new query.
 //     */
 //    private void clearList() {
-//        super.ITEMS.clear();
+//        ITEMS.clear();
 //        if (afoActivity != null) {
 //            afoActivity.redrawLists();
 //        }
@@ -77,7 +74,7 @@ public class MainHousingListing_PopulateList extends ListPage {
         if (db != null) {
             db.collection("listing")
                     .limit(COUNT)
-                    .orderBy("price")
+                    .orderBy("address")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -85,6 +82,7 @@ public class MainHousingListing_PopulateList extends ListPage {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     // call function to get listing details
+//                                    addListingToPage(document);
                                     addListingToPage(document);
                                     getRefreshableFragment().refreshPage();
                                 }
@@ -93,7 +91,6 @@ public class MainHousingListing_PopulateList extends ListPage {
                             }
                         }
                     });
-
             return true;
         }
         else {
@@ -101,5 +98,7 @@ public class MainHousingListing_PopulateList extends ListPage {
             return false;
         }
     }
+
+
 }
 

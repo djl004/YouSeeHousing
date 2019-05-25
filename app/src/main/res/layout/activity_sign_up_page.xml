@@ -215,11 +215,11 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/finish"
+                    android:id="@+id/setPreference"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="createAccountonClick"
-                    android:text="Finish" />
+                    android:onClick="createAccountOnClick"
+                    android:text="Next" />
 
             </LinearLayout>
         </ScrollView>

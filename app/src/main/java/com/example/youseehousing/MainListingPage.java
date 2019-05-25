@@ -74,7 +74,7 @@ public class MainListingPage extends AppCompatActivity {
         try {
             String image_0 = listing.getPictures().get(0);
             if(image_0.length() > 0) {
-            //    Picasso.get().load(listing.getPictures().get(0)).into(imagesView);   // This throws IllegalArgumentException !!!
+        //        Picasso.get().load(listing.getPictures().get(0)).into(imagesView);   // This throws IllegalArgumentException !!!
             }
             addressView.setText(listing.getAddress());
             captionView.setText(listing.getBath() + " " + listing.getBed());

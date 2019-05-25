@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.youseehousing.ItemFragment.OnListFragmentInteractionListener;
+import com.example.youseehousing.ListPageFragment.OnListFragmentInteractionListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -26,9 +26,9 @@ import static com.example.youseehousing.ListingDetails.getImageURL;
 public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
 
     private final List<ListingDetails> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private final ListPageFragment.OnListFragmentInteractionListener mListener;
 
-    public MyItemRecyclerViewAdapter(List<ListingDetails> items, OnListFragmentInteractionListener listener) {
+    public MyItemRecyclerViewAdapter(List<ListingDetails> items, ListPageFragment.OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -83,19 +83,12 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final ImageView mThumbnailView;
-        public final TextView mTitleView;
-        public final TextView mDetailsView;
+        public final TextView mIdView; // unseen id # of item
+        public final ImageView mThumbnailView; // mThumbnailView: image
+        public final TextView mTitleView; // title of listing thumbnail
+        public final TextView mDetailsView; // caption of listing thumbnail
         public ListingDetails mItem;
 
-        /**
-         * @param mIdView: unseen id # of item
-         * @param mThumbnailView: image
-         * @param mTitleView: title of listing thumbnail
-         * @param mDetailsView: caption of listing thumbnail
-         *
-         */
         // TODO: Parameters for listing thumbnail here
         public ViewHolder(View view) {
             super(view);

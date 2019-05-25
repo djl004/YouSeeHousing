@@ -1,13 +1,15 @@
-/*
 package com.example.youseehousing;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -65,6 +67,7 @@ public class UserPreferences extends AppCompatActivity {
         });
     }
 
+
     private void showData(DataSnapshot dataSnapshot) {
         for(DataSnapshot ds : dataSnapshot.getChildren()){
             Account uInfo = new Account();
@@ -84,5 +87,10 @@ public class UserPreferences extends AppCompatActivity {
         }
     }
 
+    public void doneUserPreferencesOnClick(View view) {
+        Intent myIntent = new Intent(UserPreferences.this, MainActivity.class);
+        startActivity(myIntent);
+        Toast.makeText(getApplicationContext(), "Please log in",
+                Toast.LENGTH_LONG).show();
+    }
 }
-*/

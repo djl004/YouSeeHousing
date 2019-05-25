@@ -3,9 +3,36 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/ucsdDarkBlue</item>
+        <item name="colorPrimaryDark">@color/ucsdDarkBlue</item>
+        <item name="colorAccent">@color/ucsdGold</item>
+        <item name="colorButtonNormal">@color/ucsdGold</item>
+        <item name="colorBackgroundFloating">@color/ucsdDarkBlue</item>
+    </style>
+
+    <style name="YouSeeTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="colorPrimary">@color/ucsdDarkBlue</item>
+    <item name="colorPrimaryDark">@color/ucsdDarkBlue</item>
+    <item name="colorAccent">@color/ucsdGold</item>
+    <item name="colorButtonNormal">@color/ucsdGold</item>
+    <item name="colorBackgroundFloating">@color/ucsdBlue</item>
+        <item name="actionMenuTextColor">@color/ucsdGold</item>
+    </style>
+
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:colorAccent">@color/ucsdGold</item>
+        <!--title-->
+        <item name="android:textColor">#c7ac56</item>
+        <!--text-->
+        <item name="android:textColorPrimary">#fafafa</item>
+        <!--selection list-->
+        <item name="android:textColorTertiary">#fafafa</item>
+        <!--background-->
+        <item name="android:background">#5c8487</item>
+    </style>
+
+    <style name="BarStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@android:color/white</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
