@@ -16,7 +16,7 @@ import java.util.List;
  *        based on its id and populates these parameters with that information. DONE!
  */
 
-public class ListingDetails extends RecyclerViewListItem implements Parcelable {
+public class ListingDetails extends RecyclerViewListItem implements Parcelable, Cloneable {
 
     private static final String TAG = "ListingDetails";
 //    private String id;
@@ -316,5 +316,21 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable {
             return new ArrayList<String>();
         }
         else return pictures;
+    }
+
+    /**
+     * from https://medium.com/@hamidgh/sending-objects-to-fragment-naive-question-is-it-sent-by-value-ddaaa19fa42d
+     * @return
+     */
+    @Override
+    public Object clone() {
+        Parcel parcel = Parcel.obtain();
+        this.writeToParcel(parcel, 0);
+        byte[] bytes = parcel.marshall();
+
+        Parcel parcel2 = Parcel.obtain();
+        parcel2.unmarshall(bytes, 0, bytes.length);
+        parcel2.setDataPosition(0);
+        return ListingDetails.CREATOR.createFromParcel(parcel2);
     }
 }

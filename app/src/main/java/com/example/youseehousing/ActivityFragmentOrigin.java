@@ -1,13 +1,10 @@
 package com.example.youseehousing;
 
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Build;
+import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,7 +12,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +22,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class ActivityFragmentOrigin extends AppCompatActivity implements ListPageFragment.OnListFragmentInteractionListener {
+
+    public static final String BUNDLE_TAG = "ListingDetails";
 
     private BottomNavigationView bottomNavigationView;
 
@@ -158,16 +156,17 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
      */
     @Override
     public void onBackPressed() {
+        // Check to see if single overlay is open
         if (checkIfFragmentIsVisible(fragment4)) {
             toggleListingOverlay(false);
         }
-
+        // Check to see if compare overlay is open
         if (checkIfFragmentIsVisible(compare_bottom) || checkIfFragmentIsVisible(compare_top)) {
             toggleCompareOverlay(false);
         }
 
         else {
-            super.onBackPressed();
+//            super.onBackPressed();
         }
     }
 
@@ -237,7 +236,7 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
 
     private void makeListingPage(ListingDetails item) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable("ListingDetails", item);
+        bundle.putParcelable(BUNDLE_TAG, item);
 
         fragment4.setArguments(bundle);
         fragment4.refresh();
@@ -245,15 +244,23 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         toggleListingOverlay(true); // testing
     }
 
+    /**
+     * Opens an overlay with two Listings to compares
+     * @param item1
+     * @param item2
+     */
     private void makeCompare(ListingDetails item1, ListingDetails item2) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("ListingDetails", item1);
+        Bundle bundle1 = new Bundle();
+        Bundle bundle2 = new Bundle();
 
-        compare_bottom.setArguments(bundle);
-        compare_top.setArguments(bundle);
+        bundle1.putParcelable(BUNDLE_TAG, (ListingDetails) item1.clone());
+        bundle2.putParcelable(BUNDLE_TAG, (ListingDetails) item2.clone());
 
-        compare_bottom.refresh();
+        compare_top.setArguments(bundle1);
+        compare_bottom.setArguments(bundle2);
+
         compare_top.refresh();
+        compare_bottom.refresh();
 
         toggleCompareOverlay(true);
     }
