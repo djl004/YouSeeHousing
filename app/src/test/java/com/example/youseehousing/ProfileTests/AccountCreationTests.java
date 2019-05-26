@@ -3,6 +3,17 @@ package com.example.youseehousing.ProfileTests;
 
 
 
+
+
+// Import for testing
+import junit.framework.TestCase;
+import org.junit.Test;
+import java.util.ArrayList;
+import static org.junit.Assert.*;
+import java.lang.Math;              // To generate random numbers
+
+
+
 public class AccountCreationTests {
 
 /**
@@ -12,11 +23,8 @@ public class AccountCreationTests {
  *
  *
  *
- *
- *
- *
- *
- * NOTE: Writing unit tests seems kind of difficult. So, I'll do it manually.
+ * TESTS
+ * NOTE: Writing unit tests seems kind of difficult. So, some of it will be manual.
  *
  * SIGN_UP_PAGE.JAVA:
  *
@@ -24,29 +32,15 @@ public class AccountCreationTests {
  *
  *
  *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
  */
+
+
+
+
+
+
+
+
+
 
 }
