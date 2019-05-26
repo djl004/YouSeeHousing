@@ -2,6 +2,9 @@ package com.example.youseehousing;
 
 import android.os.Parcel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ListingImage extends RecyclerViewListItem {
     private String imageURL;
 
@@ -48,5 +51,15 @@ public class ListingImage extends RecyclerViewListItem {
 
     public static ListingImage makeListingImage(String imageURL) {
         return new ListingImage(imageURL);
+    }
+
+    public static ArrayList<ListingImage> getListingImages(List<RecyclerViewListItem> list) {
+        ArrayList<ListingImage> outList = new ArrayList<ListingImage>();
+        for (RecyclerViewListItem item : list) {
+            if(item instanceof ListingImage) {
+                outList.add((ListingImage) item);
+            }
+        }
+        return outList;
     }
 }

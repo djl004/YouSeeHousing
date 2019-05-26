@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,14 +81,22 @@ public class ListPageFragment extends RefreshableListFragmentPage {
                     recyclerView.setAdapter
                             (new MyItemRecyclerViewAdapter(MainHousingListing_PopulateList.ITEMS, mListener));
                     break;
+
                 case FAVORITES:
                     recyclerView.setAdapter
                             (new MyItemRecyclerViewAdapter(Favorites_PopulateList.ITEMS, mListener));
                     break;
+
                 case IMAGE_RECYCLER:
                     recyclerView.setAdapter(
                             (new ImageRecyclerViewAdapter(ImageRecycler_PopulateList.ITEMS, mListener)));
+                    LinearLayoutManager layout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
+                    recyclerView.setLayoutManager(layout);
+                    recyclerView.setHasFixedSize(true);
+                    SnapHelper helper = new LinearSnapHelper();
+                    helper.attachToRecyclerView(recyclerView);
                     break;
+
                 default: throw new TypeNotPresentException("Invalid List Type", new Throwable());
             }
         }
