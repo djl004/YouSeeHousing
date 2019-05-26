@@ -16,7 +16,7 @@ import java.util.List;
 import static com.example.youseehousing.ListingDetails.getImageURL;
 
 /**
- * This class handles populating and displaying the list of housing in MainHousingListing.
+ * This class handles populating and displaying the listing details in MainHousingListing.
  * Note: Class ListingDetailsViewHolder is what sets the text of the listing thumbnail.
  *
  * Template Description:
@@ -50,6 +50,21 @@ public class MyItemRecyclerViewAdapter extends GenericItemRecyclerViewAdapter {
      * @param position: the position in the array
      */
     public void onBindViewHolder(final GenericItemRecyclerViewAdapter.ViewHolder holder, int position) {
+
+//        holder.mItem = mValues.get(position);
+//
+//        setThumbnailImage(holder); // Set image
+//        holder.mTitleView.setText(mValues.get(position).getAddress()); // Set title "100 Addr Pl."
+//        holder.mDetailsView.setText(mValues.get(position).getPrice()); // Set detail text "$1,959"
+//
+//        holder.mView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (null != mListener) {
+//                    // Notify the active callbacks interface (the activity, if the
+//                    // fragment is attached to one) that an item has been selected.
+//                    mListener.onListFragmentInteraction(holder.mItem);
+//                }
         final ListingDetailsViewHolder new_holder = (ListingDetailsViewHolder) holder;
         List<RecyclerViewListItem> list = getList();
 
@@ -87,7 +102,7 @@ public class MyItemRecyclerViewAdapter extends GenericItemRecyclerViewAdapter {
     }
 
     public class ListingDetailsViewHolder extends GenericItemRecyclerViewAdapter.ViewHolder {
-        public final View mView;
+//        public final View mView;
         public final TextView mIdView; // unseen id # of item
         public final ImageView mThumbnailView; // mThumbnailView: image
         public final TextView mTitleView; // title of listing thumbnail
@@ -97,12 +112,11 @@ public class MyItemRecyclerViewAdapter extends GenericItemRecyclerViewAdapter {
         // TODO: Parameters for listing thumbnail here
         public ListingDetailsViewHolder(View view) {
             super(view);
-            mView = view;
+//            mView = view;
             mIdView = (TextView) view.findViewById(R.id.item_number);
             mThumbnailView = (ImageView) view.findViewById(R.id.thumbnail);
             mTitleView = (TextView) view.findViewById(R.id.title);
-            mDetailsView = (TextView) view.findViewById(R.id.details);
-
+            mDetailsView = (TextView) view.findViewById(R.id.thumbnail_caption);
         }
 
         @Override

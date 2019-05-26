@@ -69,11 +69,10 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/details"
+                        android:id="@+id/thumbnail_caption"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:background="@color/colorCardBG"
                         android:gravity="bottom"
                         android:padding="@dimen/text_padding"
                         android:text="Brief listing description"

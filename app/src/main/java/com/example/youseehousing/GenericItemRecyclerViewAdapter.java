@@ -37,6 +37,17 @@ public class GenericItemRecyclerViewAdapter extends RecyclerView.Adapter<Generic
         return mListener;
     }
 
+
+    public List<RecyclerViewListItem> getmValues() {
+        return mValues;
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return getmValues().size();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -64,26 +75,6 @@ public class GenericItemRecyclerViewAdapter extends RecyclerView.Adapter<Generic
             }
         });
     }
-
-//    private void setThumbnailImage(ListingDetailsViewHolder holder) {
-//        //        String imageURL = "https://i.imgur.com/vrmywgE.jpg";
-//        ListingDetails item = holder.mItem;
-//        String imageURL = getImageURL(item, 0);
-//        if (!imageURL.isEmpty()) {
-//            Log.i(TAG, "Loading image " + imageURL);
-//            Picasso.get().load(imageURL).resize(holder.mThumbnailView.getWidth(),500).centerCrop().into(holder.mThumbnailView);
-//        }
-//    }
-
-    @Override
-    public int getItemCount() {
-        return getmValues().size();
-    }
-
-    public List<RecyclerViewListItem> getmValues() {
-        return mValues;
-    }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
