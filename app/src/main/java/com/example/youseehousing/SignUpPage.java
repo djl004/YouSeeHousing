@@ -213,7 +213,7 @@ public class SignUpPage extends AppCompatActivity {
      * @param date: String to check for valid format.
      * @return
      */
-    public boolean validDate(String date){
+    public static boolean validDate(String date){
 
 
         // Date-checking constants
