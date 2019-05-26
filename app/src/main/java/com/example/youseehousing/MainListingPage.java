@@ -54,11 +54,18 @@ public class MainListingPage extends AppCompatActivity {
 
     private MapView mapView;
     private MapboxMap mapboxMap;
+    private Mapbox mapboxInstance;
     private double longitude, latitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mapboxInstance = Mapbox.getInstance(this,
+                "pk.eyJ1IjoicW93bnNnbWw5MyIsImEiOiJjanZ5emNrMmwwYWo5NDh0cm56bnpsNG1pIn0.JxZmBYwkXwMLb2w7ZdjQIQ");
+        setContentView(R.layout.activity_listing);
+        mapView = findViewById(R.id.mapView);
+        mapView.onCreate(savedInstanceState);
+
 
         imagesView = (ImageView) findViewById(R.id.image);
         addressView = (TextView) findViewById(R.id.title);
@@ -90,11 +97,9 @@ public class MainListingPage extends AppCompatActivity {
 
         /************************************* Map Feature ****************************************/
 
-        Mapbox.getInstance(this,
-                "pk.eyJ1IjoicW93bnNnbWw5MyIsImEiOiJjanZ5emNrMmwwYWo5NDh0cm56bnpsNG1pIn0.JxZmBYwkXwMLb2w7ZdjQIQ");
-        setContentView(R.layout.activity_listing);
-        mapView = findViewById(R.id.mapView);
-        mapView.onCreate(savedInstanceState);
+
+
+
 
         String userAddress = listing.getAddress();
         Log.d(TAG, "User address: " + userAddress);
