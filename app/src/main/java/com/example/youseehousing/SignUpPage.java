@@ -249,18 +249,6 @@ public class SignUpPage extends AppCompatActivity {
 
         //return true, because the date is valid
         return true;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
+    } // end of validDate()
 
 }
