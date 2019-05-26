@@ -38,32 +38,6 @@ public class MainHousingListing_PopulateList extends ListPage {
         queryDatabase();
     }
 
-//    /**
-//     * This method takes as input a document snapshot from the database and adds a listing to the
-//     * page.
-//     * TODO: Paginate data https://firebase.google.com/docs/firestore/query-data/query-cursors
-//     **/
-//    private void addListingToPage(QueryDocumentSnapshot document) {
-//            ListingDetails newListing = ListingDetails.makeListingDetailsFromDocumentSnapshot(document);
-//            if ( newListing != null ) {
-//                ITEMS.add(newListing);
-//            }
-//
-//        if (afoActivity != null) {
-//            afoActivity.redrawLists();
-//        }
-//    }
-//
-//    /**
-//     * Clears the list for a new query.
-//     */
-//    private void clearList() {
-//        super.ITEMS.clear();
-//        if (afoActivity != null) {
-//            afoActivity.redrawLists();
-//        }
-//    }
-
     /**
      * This method queries the Cloud Firestore database for COUNT listings.
      * And calls addListingToPage for each retrieved

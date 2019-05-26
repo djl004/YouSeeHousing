@@ -19,16 +19,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/image"
+        <LinearLayout
+            android:id="@+id/listing_imageLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:cropToPadding="false"
-            android:scaleType="centerCrop"
-            android:visibility="visible"
-            app:srcCompat="@drawable/placeholder" />
+            android:orientation="horizontal">
+
+            <fragment
+                android:id="@+id/image_recycler_fragment"
+                android:name="com.example.youseehousing.ImageRecyclerFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:cropToPadding="false"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                app:srcCompat="@drawable/placeholder" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/buttons"

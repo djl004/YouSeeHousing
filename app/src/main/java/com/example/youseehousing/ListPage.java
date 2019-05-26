@@ -11,11 +11,13 @@ public class ListPage {
     private ActivityFragmentOrigin afoActivity;
     private RefreshableListFragmentPage refreshableFragment;
 
+
     public ListPageFragment.ListType getListType() {
         return type;
     }
 
     private ListPageFragment.ListType type = ListPageFragment.ListType.MAIN_LISTING_PAGE;
+
     public static List<RecyclerViewListItem> ITEMS = new ArrayList<RecyclerViewListItem>();
 
 
@@ -26,8 +28,15 @@ public class ListPage {
              throw new ClassCastException();
          }
         setRefreshableFragment(fragment);
-
      }
+
+     public ListPage(RefreshableListFragmentPage fragment) {
+        setRefreshableFragment(fragment);
+     }
+
+     public ListPage() {
+     }
+
     public ActivityFragmentOrigin getActivityFragmentOrigin() {
         return afoActivity;
     }

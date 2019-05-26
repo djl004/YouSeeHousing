@@ -50,21 +50,6 @@ public class MyItemRecyclerViewAdapter extends GenericItemRecyclerViewAdapter {
      * @param position: the position in the array
      */
     public void onBindViewHolder(final GenericItemRecyclerViewAdapter.ViewHolder holder, int position) {
-
-//        holder.mItem = mValues.get(position);
-//
-//        setThumbnailImage(holder); // Set image
-//        holder.mTitleView.setText(mValues.get(position).getAddress()); // Set title "100 Addr Pl."
-//        holder.mDetailsView.setText(mValues.get(position).getPrice()); // Set detail text "$1,959"
-//
-//        holder.mView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (null != mListener) {
-//                    // Notify the active callbacks interface (the activity, if the
-//                    // fragment is attached to one) that an item has been selected.
-//                    mListener.onListFragmentInteraction(holder.mItem);
-//                }
         final ListingDetailsViewHolder new_holder = (ListingDetailsViewHolder) holder;
         List<RecyclerViewListItem> list = getList();
 

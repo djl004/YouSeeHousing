@@ -19,9 +19,10 @@ public class ListPageFragment extends RefreshableListFragmentPage {
 
     private ListType type = ListType.MAIN_LISTING_PAGE;
 
+
     // The types of list
     public enum ListType {
-        FAVORITES, MAIN_LISTING_PAGE
+        FAVORITES, MAIN_LISTING_PAGE, IMAGE_RECYCLER
     }
 
     // TODO: Customize parameters
@@ -30,6 +31,10 @@ public class ListPageFragment extends RefreshableListFragmentPage {
     private Bundle savedInstanceState;
     private View createdView;
     private RecyclerView recyclerView;
+
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
@@ -46,7 +51,7 @@ public class ListPageFragment extends RefreshableListFragmentPage {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            setmColumnCount(getArguments().getInt(ARG_COLUMN_COUNT));
         }
         this.savedInstanceState = savedInstanceState;
     }
@@ -61,10 +66,10 @@ public class ListPageFragment extends RefreshableListFragmentPage {
         if (createdView instanceof RecyclerView) {
             Context context = createdView.getContext();
             recyclerView = (RecyclerView) createdView;
-            if (mColumnCount <= 1) {
+            if (getmColumnCount() <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                recyclerView.setLayoutManager(new GridLayoutManager(context, getmColumnCount()));
             }
             // TODO: Listings are inserted into the display list here
 
@@ -72,11 +77,15 @@ public class ListPageFragment extends RefreshableListFragmentPage {
             switch(this.getListType()) {
                 case MAIN_LISTING_PAGE:
                     recyclerView.setAdapter
-                            (new MyItemRecyclerViewAdapter( MainHousingListing_PopulateList.ITEMS, mListener));
+                            (new MyItemRecyclerViewAdapter(MainHousingListing_PopulateList.ITEMS, mListener));
                     break;
                 case FAVORITES:
                     recyclerView.setAdapter
-                            (new MyItemRecyclerViewAdapter( Favorites_PopulateList.ITEMS, mListener));
+                            (new MyItemRecyclerViewAdapter(Favorites_PopulateList.ITEMS, mListener));
+                    break;
+                case IMAGE_RECYCLER:
+                    recyclerView.setAdapter(
+                            (new ImageRecyclerViewAdapter(ImageRecycler_PopulateList.ITEMS, mListener)));
                     break;
                 default: throw new TypeNotPresentException("Invalid List Type", new Throwable());
             }
@@ -124,6 +133,13 @@ public class ListPageFragment extends RefreshableListFragmentPage {
         return type;
     }
 
+    public int getmColumnCount() {
+        return mColumnCount;
+    }
+
+    public void setmColumnCount(int mColumnCount) {
+        this.mColumnCount = mColumnCount;
+    }
 
     /**
      * This interface must be implemented by activities that contain this
@@ -139,4 +155,5 @@ public class ListPageFragment extends RefreshableListFragmentPage {
         // TODO: Update argument type and name
         void onListFragmentInteraction(ListingDetails item);
     }
+
 }

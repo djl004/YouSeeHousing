@@ -1,10 +1,10 @@
 package com.example.youseehousing;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +16,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+/**
+ * This class is the fragment version of the listing details page.
+ */
 public class ListingDetailsOverlayFragment extends Fragment {
 
     private ImageView imagesView;
@@ -23,7 +26,12 @@ public class ListingDetailsOverlayFragment extends Fragment {
     private TextView captionView;
     private TextView descriptionView;
     private Button buttonsView;
+    private LinearLayout imageRecyclerView;
+
     private ListingDetails item;
+    private ImageRecyclerFragment imageRecyclerFragment;
+    private ImageRecycler_PopulateList imageRecyclerList;
+    private final FragmentManager fm = getFragmentManager();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,8 +48,15 @@ public class ListingDetailsOverlayFragment extends Fragment {
         captionView = (TextView) rootView.findViewById(R.id.caption);
         descriptionView = (TextView) rootView.findViewById(R.id.description);
         buttonsView = (Button) rootView.findViewById(R.id.btnCompare);
+        imageRecyclerView = (LinearLayout) rootView.findViewById(R.id.listing_imageLayout);
 
+        // Add fragment to page
 
+        imageRecyclerFragment = (ImageRecyclerFragment) getChildFragmentManager().findFragmentById(R.id.image_recycler_fragment);
+
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelable("Images", item);
+//        fm.beginTransaction().add(R.id.listing_imageLayout, imageRecyclerFragment, "1");
 
 
         // Get data passed from previous activity
@@ -50,7 +65,9 @@ public class ListingDetailsOverlayFragment extends Fragment {
         if (getArguments() != null) {
             try {
                 item = (ListingDetails) getArguments().get("ListingDetails");
+                imageRecyclerList = new ImageRecycler_PopulateList(item, imageRecyclerFragment);
                 setText();
+                setImages();
             }
             catch (ClassCastException e) {
                 e.printStackTrace();
@@ -58,6 +75,10 @@ public class ListingDetailsOverlayFragment extends Fragment {
         }
 
         return rootView;
+    }
+
+    private void setImages() {
+
     }
 
     private void setText() {

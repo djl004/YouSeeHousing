@@ -231,8 +231,8 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
      * @param item : the selected listing
      */
     private void selectListingFxn(ListingDetails item) {
-        makeCompare(item, item); // pass this two different items to compare
-//        makeListingPage(item); // single item listing
+//        makeCompare(item, item); // pass this two different items to compare
+        makeListingPage(item); // single item listing
     }
 
     private void makeListingPage(ListingDetails item) {
@@ -249,10 +249,6 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
     private void makeCompare(ListingDetails item1, ListingDetails item2) {
         Bundle bundle = new Bundle();
         bundle.putParcelable("ListingDetails", item1);
-
-
-        compare_bottom.hideButtons(false);
-        compare_top.hideButtons(true);
 
         compare_bottom.setArguments(bundle);
         compare_top.setArguments(bundle);

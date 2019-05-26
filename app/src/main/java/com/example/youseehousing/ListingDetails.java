@@ -297,4 +297,24 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable {
         }
         return pictureList.get(index);
     }
+
+    /**
+     * Returns the number of images in the ListingDetails item
+     * Returns 0 if images is null!
+     */
+    public int getNumImages() {
+        if (getPictures() != null) {
+            return getPictures().size();
+        }
+        else {
+            return 0;
+        }
+    }
+
+    public ArrayList<String> getListOfImages() {
+        if (getNumImages() <= 0) {
+            return new ArrayList<String>();
+        }
+        else return pictures;
+    }
 }
