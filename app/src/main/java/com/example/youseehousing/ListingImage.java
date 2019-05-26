@@ -1,6 +1,10 @@
 package com.example.youseehousing;
 
 import android.os.Parcel;
+import android.provider.ContactsContract;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +57,11 @@ public class ListingImage extends RecyclerViewListItem {
         return new ListingImage(imageURL);
     }
 
+    /**
+     * Given a list of RecyclerViewListItems, returns only the ListingImages
+     * @param list
+     * @return
+     */
     public static ArrayList<ListingImage> getListingImages(List<RecyclerViewListItem> list) {
         ArrayList<ListingImage> outList = new ArrayList<ListingImage>();
         for (RecyclerViewListItem item : list) {
@@ -61,5 +70,16 @@ public class ListingImage extends RecyclerViewListItem {
             }
         }
         return outList;
+    }
+
+    public static void loadImage(ListingImage image, ImageView imageView) {
+        String imageURL = image.getImageURL();
+        // Load placeholder image if URL is bad
+        if(imageURL.length() <= 0) {
+            Picasso.get().load(R.drawable.placeholder).into(imageView);
+        }
+        else {
+            Picasso.get().load(imageURL).error(R.drawable.placeholder).into(imageView);
+        }
     }
 }

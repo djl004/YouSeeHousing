@@ -21,6 +21,13 @@ public class ListPageFragment extends RefreshableListFragmentPage {
 
     private ListType type = ListType.MAIN_LISTING_PAGE;
 
+    public OnListFragmentInteractionListener getmListener() {
+        return mListener;
+    }
+
+    public void setmListener(OnListFragmentInteractionListener mListener) {
+        this.mListener = mListener;
+    }
 
     // The types of list
     public enum ListType {
@@ -36,6 +43,9 @@ public class ListPageFragment extends RefreshableListFragmentPage {
 
     public RecyclerView getRecyclerView() {
         return recyclerView;
+    }
+    public void setRecyclerView(RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
     }
 
     // TODO: Customize parameter initialization
@@ -69,7 +79,7 @@ public class ListPageFragment extends RefreshableListFragmentPage {
             Context context = createdView.getContext();
             recyclerView = (RecyclerView) createdView;
             if (getmColumnCount() <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, getmColumnCount()));
             }
@@ -79,23 +89,24 @@ public class ListPageFragment extends RefreshableListFragmentPage {
             switch(this.getListType()) {
                 case MAIN_LISTING_PAGE:
                     recyclerView.setAdapter
-                            (new MyItemRecyclerViewAdapter(MainHousingListing_PopulateList.ITEMS, mListener));
+                            (new MyItemRecyclerViewAdapter(MainHousingListing_PopulateList.ITEMS, getmListener()));
                     break;
 
                 case FAVORITES:
                     recyclerView.setAdapter
-                            (new MyItemRecyclerViewAdapter(Favorites_PopulateList.ITEMS, mListener));
+                            (new MyItemRecyclerViewAdapter(Favorites_PopulateList.ITEMS, getmListener()));
                     break;
 
                 case IMAGE_RECYCLER:
-                    recyclerView.setAdapter(
-                            (new ImageRecyclerViewAdapter(ImageRecycler_PopulateList.ITEMS, mListener)));
-                    LinearLayoutManager layout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
-                    recyclerView.setLayoutManager(layout);
-                    recyclerView.setHasFixedSize(true);
-                    SnapHelper helper = new LinearSnapHelper();
-                    helper.attachToRecyclerView(recyclerView);
-                    break;
+//                    recyclerView.setAdapter(
+//                            (new ImageRecyclerViewAdapter(ImageRecycler_PopulateList.ITEMS, getmListener())));
+
+                    // Code for sticky images (snaps to center of screen)
+//                    WrapContentLinearLayoutManager layout = new WrapContentLinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
+//                    recyclerView.setLayoutManager(layout);
+//                    SnapHelper helper = new LinearSnapHelper();
+//                    helper.attachToRecyclerView(recyclerView);
+//                    break;
 
                 default: throw new TypeNotPresentException("Invalid List Type", new Throwable());
             }
@@ -107,7 +118,7 @@ public class ListPageFragment extends RefreshableListFragmentPage {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+            setmListener((OnListFragmentInteractionListener) context);
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
@@ -117,7 +128,7 @@ public class ListPageFragment extends RefreshableListFragmentPage {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        setmListener(null);
 
     }
 

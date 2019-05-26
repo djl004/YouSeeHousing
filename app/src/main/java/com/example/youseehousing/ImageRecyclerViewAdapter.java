@@ -1,19 +1,15 @@
 package com.example.youseehousing;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.youseehousing.ListPageFragment.OnListFragmentInteractionListener;
-import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.youseehousing.ListingDetails.getImageURL;
 
 /**
  * This class handles scrollable ImageViews.
@@ -24,82 +20,62 @@ import static com.example.youseehousing.ListingDetails.getImageURL;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class ImageRecyclerViewAdapter extends GenericItemRecyclerViewAdapter {
+public class ImageRecyclerViewAdapter extends RecyclerView.Adapter<ImageRecyclerViewAdapter.ImageViewHolder> {
 
     private final String TAG = "ItemRecyclerViewAdapter";
+    private List<ListingImage> IMAGES = new ArrayList<ListingImage>();
+    private ImageRecycler_PopulateList populateList;
 
-    public ImageRecyclerViewAdapter(List<RecyclerViewListItem> items, OnListFragmentInteractionListener listener) {
-        super(items, listener);
+    public ImageRecyclerViewAdapter(ListingDetails item) {
+        //TODO: Initialize IMAGES
+        populateList = new ImageRecycler_PopulateList(this, item);
     }
-
-
-    @Override
-    public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_image_item, parent, false);
-        return new ImageViewHolder(view);
-    }
-
 
     /**
-     * Sets the text and image in the listing item on the main listing page.
+     * Create new views (invoked by the layout manager)
+     */
+    @Override
+    public ImageRecyclerViewAdapter.ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        ImageView view = (ImageView) LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.image_item, parent, false);
+        ImageViewHolder vh = new ImageViewHolder(view);
+        return vh;
+    }
+
+    /**
+     * Replace the contents of a view (invoked by the layout manager)
      *
-     * @param holder: the listing thumbnail object
+     * @param holder: the image object
      * @param position: the position in the array
      */
-    public void onBindViewHolder(final GenericItemRecyclerViewAdapter.ViewHolder holder, int position) {
-        ImageViewHolder new_holder = (ImageViewHolder) holder;
-        List<RecyclerViewListItem> list = getList();
-
-        // TODO: Figure out why non ImageViewHolders get added to the list
-        try {
-            new_holder.mItem = (ListingImage) list.get(position);
-        }
-        catch( ClassCastException e ) {
-            e.printStackTrace();
-            return;
-        }
-
-        setImage(new_holder); // Set image
-
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != getmListener()) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-//                    getmListener().onListFragmentInteraction(new_holder.mItem);
-                }
-            }
-        });
+    @Override
+    public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
+        ListingImage.loadImage(IMAGES.get(position), holder.mImageView);
     }
 
-
-
-    private void setImage(ImageViewHolder holder) {
-        if (holder != null) {
-            String imageURL = holder.mItem.getImageURL();
-            if (imageURL != null) {
-                Log.i(TAG, "Loading image " + imageURL);
-                Picasso.get().load(imageURL).resize(holder.mThumbnailView.getWidth(), 500).centerCrop().into(holder.mThumbnailView);
-            }
-        }
-    }
-
+    /**
+     * Return the size of your dataset (invoked by the layout manager)
+     */
     @Override
     public int getItemCount() {
-        return getList().size();
+        return getImageList().size();
     }
 
-    public class ImageViewHolder extends GenericItemRecyclerViewAdapter.ViewHolder {
+    public List<ListingImage> getImageList() {
+        return IMAGES;
+    }
+
+    /**
+     * Provide a reference to the views for each data item
+     */
+    public class ImageViewHolder extends RecyclerView.ViewHolder {
 //        public final View mView;
-        public final ImageView mThumbnailView; // mThumbnailView: image
-        public ListingImage mItem;
+        public final ImageView mImageView; // mImageView: image
 
         // TODO: Parameters for listing thumbnail here
-        public ImageViewHolder(View view) {
+        public ImageViewHolder(ImageView view) {
             super(view);
-            mThumbnailView = (ImageView) view.findViewById(R.id.card_image);
+            mImageView = view;
         }
 
         @Override

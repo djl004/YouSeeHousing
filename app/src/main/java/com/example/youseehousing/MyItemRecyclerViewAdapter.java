@@ -89,7 +89,7 @@ public class MyItemRecyclerViewAdapter extends GenericItemRecyclerViewAdapter {
     public class ListingDetailsViewHolder extends GenericItemRecyclerViewAdapter.ViewHolder {
 //        public final View mView;
         public final TextView mIdView; // unseen id # of item
-        public final ImageView mThumbnailView; // mThumbnailView: image
+        public final ImageView mThumbnailView; // mImageView: image
         public final TextView mTitleView; // title of listing thumbnail
         public final TextView mDetailsView; // caption of listing thumbnail
         public ListingDetails mItem;

@@ -1,10 +1,15 @@
 package com.example.youseehousing;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,10 +31,13 @@ public class ListingDetailsOverlayFragment extends Fragment {
     private TextView captionView;
     private TextView descriptionView;
     private Button buttonsView;
-    private LinearLayout imageRecyclerView;
+
+    private RecyclerView imageRecyclerView;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     private ListingDetails item;
-    private ImageRecyclerFragment imageRecyclerFragment;
+//    private ImageRecyclerFragment imageRecyclerFragment;
     private ImageRecycler_PopulateList imageRecyclerList;
     private final FragmentManager fm = getFragmentManager();
 
@@ -48,26 +56,16 @@ public class ListingDetailsOverlayFragment extends Fragment {
         captionView = (TextView) rootView.findViewById(R.id.caption);
         descriptionView = (TextView) rootView.findViewById(R.id.description);
         buttonsView = (Button) rootView.findViewById(R.id.btnCompare);
-        imageRecyclerView = (LinearLayout) rootView.findViewById(R.id.listing_imageLayout);
-
-        // Add fragment to page
-
-        imageRecyclerFragment = (ImageRecyclerFragment) getChildFragmentManager().findFragmentById(R.id.image_recycler_fragment);
-
-//        Bundle bundle = new Bundle();
-//        bundle.putParcelable("Images", item);
-//        fm.beginTransaction().add(R.id.listing_imageLayout, imageRecyclerFragment, "1");
+        imageRecyclerView = (RecyclerView) rootView.findViewById(R.id.image_recycler_view);
 
 
-        // Get data passed from previous activity
-        // Check if members are null when setting parameters
+
 
         if (getArguments() != null) {
             try {
                 item = (ListingDetails) getArguments().get("ListingDetails");
-                imageRecyclerList = new ImageRecycler_PopulateList(item, imageRecyclerFragment);
+                setupRecyclerView(rootView);
                 setText();
-                setImages();
             }
             catch (ClassCastException e) {
                 e.printStackTrace();
@@ -77,17 +75,29 @@ public class ListingDetailsOverlayFragment extends Fragment {
         return rootView;
     }
 
-    private void setImages() {
+    /**
+     * Set parameters in RecyclerView
+     * @param rootView
+     */
+    private void setupRecyclerView(View rootView) {
+        layoutManager = new LinearLayoutManager(getContext());
+        imageRecyclerView.setLayoutManager(layoutManager);
 
+        adapter = new ImageRecyclerViewAdapter(item);
+        imageRecyclerView.setAdapter(adapter);
+
+        // Sticky images (stays at center)
+        SnapHelper helper = new LinearSnapHelper();
+        helper.attachToRecyclerView(imageRecyclerView);
+
+        imageRecyclerView.getAdapter().notifyDataSetChanged();
     }
 
+    /**
+     * Sets descriptive text in the listing page.
+     */
     private void setText() {
-        // Set parameters
         try {
-            String image_0 = item.getPictures().get(0);
-            if(image_0.length() > 0) {
-                Picasso.get().load(item.getPictures().get(0)).into(imagesView);
-            }
             addressView.setText(item.getAddress());
             captionView.setText(item.getBath() + " " + item.getBed());
             descriptionView.setText(item.getDesc());

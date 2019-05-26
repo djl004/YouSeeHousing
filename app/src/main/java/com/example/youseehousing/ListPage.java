@@ -73,9 +73,11 @@ public class ListPage {
      * Add a listing to ITEMS.
      */
     public void addListingToPage(QueryDocumentSnapshot document) {
-        ListingDetails newListing = ListingDetails.makeListingDetailsFromDocumentSnapshot(document);
-        if ( newListing != null ) {
-            ITEMS.add(newListing);
+        if(getListType() != ListPageFragment.ListType.IMAGE_RECYCLER) {
+            ListingDetails newListing = ListingDetails.makeListingDetailsFromDocumentSnapshot(document);
+            if (newListing != null) {
+                ITEMS.add(newListing);
+            }
         }
 
     }
@@ -88,5 +90,13 @@ public class ListPage {
         if(refreshableFragment != null) {
             refreshableFragment.refreshPage();
         }
+    }
+
+    /**
+     * Returns number of items in ITEMS
+     * @return
+     */
+    public int size() {
+        return ITEMS.size();
     }
 }

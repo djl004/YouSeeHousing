@@ -5,18 +5,16 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImageRecycler_PopulateList extends ListPage {
-    private ActivityFragmentOrigin afoActivity;
+public class ImageRecycler_PopulateList {
+//    private ActivityFragmentOrigin afoActivity;
     private String TAG = "MainHousingListing";
-    private ImageRecycler_PopulateList imageRecyclerList;
-    private List<ListingImage> IMAGES = new ArrayList<ListingImage>();
+    private ImageRecyclerViewAdapter adapter;
 
-    private static final int COUNT = 5; // Max number of listings to query at once from database.
-    private final ListPageFragment.ListType TYPE = ListPageFragment.ListType.IMAGE_RECYCLER;
+//    private final ListPageFragment.ListType TYPE = ListPageFragment.ListType.IMAGE_RECYCLER;
     private final ListingDetails item;
 
-    public ImageRecycler_PopulateList(ListingDetails item, RefreshableListFragmentPage fragment) {
-        super(fragment);
+    public ImageRecycler_PopulateList(ImageRecyclerViewAdapter adapter, ListingDetails item) {
+        this.adapter = adapter;
         this.item = item;
 
         if(item != null) {
@@ -36,7 +34,7 @@ public class ImageRecycler_PopulateList extends ListPage {
 
     public void addImageToPage(ListingImage image) {
         if ( image != null ) {
-            ITEMS.add(image);
+            adapter.getImageList().add(image);
         }
     }
 
@@ -60,6 +58,7 @@ public class ImageRecycler_PopulateList extends ListPage {
         for( String imageURL : item.getPictures() ) {
             ListingImage image = ListingImage.makeListingImage(imageURL);
             addImageToPage(image);
+//            getRefreshableFragment().refreshPage();
         }
 
         return true;
