@@ -240,7 +240,6 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         bundle.putParcelable("ListingDetails", item);
 
         fragment4.setArguments(bundle);
-        fragment4.hideButtons(true);
         fragment4.refresh();
 
         toggleListingOverlay(true); // testing

@@ -33,15 +33,16 @@
                 <ImageView
                     android:id="@+id/thumbnail"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="220dp"
                     android:layout_marginBottom="8dp"
                     android:layout_weight="1"
                     android:adjustViewBounds="true"
                     android:contentDescription="Image"
                     android:cropToPadding="false"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/placeholder"
-                    app:layout_constrainedHeight="true" />
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/placeholder2"
+                    app:layout_constrainedHeight="true"
+                    app:srcCompat="@drawable/placeholder2" />
             </TableRow>
 
             <TableRow

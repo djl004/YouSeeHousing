@@ -98,16 +98,6 @@ public class ListPageFragment extends RefreshableListFragmentPage {
                     break;
 
                 case IMAGE_RECYCLER:
-//                    recyclerView.setAdapter(
-//                            (new ImageRecyclerViewAdapter(ImageRecycler_PopulateList.ITEMS, getmListener())));
-
-                    // Code for sticky images (snaps to center of screen)
-//                    WrapContentLinearLayoutManager layout = new WrapContentLinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
-//                    recyclerView.setLayoutManager(layout);
-//                    SnapHelper helper = new LinearSnapHelper();
-//                    helper.attachToRecyclerView(recyclerView);
-//                    break;
-
                 default: throw new TypeNotPresentException("Invalid List Type", new Throwable());
             }
         }

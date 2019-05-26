@@ -72,14 +72,17 @@ public class ListingImage extends RecyclerViewListItem {
         return outList;
     }
 
+    /**
+     * Load an image into an arbitrary imageView
+     */
     public static void loadImage(ListingImage image, ImageView imageView) {
         String imageURL = image.getImageURL();
         // Load placeholder image if URL is bad
         if(imageURL.length() <= 0) {
-            Picasso.get().load(R.drawable.placeholder).into(imageView);
+            Picasso.get().load(R.drawable.placeholder2).into(imageView);
         }
         else {
-            Picasso.get().load(imageURL).error(R.drawable.placeholder).into(imageView);
+            Picasso.get().load(imageURL).error(R.drawable.placeholder2).into(imageView);
         }
     }
 }

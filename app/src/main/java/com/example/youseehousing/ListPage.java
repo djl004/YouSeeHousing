@@ -49,10 +49,6 @@ public class ListPage {
          this.refreshableFragment = fragment;
     }
 
-//    private void addListingToItems(ListingDetails newListing) {
-//        ITEMS.add(newListing);
-//    }
-
     /**
      * Verify that activity passed is in fact an ActivityFragmentOrigin object.
      * @param activityFragmentOrigin

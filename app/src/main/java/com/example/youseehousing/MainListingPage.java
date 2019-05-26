@@ -52,7 +52,8 @@ public class MainListingPage extends Activity {
         try {
             String image_0 = listing.getPictures().get(0);
             if(image_0.length() > 0) {
-                Picasso.get().load(listing.getPictures().get(0)).into(imagesView);
+                ListingImage image = ListingImage.makeListingImage(image_0);
+                ListingImage.loadImage(image, imagesView);
             }
             addressView.setText(listing.getAddress());
             captionView.setText(listing.getBath() + " " + listing.getBed());

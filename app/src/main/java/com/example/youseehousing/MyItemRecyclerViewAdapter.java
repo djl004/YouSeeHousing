@@ -25,9 +25,6 @@ import static com.example.youseehousing.ListingDetails.getImageURL;
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyItemRecyclerViewAdapter extends GenericItemRecyclerViewAdapter {
-
-//    private final List<RecyclerViewListItem> mValues;
-//    private final OnListFragmentInteractionListener mListener;
     private final String TAG = "ItemRecyclerViewAdapter";
 
     public MyItemRecyclerViewAdapter(List<RecyclerViewListItem> items, OnListFragmentInteractionListener listener) {
@@ -97,7 +94,6 @@ public class MyItemRecyclerViewAdapter extends GenericItemRecyclerViewAdapter {
         // TODO: Parameters for listing thumbnail here
         public ListingDetailsViewHolder(View view) {
             super(view);
-//            mView = view;
             mIdView = (TextView) view.findViewById(R.id.item_number);
             mThumbnailView = (ImageView) view.findViewById(R.id.thumbnail);
             mTitleView = (TextView) view.findViewById(R.id.title);

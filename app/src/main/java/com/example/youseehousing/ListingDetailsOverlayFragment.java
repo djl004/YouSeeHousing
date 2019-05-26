@@ -37,8 +37,6 @@ public class ListingDetailsOverlayFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
 
     private ListingDetails item;
-//    private ImageRecyclerFragment imageRecyclerFragment;
-    private ImageRecycler_PopulateList imageRecyclerList;
     private final FragmentManager fm = getFragmentManager();
 
     @Override
@@ -58,9 +56,8 @@ public class ListingDetailsOverlayFragment extends Fragment {
         buttonsView = (Button) rootView.findViewById(R.id.btnCompare);
         imageRecyclerView = (RecyclerView) rootView.findViewById(R.id.image_recycler_view);
 
-
-
-
+        // Take the arguments passed to this from ActivityFragmentOrigin and set up the
+        // details based on that ListingDetails object
         if (getArguments() != null) {
             try {
                 item = (ListingDetails) getArguments().get("ListingDetails");
@@ -71,7 +68,6 @@ public class ListingDetailsOverlayFragment extends Fragment {
                 e.printStackTrace();
             }
         }
-
         return rootView;
     }
 
@@ -80,7 +76,7 @@ public class ListingDetailsOverlayFragment extends Fragment {
      * @param rootView
      */
     private void setupRecyclerView(View rootView) {
-        layoutManager = new LinearLayoutManager(getContext());
+        layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         imageRecyclerView.setLayoutManager(layoutManager);
 
         adapter = new ImageRecyclerViewAdapter(item);
@@ -115,6 +111,9 @@ public class ListingDetailsOverlayFragment extends Fragment {
         super.onPause();
     }
 
+    /**
+     * Effectively "refreshes" the fragment
+     */
     public void refresh() {
         getFragmentManager().beginTransaction().detach(this).attach(this).commit();
     }
