@@ -1,5 +1,6 @@
 package com.example.youseehousing;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,7 +22,7 @@ public class ListingDetailsOverlayFragment extends Fragment {
     private TextView addressView;
     private TextView captionView;
     private TextView descriptionView;
-    private LinearLayout buttonsView;
+    private Button buttonsView;
     private ListingDetails item;
 
     @Override
@@ -37,10 +39,7 @@ public class ListingDetailsOverlayFragment extends Fragment {
         addressView = (TextView) rootView.findViewById(R.id.title);
         captionView = (TextView) rootView.findViewById(R.id.caption);
         descriptionView = (TextView) rootView.findViewById(R.id.description);
-        buttonsView = (LinearLayout) rootView.findViewById(R.id.buttons);
-
-
-        buttonsView.setVisibility(View.GONE);
+        buttonsView = (Button) rootView.findViewById(R.id.btnCompare);
 
 
 
@@ -89,13 +88,19 @@ public class ListingDetailsOverlayFragment extends Fragment {
         getFragmentManager().beginTransaction().detach(this).attach(this).commit();
     }
 
-    public void hideButtons(boolean visible) {
-        if (visible) {
-            buttonsView.setVisibility(View.VISIBLE);
-        }
-        else {
-            buttonsView.setVisibility(View.GONE);
-        }
-        refresh();
+    public void hideButtons(final boolean visible) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (visible) {
+                    buttonsView.setVisibility(View.VISIBLE);
+                }
+                else {
+                    buttonsView.setVisibility(View.GONE);
+                }
+                refresh();
+            }
+        });
+
     }
 }

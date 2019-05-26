@@ -16,7 +16,7 @@ import java.util.List;
  *        based on its id and populates these parameters with that information. DONE!
  */
 
-public class ListingDetails implements Parcelable {
+public class ListingDetails extends RecyclerViewListItem implements Parcelable {
 
     private static final String TAG = "ListingDetails";
 //    private String id;

@@ -240,6 +240,7 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         bundle.putParcelable("ListingDetails", item);
 
         fragment4.setArguments(bundle);
+        fragment4.hideButtons(true);
         fragment4.refresh();
 
         toggleListingOverlay(true); // testing
@@ -251,7 +252,7 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
 
 
         compare_bottom.hideButtons(false);
-        compare_top.hideButtons(false);
+        compare_top.hideButtons(true);
 
         compare_bottom.setArguments(bundle);
         compare_top.setArguments(bundle);

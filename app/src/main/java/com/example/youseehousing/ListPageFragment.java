@@ -72,13 +72,11 @@ public class ListPageFragment extends RefreshableListFragmentPage {
             switch(this.getListType()) {
                 case MAIN_LISTING_PAGE:
                     recyclerView.setAdapter
-                            (new MyItemRecyclerViewAdapter(
-                                    MainHousingListing_PopulateList.ITEMS, mListener));
+                            (new MyItemRecyclerViewAdapter( MainHousingListing_PopulateList.ITEMS, mListener));
                     break;
                 case FAVORITES:
                     recyclerView.setAdapter
-                            (new MyItemRecyclerViewAdapter(
-                                    Favorites_PopulateList.ITEMS, mListener));
+                            (new MyItemRecyclerViewAdapter( Favorites_PopulateList.ITEMS, mListener));
                     break;
                 default: throw new TypeNotPresentException("Invalid List Type", new Throwable());
             }

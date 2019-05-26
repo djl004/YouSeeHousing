@@ -16,7 +16,7 @@ public class ListPage {
     }
 
     private ListPageFragment.ListType type = ListPageFragment.ListType.MAIN_LISTING_PAGE;
-    public static List<ListingDetails> ITEMS = new ArrayList<ListingDetails>();
+    public static List<RecyclerViewListItem> ITEMS = new ArrayList<RecyclerViewListItem>();
 
 
 
