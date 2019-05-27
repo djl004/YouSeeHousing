@@ -1,6 +1,5 @@
 package com.example.youseehousing;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,23 +15,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 /**
  * This class is the fragment version of the listing details page.
  */
 public class ListingDetailsOverlayFragment extends Fragment {
 
+    private ActivityFragmentOrigin parentActivity;
+
     private ImageView imagesView;
     private TextView addressView;
     private TextView captionView;
     private TextView descriptionView;
-    private Button buttonsView;
-
+    private Button btnCompare;
+    private Button btnFavorite;
+    private Button btnContact;
+    private Button btnMap;
     private RecyclerView imageRecyclerView;
+
+
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
@@ -53,8 +55,19 @@ public class ListingDetailsOverlayFragment extends Fragment {
         addressView = (TextView) rootView.findViewById(R.id.title);
         captionView = (TextView) rootView.findViewById(R.id.caption);
         descriptionView = (TextView) rootView.findViewById(R.id.description);
-        buttonsView = (Button) rootView.findViewById(R.id.btnCompare);
+        btnCompare = (Button) rootView.findViewById(R.id.btnCompare);
+        btnContact = (Button) rootView.findViewById(R.id.btnContactInfo);
+        btnFavorite = (Button) rootView.findViewById(R.id.btnFavorite);
+        btnMap = (Button) rootView.findViewById(R.id.btnMap);
         imageRecyclerView = (RecyclerView) rootView.findViewById(R.id.image_recycler_view);
+
+        try {
+            parentActivity = (ActivityFragmentOrigin) getActivity();
+        }
+        catch (ClassCastException e) {
+            throw e;
+        }
+
 
         // Take the arguments passed to this from ActivityFragmentOrigin and set up the
         // details based on that ListingDetails object
@@ -63,12 +76,49 @@ public class ListingDetailsOverlayFragment extends Fragment {
                 item = (ListingDetails) getArguments().get("ListingDetails");
                 setupRecyclerView(rootView);
                 setText();
+                setupButtons();
             }
             catch (ClassCastException e) {
                 e.printStackTrace();
             }
         }
         return rootView;
+    }
+
+    private void setupButtons() {
+        // Favorite button
+        handleButtonPress(btnCompare);
+        handleButtonPress(btnFavorite);
+        handleButtonPress(btnContact);
+        handleButtonPress(btnMap);
+
+    }
+
+    /**
+     * Handles button actions
+     * @param btn
+     */
+    private void handleButtonPress(final Button btn) {
+        btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Compare button
+                if(btn == btnCompare) {
+                    ListingButtonActions.compare(parentActivity, item);
+                }
+                // Contact button
+                if(btn == btnContact) {
+                    ListingButtonActions.openContactInfo(item);
+                }
+                // Favorite button
+                if(btn == btnFavorite) {
+                    ListingButtonActions.addToFavorites(item);
+                }
+                // Favorite button
+                if(btn == btnMap) {
+                    ListingButtonActions.openMap(item);
+                }
+            }
+        });
     }
 
     /**
@@ -123,10 +173,10 @@ public class ListingDetailsOverlayFragment extends Fragment {
             @Override
             public void run() {
                 if (visible) {
-                    buttonsView.setVisibility(View.VISIBLE);
+                    btnCompare.setVisibility(View.VISIBLE);
                 }
                 else {
-                    buttonsView.setVisibility(View.GONE);
+                    btnCompare.setVisibility(View.GONE);
                 }
                 refresh();
             }

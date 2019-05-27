@@ -63,6 +63,9 @@ public class Account {
     }
 
     public ArrayList<String> getFavorites() {
+        if (favorites == null) {
+            return new ArrayList<String>();
+        }
         return favorites;
     }
 

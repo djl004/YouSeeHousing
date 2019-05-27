@@ -79,16 +79,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
-                android:text="Contact Info" />
+                android:text="Contact" />
 
             <Button
-                android:id="@+id/btnWebsite"
+                android:id="@+id/btnMap"
                 style="@style/Widget.AppCompat.Button.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
-                android:text="Website" />
+                android:text="Map" />
 
         </LinearLayout>
 

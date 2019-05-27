@@ -28,7 +28,6 @@ import java.util.ArrayList;
 public class Favorites_PopulateList extends ListPage {
     private ActivityFragmentOrigin afoActivity;
     private String TAG = "Favorites";
-    private FirebaseAuth mAuth;
     private String USERS_PATH = "users/";
 
     private ArrayList<String> userFavorites;
@@ -91,8 +90,7 @@ public class Favorites_PopulateList extends ListPage {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     // call function to add listing details
-                                    addListingToPage(document);
-                                    getRefreshableFragment().refreshPage();
+                                    addAddressToFavoritesList(document);
                                 }
                             } else {
                                 Log.w(TAG, "Error getting address: " + favoriteString, task.getException());
@@ -107,10 +105,15 @@ public class Favorites_PopulateList extends ListPage {
         }
     }
 
+    private void addAddressToFavoritesList(QueryDocumentSnapshot document) {
+        addListingToPage(document);
+        getRefreshableFragment().refreshPage();
+    }
+
 
     private void queryUserFavorites() {
         // Set reference to the user's directory in the database
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(USERS_PATH + UserAuthentication.getUid());
+        DatabaseReference ref = UserAuthentication.getUserDirectory();
         Log.e(TAG, "User path: " + ref.toString());
 
         // Attach a listener to read the data at our users reference

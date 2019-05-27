@@ -39,12 +39,14 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
     final ListingDetailsOverlayFragment compare_top = new ListingDetailsOverlayFragment();
     final ListingDetailsOverlayFragment compare_bottom = new ListingDetailsOverlayFragment();
 
-
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragment2;
 
     public static DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
+
+    private ListingDetails previousSelectedItem = null;
+    private ListingDetails currentSelectedItem = null;
 
 
     @Override
@@ -122,17 +124,20 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         active = fragment1;
         toggleListingOverlay(false); // testing
         toggleCompareOverlay(false); // testing
+        if(isCompareModeEnabled()) {
+            disableCompareMode();
+        }
     }
 
     /**
      * Shows/hides the listing overlay
      * @param visible - true to show, false to hide
      */
-    private void toggleListingOverlay(boolean visible) {
+    public void toggleListingOverlay(boolean visible) {
             showOverlayFragment(visible, fragment4);
     }
 
-    private void toggleCompareOverlay(boolean visible) {
+    public void toggleCompareOverlay(boolean visible) {
             showOverlayFragment(visible, compare_bottom);
             showOverlayFragment(visible, compare_top);
     }
@@ -163,6 +168,10 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         // Check to see if compare overlay is open
         if (checkIfFragmentIsVisible(compare_bottom) || checkIfFragmentIsVisible(compare_top)) {
             toggleCompareOverlay(false);
+        }
+        // Cancel compare mode
+        if (isCompareModeEnabled()) {
+            disableCompareMode();
         }
 
         else {
@@ -230,8 +239,13 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
      * @param item : the selected listing
      */
     private void selectListingFxn(ListingDetails item) {
-//        makeCompare(item, item); // pass this two different items to compare
-        makeListingPage(item); // single item listing
+        // pass this two different items to compare
+        if(isCompareModeEnabled()) {
+            makeCompare(previousSelectedItem, item);
+        }
+        else {
+            makeListingPage(item); // single item listing
+        }
     }
 
     private void makeListingPage(ListingDetails item) {
@@ -249,7 +263,7 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
      * @param item1
      * @param item2
      */
-    private void makeCompare(ListingDetails item1, ListingDetails item2) {
+    public void makeCompare(ListingDetails item1, ListingDetails item2) {
         Bundle bundle1 = new Bundle();
         Bundle bundle2 = new Bundle();
 
@@ -263,6 +277,32 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         compare_bottom.refresh();
 
         toggleCompareOverlay(true);
+        disableCompareMode(true);
+    }
+
+    public boolean isCompareModeEnabled() {
+        // Set previousSelectedItem to null to cancel compare mode
+        if (previousSelectedItem == null) {
+            return false;
+        }
+        else return true;
+    }
+
+    /**
+     * Cancels compare mode. If silent is true, it won't make a text prompt
+     * @param silent
+     */
+    public void disableCompareMode() {
+        // Set previousSelectedItem to null to cancel compare mode
+        disableCompareMode(false);
+    }
+    public void disableCompareMode(boolean silent) {
+        // Set previousSelectedItem to null to cancel compare mode
+
+        previousSelectedItem = null;
+        if(!silent) {
+            Toast.makeText(getApplicationContext(), ListingButtonActions.STRING_COMPARE_CANCEL, Toast.LENGTH_LONG).show();
+        }
     }
 
 
@@ -629,6 +669,14 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
             menu.removeItem(R.id.action_filters);
         }
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    public ListingDetails getPreviousSelectedItem() {
+        return previousSelectedItem;
+    }
+
+    public void setPreviousSelectedItem(ListingDetails previousSelectedItem) {
+        this.previousSelectedItem = previousSelectedItem;
     }
 }
 
