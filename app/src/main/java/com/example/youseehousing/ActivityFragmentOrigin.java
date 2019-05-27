@@ -95,6 +95,8 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         // Create listing pages
         activeList = new MainHousingListing_PopulateList(ActivityFragmentOrigin.this, fragment2);
 
+
+        // Bottom nav buttons
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -135,11 +137,13 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
      */
     public void toggleListingOverlay(boolean visible) {
             showOverlayFragment(visible, fragment4);
+            ListingDetailsOverlayFragment.hideButtons(fragment4, true);
     }
 
     public void toggleCompareOverlay(boolean visible) {
             showOverlayFragment(visible, compare_bottom);
             showOverlayFragment(visible, compare_top);
+
     }
 
     private void showOverlayFragment(boolean visible, Fragment fragment) {
@@ -253,6 +257,8 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         bundle.putParcelable(BUNDLE_TAG, item);
 
         fragment4.setArguments(bundle);
+
+
         fragment4.refresh();
 
         toggleListingOverlay(true); // testing
@@ -290,7 +296,6 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
 
     /**
      * Cancels compare mode. If silent is true, it won't make a text prompt
-     * @param silent
      */
     public void disableCompareMode() {
         // Set previousSelectedItem to null to cancel compare mode

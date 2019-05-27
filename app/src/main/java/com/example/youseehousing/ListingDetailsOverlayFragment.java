@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -32,6 +33,7 @@ public class ListingDetailsOverlayFragment extends Fragment {
     private Button btnFavorite;
     private Button btnContact;
     private Button btnMap;
+    private LinearLayout buttonsView;
     private RecyclerView imageRecyclerView;
 
 
@@ -59,6 +61,7 @@ public class ListingDetailsOverlayFragment extends Fragment {
         btnContact = (Button) rootView.findViewById(R.id.btnContactInfo);
         btnFavorite = (Button) rootView.findViewById(R.id.btnFavorite);
         btnMap = (Button) rootView.findViewById(R.id.btnMap);
+        buttonsView = (LinearLayout) rootView.findViewById(R.id.buttons);
         imageRecyclerView = (RecyclerView) rootView.findViewById(R.id.image_recycler_view);
 
         try {
@@ -168,19 +171,12 @@ public class ListingDetailsOverlayFragment extends Fragment {
         getFragmentManager().beginTransaction().detach(this).attach(this).commit();
     }
 
-    public void hideButtons(final boolean visible) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
+    public static void hideButtons(final ListingDetailsOverlayFragment fragment, final boolean visible) {
                 if (visible) {
-                    btnCompare.setVisibility(View.VISIBLE);
+                    fragment.buttonsView.setVisibility(View.VISIBLE);
                 }
                 else {
-                    btnCompare.setVisibility(View.GONE);
+                    fragment.buttonsView.setVisibility(View.GONE);
                 }
-                refresh();
-            }
-        });
-
     }
 }
