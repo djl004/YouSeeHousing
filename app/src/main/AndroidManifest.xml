@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.youseehousing">
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".UserPreferences"></activity>
+        android:theme="@style/YouSeeTheme">
+        <activity android:name=".ActivityFragmentOrigin"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".UserPreferences" />
         <activity
             android:name=".AccountCreation"
             android:parentActivityName=".SignUpPage" /> <!-- The meta-data tag is required if you support API level 15 and lower -->
@@ -24,6 +29,13 @@
             android:value=".MainActivity" />
 
         <activity
+            android:name=".MainListingPage"
+            android:parentActivityName=".MainHousingListing" /> <!-- The meta-data tag is required if you support API level 15 and lower -->
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".MainActivity" />
+
+        <activity
             android:name=".SignUpPage"
             android:parentActivityName=".MainActivity" /> <!-- The meta-data tag is required if you support API level 15 and lower -->
         <meta-data
@@ -33,6 +45,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

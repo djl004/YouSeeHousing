@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/recycler_image_item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:adjustViewBounds="true"
+    android:background="#C5C5C5"
+    android:scaleType="centerCrop"
+    app:srcCompat="@drawable/placeholder2">
+    <!-- free  image from https://pixabay.com/vectors/house-home-real-estate-architecture-2026116/ -->
+</ImageView>

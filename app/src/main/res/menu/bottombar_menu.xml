@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/bottombaritem_preferences"
+        android:icon="@drawable/ic_baseline_assignment_ind_24px"
+        android:title="@string/bottombar_preferences"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/bottombaritem_listing"
+        android:icon="@drawable/ic_baseline_home_24px"
+        android:title="@string/bottombar_listing"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/bottombaritem_favorites"
+        android:icon="@drawable/ic_baseline_favorite_border_24px"
+        android:title="@string/bottombar_favorites"
+        app:showAsAction="ifRoom"/>
+
+</menu>
