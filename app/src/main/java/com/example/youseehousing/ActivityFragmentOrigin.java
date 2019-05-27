@@ -24,6 +24,7 @@ import java.util.ArrayList;
 public class ActivityFragmentOrigin extends AppCompatActivity implements ListPageFragment.OnListFragmentInteractionListener {
 
     public static final String BUNDLE_TAG = "ListingDetails";
+    public static final String BUNDLE_VISIBILITY = "buttons";
 
     private BottomNavigationView bottomNavigationView;
 
@@ -96,6 +97,8 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         activeList = new MainHousingListing_PopulateList(ActivityFragmentOrigin.this, fragment2);
 
 
+
+
         // Bottom nav buttons
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -136,8 +139,10 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
      * @param visible - true to show, false to hide
      */
     public void toggleListingOverlay(boolean visible) {
+//            ListingDetailsOverlayFragment.hideButtons(fragment4, !visible);
             showOverlayFragment(visible, fragment4);
-            ListingDetailsOverlayFragment.hideButtons(fragment4, true);
+
+
     }
 
     public void toggleCompareOverlay(boolean visible) {
@@ -254,10 +259,11 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
 
     private void makeListingPage(ListingDetails item) {
         Bundle bundle = new Bundle();
+
         bundle.putParcelable(BUNDLE_TAG, item);
+        bundle.putParcelable(BUNDLE_VISIBILITY, new ListingDetails());
 
         fragment4.setArguments(bundle);
-
 
         fragment4.refresh();
 

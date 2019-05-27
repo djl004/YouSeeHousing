@@ -76,7 +76,17 @@ public class ListingDetailsOverlayFragment extends Fragment {
         // details based on that ListingDetails object
         if (getArguments() != null) {
             try {
+                ListingDetails visibility = (ListingDetails) getArguments().get(ActivityFragmentOrigin.BUNDLE_VISIBILITY);
+                if (visibility != null) {
+                    hideButtons(this, true);
+                }
+            }
+            catch (NullPointerException e) {
+                e.printStackTrace();
+            }
+            try {
                 item = (ListingDetails) getArguments().get("ListingDetails");
+
                 setupRecyclerView(rootView);
                 setText();
                 setupButtons();
