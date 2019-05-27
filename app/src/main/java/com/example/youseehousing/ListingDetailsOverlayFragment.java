@@ -1,5 +1,8 @@
 package com.example.youseehousing;
 
+import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,13 +21,32 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.mapbox.geojson.Feature;
+import com.mapbox.geojson.Point;
+import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.camera.CameraPosition;
+import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
+import com.mapbox.mapboxsdk.geometry.LatLng;
+import com.mapbox.mapboxsdk.maps.MapView;
+import com.mapbox.mapboxsdk.maps.MapboxMap;
+import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
+import com.mapbox.mapboxsdk.maps.Style;
+import com.mapbox.mapboxsdk.style.layers.PropertyFactory;
+import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
+import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
+
+import java.util.List;
+import java.util.Locale;
+
+import static com.mapbox.mapboxsdk.Mapbox.getApplicationContext;
+
 /**
  * This class is the fragment version of the listing details page.
  */
 public class ListingDetailsOverlayFragment extends Fragment {
 
+    private final String TAG = "ListingDetailsFrag";
     private ActivityFragmentOrigin parentActivity;
-
     private ImageView imagesView;
     private TextView addressView;
     private TextView captionView;
@@ -34,24 +56,31 @@ public class ListingDetailsOverlayFragment extends Fragment {
     private Button btnContact;
     private Button btnMap;
     private LinearLayout buttonsView;
+    private LinearLayout mapLayoutView;
     private RecyclerView imageRecyclerView;
-
-
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-
     private ListingDetails item;
+    private MapView mapView;
+    private MapboxMap mapboxMap;
+    private Mapbox mapboxInstance;
+    private double longitude, latitude;
+
+
+
     private final FragmentManager fm = getFragmentManager();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mapboxInstance = Mapbox.getInstance(getContext(),
+                "pk.eyJ1IjoicW93bnNnbWw5MyIsImEiOiJjanZ5emNrMmwwYWo5NDh0cm56bnpsNG1pIn0.JxZmBYwkXwMLb2w7ZdjQIQ");
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_single_overlay, container, false);
+        final View rootView = inflater.inflate(R.layout.activity_listing, container, false);
 
         imagesView = (ImageView) rootView.findViewById(R.id.image);
         addressView = (TextView) rootView.findViewById(R.id.title);
@@ -62,7 +91,10 @@ public class ListingDetailsOverlayFragment extends Fragment {
         btnFavorite = (Button) rootView.findViewById(R.id.btnFavorite);
         btnMap = (Button) rootView.findViewById(R.id.btnMap);
         buttonsView = (LinearLayout) rootView.findViewById(R.id.buttons);
+        mapLayoutView = (LinearLayout) rootView.findViewById(R.id.mapLayout);
         imageRecyclerView = (RecyclerView) rootView.findViewById(R.id.image_recycler_view);
+        mapView = (MapView) rootView.findViewById(R.id.mapView);
+        mapView.onCreate(savedInstanceState);
 
         try {
             parentActivity = (ActivityFragmentOrigin) getActivity();
@@ -79,6 +111,7 @@ public class ListingDetailsOverlayFragment extends Fragment {
                 ListingDetails visibility = (ListingDetails) getArguments().get(ActivityFragmentOrigin.BUNDLE_VISIBILITY);
                 if (visibility != null) {
                     hideButtons(this, true);
+                    hideMap(this, true);
                 }
             }
             catch (NullPointerException e) {
@@ -86,9 +119,9 @@ public class ListingDetailsOverlayFragment extends Fragment {
             }
             try {
                 item = (ListingDetails) getArguments().get("ListingDetails");
-
                 setupRecyclerView(rootView);
                 setText();
+                mapSetup(item.getAddress());
                 setupButtons();
             }
             catch (ClassCastException e) {
@@ -104,7 +137,6 @@ public class ListingDetailsOverlayFragment extends Fragment {
         handleButtonPress(btnFavorite);
         handleButtonPress(btnContact);
         handleButtonPress(btnMap);
-
     }
 
     /**
@@ -188,5 +220,75 @@ public class ListingDetailsOverlayFragment extends Fragment {
                 else {
                     fragment.buttonsView.setVisibility(View.GONE);
                 }
+    }
+
+    public static void hideMap(final ListingDetailsOverlayFragment fragment, final boolean visible) {
+        if (visible) {
+            fragment.mapLayoutView.setVisibility(View.VISIBLE);
+        }
+        else {
+            fragment.mapLayoutView.setVisibility(View.GONE);
+        }
+    }
+
+    private void mapSetup(String userAddress) {
+        Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+        List<Address> addresses;
+
+
+        try {
+            addresses = geocoder.getFromLocationName(userAddress, 1);   // This is causing the internet connection issue
+            Address address = addresses.get(0);
+            longitude = address.getLongitude();
+            latitude = address.getLatitude();
+        } catch (Exception e) {
+            Log.e(TAG, "Exception thrown while converting address to coordinates: " + e.toString());
+        }
+
+
+        // Create the map
+        mapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(MapboxMap mapboxArg) {
+                ListingDetailsOverlayFragment.this.mapboxMap = mapboxArg;
+
+                // Setting camera to the user's address
+                CameraPosition position = new CameraPosition.Builder()
+                        .target(new LatLng(latitude, longitude)).build();
+                try {
+                    mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 100);
+                    Log.d(TAG, "Camera position changed to (lat: " + latitude + ", lng: " + longitude + ")");
+                } catch (Exception e) {
+                    Log.e(TAG, "Exception thrown while changing camera position: " + e.toString());
+                }
+
+                // Setting the map style
+                mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+
+                    @Override
+                    public void onStyleLoaded(@NonNull Style style) {
+
+                        // Map is set up and the style has loaded. Now you can add data or make other map adjustments
+                        // Adding a pin to map
+                        style.addImage("marker-icon-id",
+                                BitmapFactory.decodeResource(
+                                        ListingDetailsOverlayFragment.this.getResources(), R.drawable.mapbox_marker_icon_default));
+
+                        Log.d(TAG, "pin set at (lat: " + latitude + ", lng: " + longitude + ")");
+
+                        GeoJsonSource geoJsonSource = new GeoJsonSource("source-id", Feature.fromGeometry(
+                                Point.fromLngLat(longitude, latitude)));
+                        style.addSource(geoJsonSource);
+
+                        SymbolLayer symbolLayer = new SymbolLayer("layer-id", "source-id");
+                        symbolLayer.withProperties(
+                                PropertyFactory.iconImage("marker-icon-id")
+                        );
+                        style.addLayer(symbolLayer);
+
+                    } // End of onStyleLoaded()
+                });
+            } // End of onMapReady()
+        }); // End of .getMapAsync()
     }
 }
