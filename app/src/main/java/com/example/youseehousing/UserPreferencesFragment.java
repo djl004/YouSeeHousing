@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -38,7 +39,7 @@ public class UserPreferencesFragment extends Fragment {
     //Spinner input
     private AppCompatSpinner smokingInput,noiseInput,wakeInput,sleepInput,guestInput;
     private EditText otherInput;
-    //private Button update;
+    private Button update;
     Account uInfo;
     View view;
 
@@ -64,15 +65,15 @@ public class UserPreferencesFragment extends Fragment {
         sleepInput = view.findViewById(R.id.sleep);
         guestInput = view.findViewById(R.id.guest);
 
-        //update = view.findViewById(R.id.doneUserPreferences);
+        update = view.findViewById(R.id.update);
 
-/*        update.setOnClickListener(new View.OnClickListener() {
+        update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateFxn();
             }
         });
-        */
+
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
