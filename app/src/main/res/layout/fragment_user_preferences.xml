@@ -288,15 +288,14 @@
 
             </RelativeLayout>
 
+            <Button
+                android:id="@+id/update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="Update" />
+
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/update"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="Update"
-        tools:layout_editor_absoluteY="712dp" />
 
 </android.support.constraint.ConstraintLayout>

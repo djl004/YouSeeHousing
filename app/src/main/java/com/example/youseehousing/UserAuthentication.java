@@ -1,6 +1,5 @@
 package com.example.youseehousing;
 
-import android.app.LauncherActivity;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -10,7 +9,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,15 +19,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.auth.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
-
-import io.opencensus.common.Function;
 
 public class UserAuthentication {
     private static String TAG = "UserAuthentication";
@@ -48,56 +42,56 @@ public class UserAuthentication {
      * @return
      */
     public static void addToFavorites(final ListingDetails item) {
-//        final DatabaseReference ref = getUserDirectory();
-//        final ArrayList<String> current_favorites = new ArrayList<String>();
-//
-//        if (ref != null && item != null) {
-//            Log.e(TAG, "Adding address " + item.getAddress() + "to favorites!");
-//            // Set reference to the user's directory in the database
-//            final ArrayList<String> favorites = new ArrayList<String>();
-//            Log.e(TAG, "User path: " + ref.toString());
-//
-//            // Attach a listener to read the data at our users reference
-//            ref.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    ArrayList<String> favs = dataSnapshot.getValue(Account.class).getFavorites();
-//                    if (favs == null) {
-//                        return;
-//                    }
-//                    for (String fav : favs) {
-//                        if (fav == null) {
-//                            continue;
-//                        }
-//                        if( fav.equals(item.getAddress()) ) {
-//                            Log.i(TAG, "Favorite exists already");
-//                            return;
-//                        }
-//                        current_favorites.add(fav);
-//                    }
-//                    // If no duplicates, push to database
-//                    Map<String, Object> favorite_map = new HashMap<>();
-//                    favorite_map.put(Integer.toString(current_favorites.size()), item.getAddress());
-//
-//                    ref.child("favorites").updateChildren(favorite_map, new DatabaseReference.CompletionListener() {
-//                        @Override
-//                        public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-//                            if (databaseError != null) {
-//                                System.out.println("Data could not be saved " + databaseError.getMessage());
-//                            } else {
-//                                System.out.println("Data saved successfully.");
-//                            }
-//                        }
-//                    });
-//
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//                    Log.e(TAG, "The read failed: " + databaseError.getCode());
-//                }
-//            });
-//        }
+        final DatabaseReference ref = getUserDirectory();
+        final ArrayList<String> current_favorites = new ArrayList<String>();
+
+        if (ref != null && item != null) {
+            Log.e(TAG, "Adding address " + item.getAddress() + "to favorites!");
+           // Set reference to the user's directory in the database
+            final ArrayList<String> favorites = new ArrayList<String>();
+            Log.e(TAG, "User path: " + ref.toString());
+
+            // Attach a listener to read the data at our users reference
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    ArrayList<String> favs = dataSnapshot.getValue(Account.class).getFavorites();
+                    if (favs == null) {
+                        return;
+                    }
+                    for (String fav : favs) {
+                        if (fav == null) {
+                            continue;
+                        }
+                        if( fav.equals(item.getAddress()) ) {
+                            Log.i(TAG, "Favorite exists already");
+                            return;
+                        }
+                        current_favorites.add(fav);
+                    }
+                    // If no duplicates, push to database
+                    Map<String, Object> favorite_map = new HashMap<>();
+                    favorite_map.put(Integer.toString(current_favorites.size()), item.getAddress());
+
+                    ref.child("favorites").updateChildren(favorite_map, new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                            if (databaseError != null) {
+                                System.out.println("Data could not be saved " + databaseError.getMessage());
+                            } else {
+                                System.out.println("Data saved successfully.");
+                            }
+                        }
+                    });
+
+                }
+
+                  @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.e(TAG, "The read failed: " + databaseError.getCode());
+                }
+            });
+        }
     }
 
 

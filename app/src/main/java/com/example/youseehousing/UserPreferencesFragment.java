@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatSpinner;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -133,24 +131,7 @@ public class UserPreferencesFragment extends Fragment {
             guestInput.setSelection(getIndex(guestInput,uInfo.getGuest()));
             wakeInput.setSelection(getIndex(wakeInput,uInfo.getWake()));
             sleepInput.setSelection(getIndex(sleepInput,uInfo.getSleep()));
-
-            //set the edit text box with the info stored in database
-            otherInput.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    otherInput.setText(other);
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-            });
+            otherInput.setText(uInfo.getOther());
 
 
         }
