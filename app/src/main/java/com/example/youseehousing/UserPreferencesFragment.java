@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -109,11 +108,12 @@ public class UserPreferencesFragment extends Fragment {
             // Log.d(TAG,"Before set name: " + ds.child(Uid).getValue(Account.class).getName());
             uInfo.setName( ds.child(Uid).getValue(Account.class).getName()); //set the name
             uInfo.setEmail(ds.child(Uid).getValue(Account.class).getEmail()); //set the email
+            uInfo.setOther(ds.child(Uid).getValue(Account.class).getOther()); //set the other
             uInfo.setSmoking(ds.child(Uid).getValue(Account.class).getSmoking());
-            uInfo.setGuest(ds.child(Uid).getValue(Account.class).getGuest());
             uInfo.setWake(ds.child(Uid).getValue(Account.class).getWake());
             uInfo.setSleep(ds.child(Uid).getValue(Account.class).getSleep());
-            uInfo.setOther(ds.child(Uid).getValue(Account.class).getOther());
+            uInfo.setGuest(ds.child(Uid).getValue(Account.class).getGuest());
+            uInfo.setNoise(ds.child(Uid).getValue(Account.class).getNoise());
 
             //uInfo.setFavorites(ds.child(Uid).getValue(Account.class).getFavorites()); // set the favorites
             Log.d(TAG, "name:" + ds.child(Uid).getValue());
@@ -128,10 +128,10 @@ public class UserPreferencesFragment extends Fragment {
             userEmail.setText(uInfo.getEmail());
 
             //set the database selection
-            smokingInput.setSelection(((ArrayAdapter)smokingInput.getAdapter()).getPosition(smoking));
-            guestInput.setSelection(((ArrayAdapter)guestInput.getAdapter()).getPosition(guest));
-            wakeInput.setSelection(((ArrayAdapter)wakeInput.getAdapter()).getPosition(wake));
-            sleepInput.setSelection(((ArrayAdapter)sleepInput.getAdapter()).getPosition(sleep));
+            smokingInput.setSelection(getIndex(smokingInput,uInfo.getSmoking()));
+            guestInput.setSelection(getIndex(guestInput,uInfo.getGuest()));
+            wakeInput.setSelection(getIndex(wakeInput,uInfo.getWake()));
+            sleepInput.setSelection(getIndex(sleepInput,uInfo.getSleep()));
 
             //set the edit text box with the info stored in database
             otherInput.addTextChangedListener(new TextWatcher() {
@@ -170,7 +170,22 @@ public class UserPreferencesFragment extends Fragment {
         myRef.child("users").child(Uid).child("wake").setValue(wake);
         myRef.child("users").child(Uid).child("sleep").setValue(sleep);
         myRef.child("users").child(Uid).child("guest").setValue(guest);
-
-
     }
+
+    private int getIndex(AppCompatSpinner spinner,String value){
+        String list[] = new String[]{"alpha","beta","charlie","delta"};
+        for(int i =0; i < list.length; i++){
+            if(value != null) {
+                if (list[i].equals(value)) {
+                    return i;
+                }
+            }
+            else{
+                Log.d(TAG,"NO VALUE BEING GET");
+            }
+        }
+        Log.d(TAG,"NO MATCH: " + value);
+        return 0;
+    }
+
 }
