@@ -2,12 +2,14 @@ package com.example.youseehousing;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatSpinner;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +29,14 @@ public class UserPreferences extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
-    private String Uid;
+    private String Uid,smoking,noise,wake,sleep,guest,other;
+
+    //Spinner input
+    private AppCompatSpinner smokingInput,noiseInput,wakeInput,sleepInput,guestInput;
+    private EditText otherInput;
+    private Button update;
+
+    Account uInfo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +49,14 @@ public class UserPreferences extends AppCompatActivity {
         myRef = database.getReference();
         FirebaseUser user = mAuth.getCurrentUser();
         Uid = user.getUid();
+        update = findViewById(R.id.doneUserPreferences);
+
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateFxn();
+            }
+        });
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -70,7 +87,7 @@ public class UserPreferences extends AppCompatActivity {
 
     private void showData(DataSnapshot dataSnapshot) {
         for(DataSnapshot ds : dataSnapshot.getChildren()){
-            Account uInfo = new Account();
+            uInfo = new Account();
            // Log.d(TAG,"Before set name: " + ds.child(Uid).getValue(Account.class).getName());
             uInfo.setName( ds.child(Uid).getValue(Account.class).getName()); //set the name
             uInfo.setEmail(ds.child(Uid).getValue(Account.class).getEmail()); //set the email
@@ -88,11 +105,42 @@ public class UserPreferences extends AppCompatActivity {
 
         }
     }
-
+/*
     public void doneUserPreferencesOnClick(View view) {
         Intent myIntent = new Intent(UserPreferences.this, MainActivity.class);
         startActivity(myIntent);
         Toast.makeText(getApplicationContext(), "Please log in",
                 Toast.LENGTH_LONG).show();
+    }
+    */
+
+    private void updateFxn(){
+        otherInput = findViewById(R.id.other);
+        noiseInput = findViewById(R.id.noise);
+        smokingInput = findViewById(R.id.smoking);
+        wakeInput = findViewById(R.id.wake);
+        sleepInput = findViewById(R.id.sleep);
+        guestInput = findViewById(R.id.guest);
+
+        other = otherInput.getText().toString();
+        noise = noiseInput.getSelectedItem().toString();
+        smoking = smokingInput.getSelectedItem().toString();
+        wake = wakeInput.getSelectedItem().toString();
+        sleep = sleepInput.getSelectedItem().toString();
+        guest = guestInput.getSelectedItem().toString();
+
+
+        myRef.child("users").child(Uid).child("other").setValue(other);
+        myRef.child("users").child(Uid).child("noise").setValue(noise);
+        myRef.child("users").child(Uid).child("smoking").setValue(smoking);
+        myRef.child("users").child(Uid).child("wake").setValue(wake);
+        myRef.child("users").child(Uid).child("sleep").setValue(sleep);
+        myRef.child("users").child(Uid).child("guest").setValue(guest);
+
+        Intent myIntent = new Intent(UserPreferences.this, MainActivity.class);
+        startActivity(myIntent);
+        Toast.makeText(getApplicationContext(), "Please log in",
+                Toast.LENGTH_LONG).show();
+
     }
 }
