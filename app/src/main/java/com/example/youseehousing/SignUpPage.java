@@ -21,8 +21,6 @@ import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-
 
 
 public class SignUpPage extends AppCompatActivity {
@@ -98,11 +96,11 @@ public class SignUpPage extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
         /** Suggested replacement for above else if case
-        else if(!validDate(dof)){
-            Toast.makeText(getApplicationContext(), "Please enter your date of birth in a format similar to this: 01/30/1999",
-                    Toast.LENGTH_LONG).show();
-        }
-        */
+         else if(!validDate(dof)){
+         Toast.makeText(getApplicationContext(), "Please enter your date of birth in a format similar to this: 01/30/1999",
+         Toast.LENGTH_LONG).show();
+         }
+         */
 
         // Check if city is entered
         else if(city.length() == 0) {
@@ -129,7 +127,7 @@ public class SignUpPage extends AppCompatActivity {
                             uid = mAuth.getInstance().getCurrentUser().getUid();
                             Log.d(TAG,uid);
                             profileSetUp();
-                            Intent myIntent = new Intent(SignUpPage.this, UserPreferences.class);
+                            Intent myIntent = new Intent(SignUpPage.this, ActivityFragmentOrigin.class);
                             startActivity(myIntent);
 
                         }
@@ -160,6 +158,11 @@ public class SignUpPage extends AppCompatActivity {
         user.setGender("male");
         user.setEmail(email);
         user.setBirth(dof);
+        user.setOther("");
+        user.setWake("");
+        user.setSleep("");
+        user.setGuest("");
+        user.setSmoking("");
         user.setFavorites(Account.makeEmptyFavorites());
         //Log.d(TAG,  user.getBirth());
         Log.d(TAG, uid);

@@ -57,6 +57,7 @@
 
 
                         <TextView
+                            android:id="@+id/name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="0sp"
@@ -84,7 +85,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/textView12"
+                            android:id="@+id/email"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="0sp"
@@ -165,6 +166,7 @@
                             android:textSize="18sp" />
 
                         <android.support.v7.widget.AppCompatSpinner
+                            android:id="@+id/smoking"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawSelectorOnTop="true"
@@ -188,6 +190,7 @@
                             android:textSize="18sp" />
 
                         <android.support.v7.widget.AppCompatSpinner
+                            android:id="@+id/wake"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawSelectorOnTop="true"
@@ -195,7 +198,7 @@
                             android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
 
                         <android.support.v7.widget.AppCompatSpinner
-                            android:id="@+id/appCompatSpinner"
+                            android:id="@+id/sleep"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="0"
@@ -221,6 +224,7 @@
                             android:textSize="18sp" />
 
                         <android.support.v7.widget.AppCompatSpinner
+                            android:id="@+id/guest"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawSelectorOnTop="true"
@@ -245,6 +249,7 @@
                             android:textSize="18sp" />
 
                         <android.support.v7.widget.AppCompatSpinner
+                            android:id="@+id/noise"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawSelectorOnTop="true"
@@ -269,7 +274,7 @@
                             android:textSize="18sp" />
 
                         <EditText
-                            android:id="@+id/editText"
+                            android:id="@+id/other"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="0"
@@ -280,7 +285,15 @@
 
                     </LinearLayout>
                 </LinearLayout>
+
             </RelativeLayout>
+
+            <Button
+                android:id="@+id/update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="Update" />
 
         </LinearLayout>
     </ScrollView>

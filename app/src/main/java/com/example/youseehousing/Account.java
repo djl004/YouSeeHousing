@@ -1,8 +1,11 @@
 package com.example.youseehousing;
 
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  Account class for firebase realtime database setup
@@ -11,11 +14,20 @@ import java.util.ArrayList;
 @IgnoreExtraProperties
 public class Account {
     private static final String TAG = "Account";
+    //user signup
     private String name;
     private String email;
     private String birth;
     private String gender;
     private ArrayList<String> favorites;
+    //user profile
+    private String smoking;
+    private String noise;
+    private String wake;
+    private String sleep;
+    private String guest;
+    private String other;
+
 
     public Account() {
     }
@@ -26,6 +38,23 @@ public class Account {
         this.birth = birth;
         this.gender = gender;
         this.favorites = favorites;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("name",name);
+        result.put("email",email);
+        result.put("birth", birth);
+        result.put("gender", gender);
+        result.put("favorite", favorites);
+        result.put("smoking", smoking);
+        result.put("wake",wake);
+        result.put("sleep",sleep);
+        result.put("guest",guest);
+        result.put("noise",noise);
+        result.put("other",other);
+        return result;
     }
 
     public String getName() {
@@ -75,5 +104,53 @@ public class Account {
 
     public static ArrayList<String> makeEmptyFavorites() {
         return new ArrayList<String>();
+    }
+
+    public String getNoise() {
+        return noise;
+    }
+
+    public void setNoise(String noise) {
+        this.noise = noise;
+    }
+
+    public String getWake() {
+        return wake;
+    }
+
+    public void setWake(String wake) {
+        this.wake = wake;
+    }
+
+    public String getSleep() {
+        return sleep;
+    }
+
+    public void setSleep(String sleep) {
+        this.sleep = sleep;
+    }
+
+    public String getSmoking() {
+        return smoking;
+    }
+
+    public void setSmoking(String smoking) {
+        this.smoking = smoking;
+    }
+
+    public String getGuest() {
+        return guest;
+    }
+
+    public void setGuest(String guest) {
+        this.guest = guest;
+    }
+
+    public String getOther() {
+        return other;
+    }
+
+    public void setOther(String other) {
+        this.other = other;
     }
 }
