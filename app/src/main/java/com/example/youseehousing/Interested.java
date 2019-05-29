@@ -11,7 +11,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 /**
- *
+ * This class will contain a get interested and a set interested method
  *
  * **/
 public class Interested {
@@ -19,6 +19,9 @@ public class Interested {
     private String TAG = "interested";
 
     // listingId is address field
+    /**
+     * This function takes a userId and inputs it into a listing's interested field.
+     * **/
     public void setInterested(final String userId, final String listingId) {
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
