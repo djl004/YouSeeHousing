@@ -351,6 +351,7 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                 mBuilder.setView(mView);
                 dialog = mBuilder.create();
                 dialog.show();
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.holo_blue_bright);
                 return true;
 
             case R.id.action_dropdown_price:
@@ -375,7 +376,7 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                 mBuilder.setView(mView);
                 dialog = mBuilder.create();
                 dialog.show();
-
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.holo_blue_bright);
                 return true;
             case R.id.action_dropdown_bedsbathrooms:
                 mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
@@ -409,12 +410,13 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                 mBuilder.setView(mView);
                 dialog = mBuilder.create();
                 dialog.show();
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
                 return true;
             case R.id.action_dropdown_extras:
                 final String[] values = {" Washer/Dryer "," Furnished "," Parking "," Pets "};
                 final ArrayList itemsSelected = new ArrayList();
                 mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
-                mBuilder.setTitle("Select Your Choice");
+                mBuilder.setTitle("Filter by Included Amenities");
                 mBuilder.setMultiChoiceItems(values, null,
                         new DialogInterface.OnMultiChoiceClickListener() {
                             @Override
@@ -427,20 +429,20 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                                 }
                             }
                         })
-                        .setPositiveButton("Done!", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 //Your logic when OK button is clicked
                             }
                         })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                             }
                         });
                 dialog = mBuilder.create();
                 dialog.show();
-
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
                 return true;
             case R.id.action_dropdown_lease:
                 mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
@@ -474,12 +476,22 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                 mBuilder.setView(mView);
                 dialog = mBuilder.create();
                 dialog.show();
-
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
                 return true;
             case R.id.action_dropdown_sqft:
                 mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
-                mView = getLayoutInflater().inflate(R.layout.dialog_minmax, null);
+                mView = getLayoutInflater().inflate(R.layout.dialog_doublespinner, null);
                 mBuilder.setTitle("Set Square Foot (Min/Max) Filter");
+
+                mSpinner2 = (Spinner) ((View) mView).findViewById(R.id.spinner1);
+                adapter2 = new ArrayAdapter<String>(ActivityFragmentOrigin.this, android.R.layout.simple_spinner_item,
+                        getResources().getStringArray(R.array.sizeList));
+                mSpinner2.setAdapter(adapter2);
+
+                mSpinner3 = (Spinner) ((View) mView).findViewById(R.id.spinner2);
+                adapter3 = new ArrayAdapter<String>(ActivityFragmentOrigin.this, android.R.layout.simple_spinner_item,
+                        getResources().getStringArray(R.array.sizeList));
+                mSpinner3.setAdapter(adapter3);
 
                 mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
@@ -498,7 +510,7 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                 mBuilder.setView(mView);
                 dialog = mBuilder.create();
                 dialog.show();
-
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
                 return true;
 
         }

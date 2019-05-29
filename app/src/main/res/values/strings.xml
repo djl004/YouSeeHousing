@@ -50,17 +50,23 @@
     </string-array>
 
     <string-array name="sizeList">
-        <item>alpha…</item>
-        <item>beta</item>
-        <item>charlie</item>
-        <item>delta</item>
+        <item>500 sqft</item>
+        <item>600 sqft</item>
+        <item>700 sqft</item>
+        <item>800 sqft</item>
+        <item>900 sqft</item>
+        <item>1000+ sqft</item>
+
     </string-array>
 
     <string-array name="bedList">
         <item>1 Studio</item>
         <item>1 Bed</item>
+        <item>1.5 Bed</item>
         <item>2 Bed</item>
+        <item>2.5 Bed</item>
         <item>3 Bed</item>
+        <item>3.5 Bed</item>
         <item>4+ Bed</item>
     </string-array>
 
