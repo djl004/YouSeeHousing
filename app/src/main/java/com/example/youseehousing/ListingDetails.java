@@ -34,6 +34,7 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
     private String price;
     private String unitLease;
     private String washerDryer;
+    private String furnished;
 
     private final String[] queryList = {    "address", "bath", "bed",
                                             "buildingLease", "contact", "desc",
@@ -50,13 +51,15 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
                           String contact,
                           String desc,
                           String dim,
+                          String furnished,
                           String link,
                           String parking,
                           ArrayList<String> pictures,
                           String pet,
                           String price,
                           String unitLease,
-                          String washerDryer) {
+                          String washerDryer
+                          ) {
 //        this.id = id;
         this.address = address;
         this.bath = bath;
@@ -65,6 +68,7 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
         this.contact = contact;
         this.desc = desc;
         this.dim = dim;
+        this.furnished = furnished;
         this.link = link;
         this.parking = parking;
         this.pictures = pictures;
@@ -83,6 +87,7 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
         this.contact = in.readString();
         this.desc = in.readString();
         this.dim = in.readString();
+        this.furnished = in.readString();
         this.link = in.readString();
         this.parking = in.readString();
         this.pictures = (ArrayList<String>) in.readSerializable();
@@ -101,6 +106,10 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
 //    public String getId() {
 //        return this.id;
 //    }
+
+    public String getFurnished() {
+        return furnished;
+    }
     public String getAddress() {
         return this.address;
     }
@@ -187,6 +196,9 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
     public void setWasherDryer(String washerDryer) {
         this.washerDryer = washerDryer;
     }
+    public void setFurnished(String furnished) {
+        this.furnished = furnished;
+    }
 
     // Begin implemented Parcelable methods
 
@@ -249,6 +261,7 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
             String contact = document.get("contact").toString(); // contact
             String desc = document.get("desc").toString(); // desc
             String dim = document.get("dim").toString(); // dim
+            String furnished = document.get("furnished").toString(); // furnished
             String link = document.get("link").toString(); // link
             String parking = document.get("parking").toString(); // parking
 
@@ -266,7 +279,7 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
             Log.i(TAG, "Queried db: " + address);
 
             return new ListingDetails(address, bath, bed, buildingLease, contact,
-                    desc, dim, link, parking, pictures, pet, price, unitLease, washerDryer);
+                    desc, dim, furnished, link, parking, pictures, pet, price, unitLease, washerDryer);
         } else {
             return null;
         }
