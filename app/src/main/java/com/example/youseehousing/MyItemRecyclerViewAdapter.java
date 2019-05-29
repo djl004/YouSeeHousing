@@ -96,7 +96,7 @@ public class MyItemRecyclerViewAdapter extends GenericItemRecyclerViewAdapter {
             super(view);
             mIdView = (TextView) view.findViewById(R.id.item_number);
             mThumbnailView = (ImageView) view.findViewById(R.id.thumbnail);
-            mTitleView = (TextView) view.findViewById(R.id.title);
+            mTitleView = (TextView) view.findViewById(R.id.thumbnail_address);
             mDetailsView = (TextView) view.findViewById(R.id.thumbnail_caption);
         }
 

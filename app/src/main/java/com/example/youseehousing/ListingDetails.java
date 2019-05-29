@@ -37,7 +37,7 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
 
     private final String[] queryList = {    "address", "bath", "bed",
                                             "buildingLease", "contact", "desc",
-                                            "dim", "link", "parking",
+                                            "dim", "furnished", "link", "parking",
                                             "pictures", "pet", "price",
                                             "unitLease", "washerDryer"};
 
@@ -241,6 +241,7 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
 //                "dim", "link", "parking",
 //                "pictures", "pet", "price",
 //                "unitLease", "washerDryer"
+        // TODO: If any field is null, return a default string.
         if (document.exists()) {
             String address = document.get("address").toString(); // Address
             String bath = document.get("bath").toString(); // Bath
