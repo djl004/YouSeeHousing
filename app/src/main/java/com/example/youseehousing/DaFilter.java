@@ -25,7 +25,7 @@ package com.example.youseehousing;
  *           Key: "hasUtils",      Value: "true"
  * @return the filtered ArrayList of Listings
  */
-public class daFilter {
+public class DaFilter {
 
     private String priceMin;
     private String priceMax;
@@ -40,15 +40,15 @@ public class daFilter {
     private String sqftMax;
     private String furnished;
 
-    private static daFilter theFilter;
+    private static DaFilter theFilter;
 
-    private daFilter(){
+    private DaFilter(){
 
     }
 
-    public static daFilter getInstance(){
+    public static DaFilter getInstance(){
         if(theFilter == null){
-            theFilter = new daFilter();
+            theFilter = new DaFilter();
         }
         return theFilter;
     }
@@ -58,7 +58,7 @@ public class daFilter {
         String[] bounds;
         String[] boundsOfPrice;
 
-        if(priceMin != null && priceMax != null){
+        if(priceMin != null || priceMax != null){
             int min = Integer.parseInt(priceMin);
             int max = Integer.parseInt(priceMax);
 
@@ -78,7 +78,7 @@ public class daFilter {
         }
 
         if(distance != null){
-
+            // null for complication so far
         }
 
         if(pets != null){
@@ -101,14 +101,55 @@ public class daFilter {
         }
 
         if(leaseLength != null){
+            String searchTerm = leaseLength.replace(" Month", "");
+            searchTerm = searchTerm.replace(" Months", "");
+            if(searchTerm.equals("12+")) searchTerm = searchTerm.replace("+","");
 
+            if(!pending.getBuildingLease().contains(searchTerm) && !pending.getUnitLease().contains(searchTerm)) return false;
         }
 
         if(beds != null){
+            String searchTerm = beds.replace(" Bed","");
+            boolean studio = false;
+            if(searchTerm.contains("Studio")){
+                searchTerm = searchTerm.replace(" Studio", "");
+                studio = true;
+            }
+            if(searchTerm.equals("4+")){
+                searchTerm = searchTerm.replace("+", "");
+                String lotsOfBeds = Character.toString(pending.getBed().charAt(0));
+                int searchInt = Integer.parseInt(searchTerm);
+                int focusInt = Integer.parseInt(lotsOfBeds);
+                if(focusInt < searchInt) return false;
+            }
 
+            if(studio){
+                if(!pending.getBed().contains("Studio")) return false;
+            }
+            if(searchTerm.contains(".5")){
+                searchTerm = searchTerm.replace(".5", "½");
+            }
+            if(!pending.getBed().contains(searchTerm)) return false;
         }
 
-        if(sqftMin != null && sqftMax != null){
+        if(baths != null){
+            String searchTerm = baths.replace(" Bathroom","");
+
+            if(searchTerm.equals("3+")){
+                searchTerm = searchTerm.replace("+", "");
+                String lotsOfBaths = Character.toString(pending.getBed().charAt(0));
+                int searchInt = Integer.parseInt(searchTerm);
+                int focusInt = Integer.parseInt(lotsOfBaths);
+                if(focusInt < searchInt) return false;
+            }
+
+            if(searchTerm.contains(".5")){
+                searchTerm = searchTerm.replace(".5", "½");
+            }
+            if(!pending.getBed().contains(searchTerm)) return false;
+        }
+
+        if(sqftMin != null || sqftMax != null){
             int min = Integer.parseInt(sqftMin);
             int max = Integer.parseInt(sqftMax);
             String unPainify = pending.getDim();
@@ -189,12 +230,12 @@ public class daFilter {
         this.furnished = furnished;
     }
 
-    public static daFilter getTheFilter() {
+    public static DaFilter getTheFilter() {
         return theFilter;
     }
 
-    public static void setTheFilter(daFilter theFilter) {
-        daFilter.theFilter = theFilter;
+    public static void setTheFilter(DaFilter theFilter) {
+        DaFilter.theFilter = theFilter;
     }
 
     public String getPriceMin() {
