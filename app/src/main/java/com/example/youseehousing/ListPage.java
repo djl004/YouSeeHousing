@@ -71,6 +71,7 @@ public class ListPage {
     public void addListingToPage(QueryDocumentSnapshot document) {
         if(getListType() != ListPageFragment.ListType.IMAGE_RECYCLER) {
             ListingDetails newListing = ListingDetails.makeListingDetailsFromDocumentSnapshot(document);
+            // TODO: add filter here
             if (newListing != null) {
                 ITEMS.add(newListing);
             }

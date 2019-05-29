@@ -15,11 +15,17 @@
         <item>delta</item>
     </string-array>
 
-    <string-array name="locationList">
-        <item>alpha…</item>
-        <item>beta</item>
-        <item>charlie</item>
-        <item>delta</item>
+    <string-array name="distanceList">
+        <item>1 Mile</item>
+        <item>2 Miles</item>
+        <item>3 Miles</item>
+        <item>4 Miles</item>
+        <item>5 Miles</item>
+        <item>10 Miles</item>
+        <item>15 Miles</item>
+        <item>20+ Miles</item>
+
+
     </string-array>
 
     <string-array name="priceList">
@@ -51,17 +57,19 @@
     </string-array>
 
     <string-array name="bedList">
-        <item>alpha…</item>
-        <item>beta</item>
-        <item>charlie</item>
-        <item>delta</item>
+        <item>1 Studio</item>
+        <item>1 Bed</item>
+        <item>2 Bed</item>
+        <item>3 Bed</item>
+        <item>4+ Bed</item>
     </string-array>
 
     <string-array name="bathroomList">
-        <item>alpha…</item>
-        <item>beta</item>
-        <item>charlie</item>
-        <item>delta</item>
+        <item>1 Bathroom</item>
+        <item>1.5 Bathroom</item>
+        <item>2 Bathroom</item>
+        <item>2.5 Bathroom</item>
+        <item>3+ Bathroom</item>
     </string-array>
 
     <string-array name="petsList">
@@ -86,10 +94,11 @@
     </string-array>
 
     <string-array name="durationList">
-        <item>alpha…</item>
-        <item>beta</item>
-        <item>charlie</item>
-        <item>delta</item>
+        <item>1 Month</item>
+        <item>3 Months</item>
+        <item>4 Months</item>
+        <item>9 Months</item>
+        <item>12+ Months</item>
     </string-array>
 
     <string-array name="smokingList">

@@ -15,7 +15,7 @@
             <group>
 
                 <item
-                    android:id="@+id/action_dropdown_location"
+                    android:id="@+id/action_dropdown_distance"
                     android:title="by Location" />
 
                 <item
@@ -23,28 +23,17 @@
                     android:title="by Price" />
 
                 <item
-                    android:id="@+id/action_dropdown_washerdryer"
-                    android:title="by Washer/Dryer" />
+                    android:id="@+id/action_dropdown_bedsbathrooms"
+                    android:title="by #Beds/#Bathrooms" />
 
                 <item
-                    android:id="@+id/action_dropdown_furnishedaccommodations"
-                    android:title="by Furnished Accommodations" />
+                    android:id="@+id/action_dropdown_sqft"
+                    android:title="by Square Feet" />
+
 
                 <item
-                    android:id="@+id/action_dropdown_sizebedsbathrooms"
-                    android:title="by Size/#Beds/#Bathrooms" />
-
-                <item
-                    android:id="@+id/action_dropdown_petsallowed"
-                    android:title="by Pets Allowed"/>
-
-                <item
-                    android:id="@+id/action_dropdown_vacancies"
-                    android:title="by # of Vacancies" />
-
-                <item
-                    android:id="@+id/action_dropdown_utilities"
-                    android:title="by Utilities Included" />
+                    android:id="@+id/action_dropdown_extras"
+                    android:title="by Parking/Pets/Washer/etc" />
 
                 <item
                     android:id="@+id/action_dropdown_lease"

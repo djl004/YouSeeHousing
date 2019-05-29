@@ -49,7 +49,15 @@ public class ListingDetailsOverlayFragment extends Fragment {
     private ActivityFragmentOrigin parentActivity;
     private ImageView imagesView;
     private TextView addressView;
-    private TextView captionView;
+    private TextView priceView;
+    private TextView dimensionsView;
+    private TextView petsView;
+    private TextView bedsView;
+    private TextView bathsView;
+    private TextView parkingView;
+    private TextView furnishedView;
+    private TextView buildingLeaseView;
+    private TextView contactInfoView;
     private TextView descriptionView;
     private Button btnCompare;
     private Button btnFavorite;
@@ -70,6 +78,7 @@ public class ListingDetailsOverlayFragment extends Fragment {
 
     private final FragmentManager fm = getFragmentManager();
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,17 +91,36 @@ public class ListingDetailsOverlayFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.activity_listing, container, false);
 
+        // deprecated image field
         imagesView = (ImageView) rootView.findViewById(R.id.image);
-        addressView = (TextView) rootView.findViewById(R.id.title);
-        captionView = (TextView) rootView.findViewById(R.id.caption);
-        descriptionView = (TextView) rootView.findViewById(R.id.description);
+
+        // text fields
+        addressView = (TextView) rootView.findViewById(R.id.listing_address);
+        priceView = (TextView) rootView.findViewById(R.id.listing_price);
+        dimensionsView = (TextView) rootView.findViewById(R.id.listing_dimensions);
+        petsView = (TextView) rootView.findViewById(R.id.listing_pets);
+        bedsView = (TextView) rootView.findViewById(R.id.listing_beds);
+        bathsView = (TextView) rootView.findViewById(R.id.listing_baths);
+        parkingView = (TextView) rootView.findViewById(R.id.listing_parking);
+        furnishedView = (TextView) rootView.findViewById(R.id.listing_furnished);
+        buildingLeaseView = (TextView) rootView.findViewById(R.id.listing_buildingLease);
+        contactInfoView = (TextView) rootView.findViewById(R.id.listing_contactInfo);
+        descriptionView = (TextView) rootView.findViewById(R.id.listing_description);
+
+        // buttons
         btnCompare = (Button) rootView.findViewById(R.id.btnCompare);
         btnContact = (Button) rootView.findViewById(R.id.btnContactInfo);
         btnFavorite = (Button) rootView.findViewById(R.id.btnFavorite);
         btnMap = (Button) rootView.findViewById(R.id.btnMap);
+
+        // hideable layouts
         buttonsView = (LinearLayout) rootView.findViewById(R.id.buttons);
         mapLayoutView = (LinearLayout) rootView.findViewById(R.id.mapLayout);
+
+        // swipeable images
         imageRecyclerView = (RecyclerView) rootView.findViewById(R.id.image_recycler_view);
+
+        // map
         mapView = (MapView) rootView.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
 
@@ -190,8 +218,16 @@ public class ListingDetailsOverlayFragment extends Fragment {
     private void setText() {
         try {
             addressView.setText(item.getAddress());
-            captionView.setText(item.getBath() + " " + item.getBed());
+            priceView.setText(item.getPrice());
             descriptionView.setText(item.getDesc());
+            dimensionsView.setText(item.getDim());
+            petsView.setText(item.getPet());
+            bedsView.setText(item.getBed());
+            bathsView.setText(item.getBath());
+            parkingView.setText(item.getParking());
+//            furnishedView.setText(item.); // TODO: I forgot to add furnished...
+            buildingLeaseView.setText(item.getBuildingLease());
+            contactInfoView.setText(item.getContact());
         }
         catch (NullPointerException e1) {
             // Nothing was passed from previous activity
