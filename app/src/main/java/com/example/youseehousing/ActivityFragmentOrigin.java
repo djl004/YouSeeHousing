@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -317,13 +318,13 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
 
 
         switch (item.getItemId()) {
-            case R.id.action_dropdown_location:
+            case R.id.action_dropdown_distance:
                 mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
                 mView = getLayoutInflater().inflate(R.layout.dialog_spinner, null);
-                mBuilder.setTitle("Set Location Filter");
+                mBuilder.setTitle("Set Distance Filter");
                 mSpinner = (Spinner) ((View) mView).findViewById(R.id.spinner);
                 adapter = new ArrayAdapter<String>(ActivityFragmentOrigin.this, android.R.layout.simple_spinner_item,
-                        getResources().getStringArray(R.array.locationList));
+                        getResources().getStringArray(R.array.distanceList));
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 mSpinner.setAdapter(adapter);
 
@@ -354,143 +355,47 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
 
             case R.id.action_dropdown_price:
                 mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
-                mView = getLayoutInflater().inflate(R.layout.dialog_doublespinner, null);
+                mView = getLayoutInflater().inflate(R.layout.dialog_minmax, null);
                 mBuilder.setTitle("Set Price (MIN/MAX) Filter");
-                mSpinner = (Spinner) ((View) mView).findViewById(R.id.spinner1);
-                adapter = new ArrayAdapter<String>(ActivityFragmentOrigin.this, android.R.layout.simple_spinner_item,
-                        getResources().getStringArray(R.array.sizeList));
-                mSpinner.setAdapter(adapter);
 
-                mSpinner2 = (Spinner) ((View) mView).findViewById(R.id.spinner2);
+                mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick (DialogInterface dialogInterface, int i) {
+                        ////When ok is clicked
+                    }
+                });
+
+                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                mBuilder.setView(mView);
+                dialog = mBuilder.create();
+                dialog.show();
+
+                return true;
+            case R.id.action_dropdown_bedsbathrooms:
+                mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
+                mView = getLayoutInflater().inflate(R.layout.dialog_doublespinner, null);
+                mBuilder.setTitle("Set #Bed/#Bathroom Filter");
+
+                mSpinner2 = (Spinner) ((View) mView).findViewById(R.id.spinner1);
                 adapter2 = new ArrayAdapter<String>(ActivityFragmentOrigin.this, android.R.layout.simple_spinner_item,
                         getResources().getStringArray(R.array.bedList));
                 mSpinner2.setAdapter(adapter2);
 
-                mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick (DialogInterface dialogInterface, int i) {
-                        if(!mSpinner.getSelectedItem().toString().equalsIgnoreCase("alpha…")){
-
-                            Toast.makeText(ActivityFragmentOrigin.this,
-                                    mSpinner.getSelectedItem().toString(),
-                                    Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    }
-                });
-
-                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-
-                mBuilder.setView(mView);
-                dialog = mBuilder.create();
-                dialog.show();
-
-                return true;
-            case R.id.action_dropdown_washerdryer:
-                mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
-                mView = getLayoutInflater().inflate(R.layout.dialog_spinner, null);
-                mBuilder.setTitle("Set Washer/Dryer Filter");
-                mSpinner = (Spinner) ((View) mView).findViewById(R.id.spinner);
-                adapter = new ArrayAdapter<String>(ActivityFragmentOrigin.this, android.R.layout.simple_spinner_item,
-                        getResources().getStringArray(R.array.washdryList));
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                mSpinner.setAdapter(adapter);
-
-                mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick (DialogInterface dialogInterface, int i) {
-                        if(!mSpinner.getSelectedItem().toString().equalsIgnoreCase("alpha…")){
-
-                            Toast.makeText(ActivityFragmentOrigin.this,
-                                    mSpinner.getSelectedItem().toString(),
-                                    Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    }
-                });
-
-                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-
-                mBuilder.setView(mView);
-                dialog = mBuilder.create();
-                dialog.show();
-
-                return true;
-            case R.id.action_dropdown_furnishedaccommodations:
-                mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
-                mView = getLayoutInflater().inflate(R.layout.dialog_spinner, null);
-                mBuilder.setTitle("Set Accommodations Filter");
-                mSpinner = (Spinner) ((View) mView).findViewById(R.id.spinner);
-                adapter = new ArrayAdapter<String>(ActivityFragmentOrigin.this, android.R.layout.simple_spinner_item,
-                        getResources().getStringArray(R.array.furnishedList));
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                mSpinner.setAdapter(adapter);
-
-                mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick (DialogInterface dialogInterface, int i) {
-                        if(!mSpinner.getSelectedItem().toString().equalsIgnoreCase("alpha…")){
-
-                            Toast.makeText(ActivityFragmentOrigin.this,
-                                    mSpinner.getSelectedItem().toString(),
-                                    Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    }
-                });
-
-                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-
-                mBuilder.setView(mView);
-                dialog = mBuilder.create();
-                dialog.show();
-
-                return true;
-            case R.id.action_dropdown_sizebedsbathrooms:
-                mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
-                mView = getLayoutInflater().inflate(R.layout.dialog_multispinner, null);
-                mBuilder.setTitle("Set Size/Bed/Bathroom Filter");
-                mSpinner = (Spinner) ((View) mView).findViewById(R.id.spinner1);
-                adapter = new ArrayAdapter<String>(ActivityFragmentOrigin.this, android.R.layout.simple_spinner_item,
-                        getResources().getStringArray(R.array.sizeList));
-                mSpinner.setAdapter(adapter);
-
-                mSpinner2 = (Spinner) ((View) mView).findViewById(R.id.spinner2);
-                adapter2 = new ArrayAdapter<String>(ActivityFragmentOrigin.this, android.R.layout.simple_spinner_item,
-                        getResources().getStringArray(R.array.bedList));
-                mSpinner2.setAdapter(adapter2);
-
-                mSpinner3 = (Spinner) ((View) mView).findViewById(R.id.spinner3);
+                mSpinner3 = (Spinner) ((View) mView).findViewById(R.id.spinner2);
                 adapter3 = new ArrayAdapter<String>(ActivityFragmentOrigin.this, android.R.layout.simple_spinner_item,
                         getResources().getStringArray(R.array.bathroomList));
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 mSpinner3.setAdapter(adapter3);
 
                 mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick (DialogInterface dialogInterface, int i) {
-                        if(!mSpinner.getSelectedItem().toString().equalsIgnoreCase("alpha…")){
 
-                            Toast.makeText(ActivityFragmentOrigin.this,
-                                    mSpinner.getSelectedItem().toString(),
-                                    Toast.LENGTH_LONG)
-                                    .show();
-                        }
                     }
                 });
 
@@ -504,80 +409,9 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                 mBuilder.setView(mView);
                 dialog = mBuilder.create();
                 dialog.show();
-
                 return true;
-            case R.id.action_dropdown_petsallowed:
-                mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
-                mView = getLayoutInflater().inflate(R.layout.dialog_spinner, null);
-                mBuilder.setTitle("Set Pets Filter");
-                mSpinner = (Spinner) ((View) mView).findViewById(R.id.spinner);
-                adapter = new ArrayAdapter<String>(ActivityFragmentOrigin.this, android.R.layout.simple_spinner_item,
-                        getResources().getStringArray(R.array.petsList));
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                mSpinner.setAdapter(adapter);
-
-                mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick (DialogInterface dialogInterface, int i) {
-                        if(!mSpinner.getSelectedItem().toString().equalsIgnoreCase("alpha…")){
-
-                            Toast.makeText(ActivityFragmentOrigin.this,
-                                    mSpinner.getSelectedItem().toString(),
-                                    Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    }
-                });
-
-                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-
-                mBuilder.setView(mView);
-                dialog = mBuilder.create();
-                dialog.show();
-
-                return true;
-            case R.id.action_dropdown_vacancies:
-                mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
-                mView = getLayoutInflater().inflate(R.layout.dialog_spinner, null);
-                mBuilder.setTitle("Set Vacancies Filter");
-                mSpinner = (Spinner) ((View) mView).findViewById(R.id.spinner);
-                adapter = new ArrayAdapter<String>(ActivityFragmentOrigin.this, android.R.layout.simple_spinner_item,
-                        getResources().getStringArray(R.array.vacanciesList));
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                mSpinner.setAdapter(adapter);
-
-                mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick (DialogInterface dialogInterface, int i) {
-                        if(!mSpinner.getSelectedItem().toString().equalsIgnoreCase("alpha…")){
-
-                            Toast.makeText(ActivityFragmentOrigin.this,
-                                    mSpinner.getSelectedItem().toString(),
-                                    Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    }
-                });
-
-                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-
-                mBuilder.setView(mView);
-                dialog = mBuilder.create();
-                dialog.show();
-
-                return true;
-            case R.id.action_dropdown_utilities:
-                final String[] values = {" First Item "," Second Item "," Third Item "," Fourth Item ", " Fifth Item", "Sixth Item", "Seventh Item"};
+            case R.id.action_dropdown_extras:
+                final String[] values = {" Washer/Dryer "," Furnished "," Parking "," Pets "};
                 final ArrayList itemsSelected = new ArrayList();
                 mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
                 mBuilder.setTitle("Select Your Choice");
@@ -610,17 +444,12 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                 return true;
             case R.id.action_dropdown_lease:
                 mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
-                mView = getLayoutInflater().inflate(R.layout.dialog_doublespinner, null);
-                mBuilder.setTitle("Set Lease Duration (MIN/MAX) Filter");
-                mSpinner = (Spinner) ((View) mView).findViewById(R.id.spinner1);
+                mView = getLayoutInflater().inflate(R.layout.dialog_spinner, null);
+                mBuilder.setTitle("Set Lease Duration Filter");
+                mSpinner = (Spinner) ((View) mView).findViewById(R.id.spinner);
                 adapter = new ArrayAdapter<String>(ActivityFragmentOrigin.this, android.R.layout.simple_spinner_item,
                         getResources().getStringArray(R.array.durationList));
                 mSpinner.setAdapter(adapter);
-
-                mSpinner2 = (Spinner) ((View) mView).findViewById(R.id.spinner2);
-                adapter2 = new ArrayAdapter<String>(ActivityFragmentOrigin.this, android.R.layout.simple_spinner_item,
-                        getResources().getStringArray(R.array.durationList));
-                mSpinner2.setAdapter(adapter2);
 
                 mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
@@ -632,6 +461,30 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                                     Toast.LENGTH_LONG)
                                     .show();
                         }
+                    }
+                });
+
+                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                mBuilder.setView(mView);
+                dialog = mBuilder.create();
+                dialog.show();
+
+                return true;
+            case R.id.action_dropdown_sqft:
+                mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
+                mView = getLayoutInflater().inflate(R.layout.dialog_minmax, null);
+                mBuilder.setTitle("Set Square Foot (Min/Max) Filter");
+
+                mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick (DialogInterface dialogInterface, int i) {
+
                     }
                 });
 
