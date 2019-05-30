@@ -98,9 +98,6 @@ public class MainListingPage extends AppCompatActivity {
         /************************************* Map Feature ****************************************/
 
 
-
-
-
         String userAddress = listing.getAddress();
         Log.d(TAG, "User address: " + userAddress);
 
