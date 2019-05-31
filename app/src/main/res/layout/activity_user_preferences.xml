@@ -170,7 +170,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawSelectorOnTop="true"
-                            android:entries="@array/smokingList"
+                            android:entries="@array/smokeList"
                             android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
                     </LinearLayout>
 
@@ -193,7 +193,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawSelectorOnTop="true"
-                            android:entries="@array/smokingList"
+                            android:entries="@array/smokeList"
                             android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
 
                         <android.support.v7.widget.AppCompatSpinner
@@ -202,7 +202,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0"
                             android:drawSelectorOnTop="true"
-                            android:entries="@array/smokingList"
+                            android:entries="@array/smokeList"
                             android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
 
                     </LinearLayout>
@@ -226,7 +226,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawSelectorOnTop="true"
-                            android:entries="@array/smokingList"
+                            android:entries="@array/smokeList"
                             android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
 
                     </LinearLayout>
@@ -254,7 +254,7 @@
 
                             android:layout_height="wrap_content"
                             android:drawSelectorOnTop="true"
-                            android:entries="@array/smokingList"
+                            android:entries="@array/smokeList"
                             android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
 
 
