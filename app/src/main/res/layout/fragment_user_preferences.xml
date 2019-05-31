@@ -170,7 +170,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawSelectorOnTop="true"
-                            android:entries="@array/smokingList"
+                            android:entries="@array/smokeList"
                             android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
                     </LinearLayout>
 
@@ -193,17 +193,36 @@
                             android:id="@+id/wake"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_weight="0"
                             android:drawSelectorOnTop="true"
-                            android:entries="@array/smokingList"
+                            android:entries="@array/wakeSleepList"
+                            android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
+
+                        <android.support.v7.widget.AppCompatSpinner
+                            android:id="@+id/ampmWake"
+                            android:layout_width="63dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0"
+                            android:drawSelectorOnTop="true"
+                            android:entries="@array/amPmList"
                             android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
 
                         <android.support.v7.widget.AppCompatSpinner
                             android:id="@+id/sleep"
+                            android:layout_width="53dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0"
+                            android:drawSelectorOnTop="true"
+                            android:entries="@array/wakeSleepList"
+                            android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
+
+                        <android.support.v7.widget.AppCompatSpinner
+                            android:id="@+id/ampmSleep"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="0"
                             android:drawSelectorOnTop="true"
-                            android:entries="@array/smokingList"
+                            android:entries="@array/amPmList"
                             android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
 
                     </LinearLayout>
@@ -228,7 +247,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawSelectorOnTop="true"
-                            android:entries="@array/smokingList"
+                            android:entries="@array/guestList"
                             android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
 
                     </LinearLayout>
@@ -253,7 +272,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawSelectorOnTop="true"
-                            android:entries="@array/smokingList"
+                            android:entries="@array/noiseList"
                             android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
 
                     </LinearLayout>
@@ -270,7 +289,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="0"
-                            android:text="Miscellaneous:"
+                            android:text="About Me:"
                             android:textSize="18sp" />
 
                         <EditText
@@ -279,8 +298,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0"
                             android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="Name" />
+                            android:inputType="textPersonName" />
 
 
                     </LinearLayout>

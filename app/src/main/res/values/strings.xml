@@ -59,6 +59,7 @@
 
     </string-array>
 
+
     <string-array name="bedList">
         <item>1 Studio</item>
         <item>1 Bed</item>
@@ -76,6 +77,43 @@
         <item>2 Bathroom</item>
         <item>2.5 Bathroom</item>
         <item>3+ Bathroom</item>
+    </string-array>
+
+    <string-array name="wakeSleepList">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+
+    <string-array name="amPmList">
+        <item>A.M.</item>
+        <item>P.M</item>
+    </string-array>
+
+    <string-array name="smokeList">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="guestList">
+        <item>No guests ever</item>
+        <item>I'm fine with guest as log as im told before</item>
+        <item>Guest are always allowed</item>
+    </string-array>
+
+    <string-array name="noiseList">
+        <item>Whisper Only</item>
+        <item>Normal Indoor Voice</item>
+        <item>Shout</item>
     </string-array>
 
     <string-array name="petsList">
@@ -107,12 +145,6 @@
         <item>12+ Months</item>
     </string-array>
 
-    <string-array name="smokingList">
-        <item>alpha…</item>
-        <item>beta</item>
-        <item>charlie</item>
-        <item>delta</item>
-    </string-array>
 
 
 
