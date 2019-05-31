@@ -167,7 +167,7 @@ public class DaFilter {
 
         if(furnished != null){
             if(furnished.equals("true")) {
-                if(pending.getFurnished().contains("No parking")) return false;
+                if(pending.getFurnished().equals("true")) return false;
             }
         }
 
