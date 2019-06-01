@@ -351,7 +351,7 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                 mBuilder.setView(mView);
                 dialog = mBuilder.create();
                 dialog.show();
-                dialog.getWindow().setBackgroundDrawableResource(android.R.color.holo_blue_bright);
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
                 return true;
 
             case R.id.action_dropdown_price:
@@ -376,7 +376,8 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                 mBuilder.setView(mView);
                 dialog = mBuilder.create();
                 dialog.show();
-                dialog.getWindow().setBackgroundDrawableResource(android.R.color.holo_blue_bright);
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
+
                 return true;
             case R.id.action_dropdown_bedsbathrooms:
                 mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
@@ -512,6 +513,28 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                 dialog.show();
                 dialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
                 return true;
+            case R.id.action_logout:
+                    mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
+                    mBuilder.setTitle("Are you sure you want to log out?");
+
+                    mBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick (DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+
+                    mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+
+                    dialog = mBuilder.create();
+                    dialog.show();
+                    dialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
+                return true;
 
         }
 
@@ -520,8 +543,19 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if(!active.equals(fragment2)) {
-            menu.removeItem(R.id.action_filters);
+        if(active.equals(fragment1)){
+            menu.findItem(R.id.action_filters).setVisible(false);
+            menu.findItem(R.id.action_logout).setVisible(true);
+        }
+        if(active.equals(fragment2)) {
+            menu.findItem(R.id.action_filters).setVisible(true);
+            menu.findItem(R.id.action_logout).setVisible(false);
+        }
+        if(active.equals(fragment3))
+        {
+            menu.findItem(R.id.action_filters).setVisible(false);
+            menu.findItem(R.id.action_logout).setVisible(false);
+
         }
         return super.onPrepareOptionsMenu(menu);
     }

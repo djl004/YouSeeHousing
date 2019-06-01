@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">YouSeeHousing</string>
     <string name="action_filters">Filters</string>
+    <string name="action_logout">Log out</string>
     <string name="default_listing_title">Undefined Housing Listing</string>
     <string name="default_listing_caption">$0.00/mo 0BR/0BA</string>
     <string name="bottombar_preferences">Preferences</string>
