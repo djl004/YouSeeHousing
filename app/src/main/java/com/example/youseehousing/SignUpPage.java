@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,7 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 
 public class SignUpPage extends AppCompatActivity {
-    EditText emailInput, pwInput, pwInput2, fNameInput, lNameInput, dofInput, cityInput;
+    EditText emailInput, pwInput, pwInput2, fNameInput, lNameInput, cityInput,dofInput;
+    DatePicker dofInput2;
     String email, pw, confirmPw, fName, lName, dof, city, uid;
 
     //used to store all user info for firebase database
@@ -41,6 +44,7 @@ public class SignUpPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_page);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         //grab inputs from user
         emailInput = findViewById(R.id.createEmail);

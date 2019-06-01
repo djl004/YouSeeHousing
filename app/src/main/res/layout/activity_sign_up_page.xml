@@ -13,6 +13,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:orientation="vertical"
+        android:fitsSystemWindows="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -169,8 +170,26 @@
                     android:id="@id/textview2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="1"
                     android:text="Date of Birth:" />
+
+                <DatePicker
+                    android:id="@+id/dateofbirth2"
+                    android:layout_width="194dp"
+                    android:layout_height="75dp"
+                    android:layout_weight="1"
+                    android:calendarViewShown="false"
+                    android:datePickerMode="spinner"
+                    android:descendantFocusability="blocksDescendants"
+                    android:spinnersShown="true" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <EditText
                     android:id="@+id/dateofbirth"
@@ -181,7 +200,6 @@
                     android:hint="07/26/1993"
                     android:inputType="textPersonName"
                     android:textAlignment="center" />
-
             </LinearLayout>
 
             <LinearLayout
