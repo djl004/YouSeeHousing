@@ -57,6 +57,11 @@ public class DaFilter {
         return theFilter;
     }
 
+    private static String parser(String myInput){
+
+        return myInput.replaceAll("[^\\d]", "");
+    }
+
     /**
      * If a ListingDetails object 'passes' the filter, then return true.
      * @param pending
@@ -69,19 +74,19 @@ public class DaFilter {
 
         if(priceMin != null || priceMax != null){
             try {
-                int min = Integer.parseInt(priceMin);
-                int max = Integer.parseInt(priceMax);
+                int min = Integer.parseInt(parser(priceMin));
+                int max = Integer.parseInt(parser(priceMax));
 
                 String unPainify = pending.getPrice();
                 unPainify = unPainify.replace(",", "");
                 unPainify = unPainify.replace("$", "");
                 unPainify = unPainify.replace(" ", "");
                 boundsOfPrice = unPainify.split(delims);
-                int minPrice = Integer.parseInt(boundsOfPrice[0]);
+                int minPrice = Integer.parseInt(parser(boundsOfPrice[0]));
                 if (boundsOfPrice.length == 1) {
                     if (minPrice < min || minPrice > max) return false;
                 } else {
-                    int maxPrice = Integer.parseInt(boundsOfPrice[1]);
+                    int maxPrice = Integer.parseInt(parser(boundsOfPrice[1]));
                     if (min < maxPrice || max > minPrice) return false;
                 }
             }
@@ -118,7 +123,7 @@ public class DaFilter {
         if(leaseLength != null){
             String searchTerm = leaseLength.replace(" Month", "");
             searchTerm = searchTerm.replace(" Months", "");
-            if(searchTerm.equals("12+")) searchTerm = searchTerm.replace("+","");
+            searchTerm = parser(searchTerm);
 
             if(!pending.getBuildingLease().contains(searchTerm) && !pending.getUnitLease().contains(searchTerm)) return false;
         }
@@ -183,16 +188,16 @@ public class DaFilter {
         if(sqftMin != null || sqftMax != null){
 
             try {
-                int min = Integer.parseInt(sqftMin);
-                int max = Integer.parseInt(sqftMax);
+                int min = Integer.parseInt(parser(sqftMin));
+                int max = Integer.parseInt(parser(sqftMax));
                 String unPainify = pending.getDim();
                 unPainify = unPainify.replace(" Sq Ft", "");
                 bounds = unPainify.split(delims);
-                int minSize = Integer.parseInt(bounds[0]);
+                int minSize = Integer.parseInt(parser(bounds[0]));
                 if (bounds.length == 1) {
                     if (minSize < min || minSize > max) return false;
                 } else {
-                    int maxSize = Integer.parseInt(bounds[1]);
+                    int maxSize = Integer.parseInt(parser(bounds[1]));
                     if (min < maxSize || max > minSize) return false;
                 }
             }
