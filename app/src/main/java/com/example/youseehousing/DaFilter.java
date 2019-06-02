@@ -148,10 +148,10 @@ public class DaFilter {
                 if (studio) {
                     if (!pending.getBed().contains("Studio")) return false;
                 }
-                if (searchTerm.contains(".5")) {
+                else if (searchTerm.contains(".5")) {
                     searchTerm = searchTerm.replace(".5", "½");
                 }
-                if (!pending.getBed().contains(searchTerm)) return false;
+                else if (!pending.getBed().contains(searchTerm)) return false;
             }
             catch (NumberFormatException e) {
                 Log.e(TAG, "Error parsing int in Beds!");
@@ -175,7 +175,7 @@ public class DaFilter {
                 if (searchTerm.contains(".5")) {
                     searchTerm = searchTerm.replace(".5", "½");
                 }
-                if (!pending.getBed().contains(searchTerm)) return false;
+                if (!pending.getBath().contains(searchTerm)) return false;
             }
             catch (NumberFormatException e) {
                 Log.e(TAG, "Error parsing int in Baths!");
