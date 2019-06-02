@@ -200,7 +200,7 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
     /**
      * Creates a new ListPage object.
      */
-    private void createAndPopulateListingPage(ListPageFragment.ListType TYPE) {
+    public void createAndPopulateListingPage(ListPageFragment.ListType TYPE) {
         // Call AsyncTask execute to populate listing list
         switch(TYPE) {
             case MAIN_LISTING_PAGE:

@@ -10,9 +10,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  *
  *  This class handles querying the database and populating the list of items
@@ -24,7 +21,7 @@ public class MainHousingListing_PopulateList extends ListPage {
 
 //    public static List<ListingDetails> ITEMS = new ArrayList<ListingDetails>();
 
-    private static final int COUNT = 5; // Max number of listings to query at once from database.
+    private static final int COUNT = 250; // Max number of listings to query at once from database.
     private final ListPageFragment.ListType TYPE = ListPageFragment.ListType.MAIN_LISTING_PAGE;
 
     /**
@@ -59,8 +56,18 @@ public class MainHousingListing_PopulateList extends ListPage {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     // call function to get listing details
-                                    addListingToPage(document);
-                                    getRefreshableFragment().refreshPage();
+                                    ListingDetails item =
+                                            ListingDetails.makeListingDetailsFromDocumentSnapshot(document);
+                                    // Run item through filter and if it passes, add it to page
+                                    if (item != null) {
+                                        if (checkListingPassesFilter(item)) {
+                                            Log.i(TAG, "Listing " + item.getAddress() + " passes filter!");
+                                            addListingToPage(document);
+                                            getRefreshableFragment().refreshPage();
+                                        } else {
+                                            Log.i(TAG, "Listing " + item.getAddress() + " does not pass filter!");
+                                        }
+                                    }
                                 }
                             } else {
                                 Log.w(TAG, "Error getting documents.", task.getException());
@@ -74,6 +81,14 @@ public class MainHousingListing_PopulateList extends ListPage {
             Log.e(TAG, "db reference is null!");
             return false;
         }
+    }
+
+    /**
+     * If listing passes filters, return true.
+     * @param item
+     */
+    private boolean checkListingPassesFilter(ListingDetails item) {
+        return DaFilter.getInstance().passes(item);
     }
 }
 

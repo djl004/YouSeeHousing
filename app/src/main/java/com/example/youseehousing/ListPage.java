@@ -76,8 +76,16 @@ public class ListPage {
                 ITEMS.add(newListing);
             }
         }
-
     }
+    public void addListingToPage(ListingDetails item) {
+        if(getListType() != ListPageFragment.ListType.IMAGE_RECYCLER) {
+            // TODO: add filter here
+            if (item != null) {
+                ITEMS.add(item);
+            }
+        }
+    }
+
 
     /**
      * Clears the list for a new query.

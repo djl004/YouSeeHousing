@@ -53,7 +53,7 @@ public class FilterButtonActions {
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
     }
 
-    public static void setSquareFtFilter(ActivityFragmentOrigin activityFragmentOrigin) {
+    public static void setSquareFtFilter(final ActivityFragmentOrigin activityFragmentOrigin) {
         AlertDialog.Builder mBuilder;
         View mView;
         final Spinner mSpinner2;
@@ -89,6 +89,7 @@ public class FilterButtonActions {
                 // Call to DaFilter here
                 DaFilter.getInstance().setSqftMin(lowerBound);
                 DaFilter.getInstance().setSqftMax(upperBound);
+                refreshList(activityFragmentOrigin);
             }
         });
 
@@ -133,6 +134,7 @@ public class FilterButtonActions {
                             .show();
 
                     Log.i(TAG, "Lease length filter set : " + selectedItem);
+                    refreshList(activityFragmentOrigin);
                 }
             }
         });
@@ -150,7 +152,7 @@ public class FilterButtonActions {
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
     }
 
-    public static void setExtrasFilter(ActivityFragmentOrigin activityFragmentOrigin) {
+    public static void setExtrasFilter(final ActivityFragmentOrigin activityFragmentOrigin) {
         final AlertDialog.Builder mBuilder;
         AlertDialog dialog;
         final String[] values = {" Washer/Dryer "," Furnished "," Parking "," Pets "};
@@ -191,6 +193,7 @@ public class FilterButtonActions {
                         //Your logic when OK button is clicked
                         Log.i(TAG, "Extras filter set!");
                         extrasFilterHelper(bools);
+                        refreshList(activityFragmentOrigin);
                     }
                 })
                 .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
@@ -233,6 +236,7 @@ public class FilterButtonActions {
             } else {
                 DaFilter.getInstance().setPets(STRING_FALSE);
             }
+
         }
         catch (ArrayIndexOutOfBoundsException e) {
             throw e;
@@ -243,7 +247,7 @@ public class FilterButtonActions {
         Log.i(TAG, "Pets : " + bools[3]);
     }
 
-    public static void setBedsBathsFilter(ActivityFragmentOrigin activityFragmentOrigin) {
+    public static void setBedsBathsFilter(final ActivityFragmentOrigin activityFragmentOrigin) {
         AlertDialog.Builder mBuilder;
         View mView;
         final Spinner mSpinner2;
@@ -274,6 +278,7 @@ public class FilterButtonActions {
                 DaFilter.getInstance().setBeds(beds);
                 DaFilter.getInstance().setBaths(baths);
                 Log.i(TAG, "Bed/Bath filter set : " + beds + " " + baths);
+                refreshList(activityFragmentOrigin);
             }
         });
 
@@ -349,6 +354,7 @@ public class FilterButtonActions {
                     DaFilter.getInstance().setPriceMin(minString);
                     DaFilter.getInstance().setPriceMax(maxString);
                     Log.i(TAG, "Price filter set : " + min + " " + max);
+                    refreshList(activityFragmentOrigin);
                 }
                 else {
                     Toast.makeText(activityFragmentOrigin,
@@ -381,7 +387,7 @@ public class FilterButtonActions {
 
         mBuilder = new AlertDialog.Builder(activityFragmentOrigin);
         mView = activityFragmentOrigin.getLayoutInflater().inflate(R.layout.dialog_spinner, null);
-        mBuilder.setTitle("Set Distance Filter");
+        mBuilder.setTitle("Set Max Distance Filter");
         mSpinner = (Spinner) ((View) mView).findViewById(R.id.spinner);
 
 
@@ -406,6 +412,7 @@ public class FilterButtonActions {
                             .show();
 
                     Log.i(TAG, "Distance filter set : " + selectedItem);
+                    refreshList(activityFragmentOrigin);
                 }
             }
         });
@@ -427,12 +434,17 @@ public class FilterButtonActions {
      * Clear filters
      */
     public static void clearFilters(final ActivityFragmentOrigin activityFragmentOrigin) {
+        Log.i(TAG, "Clearing filters!");
         Toast.makeText(activityFragmentOrigin, "Filters cleared",
                 Toast.LENGTH_LONG)
                 .show();
         DaFilter.getInstance().resetFilters();
+        refreshList(activityFragmentOrigin);
     }
 
+    private static void refreshList(final ActivityFragmentOrigin activityFragmentOrigin) {
+        activityFragmentOrigin.createAndPopulateListingPage(ListPageFragment.ListType.MAIN_LISTING_PAGE);
+    }
     /**
      * End filter button methods
      */

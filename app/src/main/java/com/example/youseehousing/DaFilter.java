@@ -29,6 +29,7 @@ import android.util.Log;
  * @return the filtered ArrayList of Listings
  */
 public class DaFilter {
+    private static final String STRING_PARSE = "Parsing string: ";
     private final String TAG = "DaFilter";
     private String priceMin;
     private String priceMax;
@@ -67,21 +68,27 @@ public class DaFilter {
         String[] boundsOfPrice;
 
         if(priceMin != null || priceMax != null){
-            int min = Integer.parseInt(priceMin);
-            int max = Integer.parseInt(priceMax);
+            try {
+                int min = Integer.parseInt(priceMin);
+                int max = Integer.parseInt(priceMax);
 
-            String unPainify = pending.getPrice();
-            unPainify = unPainify.replace(",", "");
-            unPainify = unPainify.replace("$", "");
-            unPainify = unPainify.replace(" ", "");
-            boundsOfPrice = unPainify.split(delims);
-            int minPrice = Integer.parseInt(boundsOfPrice[0]);
-            if(boundsOfPrice.length == 1){
-                if(minPrice < min || minPrice > max) return false;
+                String unPainify = pending.getPrice();
+                unPainify = unPainify.replace(",", "");
+                unPainify = unPainify.replace("$", "");
+                unPainify = unPainify.replace(" ", "");
+                boundsOfPrice = unPainify.split(delims);
+                int minPrice = Integer.parseInt(boundsOfPrice[0]);
+                if (boundsOfPrice.length == 1) {
+                    if (minPrice < min || minPrice > max) return false;
+                } else {
+                    int maxPrice = Integer.parseInt(boundsOfPrice[1]);
+                    if (min < maxPrice || max > minPrice) return false;
+                }
             }
-            else {
-                int maxPrice = Integer.parseInt(boundsOfPrice[1]);
-                if(min < maxPrice || max > minPrice) return false;
+            catch (NumberFormatException e) {
+                Log.e(TAG, "Error parsing int in price");
+                e.printStackTrace();
+                return false;
             }
         }
 
@@ -117,59 +124,82 @@ public class DaFilter {
         }
 
         if(beds != null){
-            String searchTerm = beds.replace(" Bed","");
-            boolean studio = false;
-            if(searchTerm.contains("Studio")){
-                searchTerm = searchTerm.replace(" Studio", "");
-                studio = true;
-            }
-            if(searchTerm.equals("4+")){
-                searchTerm = searchTerm.replace("+", "");
-                String lotsOfBeds = Character.toString(pending.getBed().charAt(0));
-                int searchInt = Integer.parseInt(searchTerm);
-                int focusInt = Integer.parseInt(lotsOfBeds);
-                if(focusInt < searchInt) return false;
-            }
+            String searchTerm = beds.replace(" Bed", "");
+            Log.i(TAG, STRING_PARSE + searchTerm);
+            try {
 
-            if(studio){
-                if(!pending.getBed().contains("Studio")) return false;
+                boolean studio = false;
+                if (searchTerm.contains("Studio")) {
+                    searchTerm = searchTerm.replace(" Studio", "");
+                    studio = true;
+                }
+                if (searchTerm.equals("4+")) {
+                    searchTerm = searchTerm.replace("+", "");
+                    String lotsOfBeds = Character.toString(pending.getBed().charAt(0));
+                    int searchInt = Integer.parseInt(searchTerm);
+                    int focusInt = Integer.parseInt(lotsOfBeds);
+                    if (focusInt < searchInt) return false;
+                }
+
+                if (studio) {
+                    if (!pending.getBed().contains("Studio")) return false;
+                }
+                if (searchTerm.contains(".5")) {
+                    searchTerm = searchTerm.replace(".5", "½");
+                }
+                if (!pending.getBed().contains(searchTerm)) return false;
             }
-            if(searchTerm.contains(".5")){
-                searchTerm = searchTerm.replace(".5", "½");
+            catch (NumberFormatException e) {
+                Log.e(TAG, "Error parsing int in Beds!");
+                e.printStackTrace();
+                return false;
             }
-            if(!pending.getBed().contains(searchTerm)) return false;
         }
 
         if(baths != null){
             String searchTerm = baths.replace(" Bathroom","");
+            Log.i(TAG, STRING_PARSE + searchTerm);
+            try {
+                if (searchTerm.equals("3+")) {
+                    searchTerm = searchTerm.replace("+", "");
+                    String lotsOfBaths = Character.toString(pending.getBed().charAt(0));
+                    int searchInt = Integer.parseInt(searchTerm);
+                    int focusInt = Integer.parseInt(lotsOfBaths);
+                    if (focusInt < searchInt) return false;
+                }
 
-            if(searchTerm.equals("3+")){
-                searchTerm = searchTerm.replace("+", "");
-                String lotsOfBaths = Character.toString(pending.getBed().charAt(0));
-                int searchInt = Integer.parseInt(searchTerm);
-                int focusInt = Integer.parseInt(lotsOfBaths);
-                if(focusInt < searchInt) return false;
+                if (searchTerm.contains(".5")) {
+                    searchTerm = searchTerm.replace(".5", "½");
+                }
+                if (!pending.getBed().contains(searchTerm)) return false;
             }
-
-            if(searchTerm.contains(".5")){
-                searchTerm = searchTerm.replace(".5", "½");
+            catch (NumberFormatException e) {
+                Log.e(TAG, "Error parsing int in Baths!");
+                e.printStackTrace();
+                return false;
             }
-            if(!pending.getBed().contains(searchTerm)) return false;
         }
 
         if(sqftMin != null || sqftMax != null){
-            int min = Integer.parseInt(sqftMin);
-            int max = Integer.parseInt(sqftMax);
-            String unPainify = pending.getDim();
-            unPainify = unPainify.replace(" Sq Ft", "");
-            bounds = unPainify.split(delims);
-            int minSize = Integer.parseInt(bounds[0]);
-            if(bounds.length == 1){
-                if(minSize < min || minSize > max) return false;
+
+            try {
+                int min = Integer.parseInt(sqftMin);
+                int max = Integer.parseInt(sqftMax);
+                String unPainify = pending.getDim();
+                unPainify = unPainify.replace(" Sq Ft", "");
+                bounds = unPainify.split(delims);
+                int minSize = Integer.parseInt(bounds[0]);
+                if (bounds.length == 1) {
+                    if (minSize < min || minSize > max) return false;
+                } else {
+                    int maxSize = Integer.parseInt(bounds[1]);
+                    if (min < maxSize || max > minSize) return false;
+                }
             }
-            else {
-                int maxSize = Integer.parseInt(bounds[1]);
-                if(min < maxSize || max > minSize) return false;
+            catch (NumberFormatException e) {
+                Log.e(TAG, "Error parsing int in sqFt!");
+                e.printStackTrace();
+                return false;
             }
         }
 

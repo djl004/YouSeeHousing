@@ -119,7 +119,6 @@ public class ListPageFragment extends RefreshableListFragmentPage {
     public void onDetach() {
         super.onDetach();
         setmListener(null);
-
     }
 
     @Override
@@ -150,6 +149,13 @@ public class ListPageFragment extends RefreshableListFragmentPage {
 
     public void setmColumnCount(int mColumnCount) {
         this.mColumnCount = mColumnCount;
+    }
+
+    /**
+     * Shows an empty text notice if no results were found.
+     */
+    public void showEmptyNotice() {
+
     }
 
     /**
