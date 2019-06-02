@@ -134,7 +134,7 @@ public class DaFilter {
 
                 boolean studio = false;
                 if (searchTerm.contains("Studio")) {
-                    searchTerm = searchTerm.replace(" Studio", "");
+                    searchTerm = searchTerm.replace("1 Studio", "Studio");
                     studio = true;
                 }
                 if (searchTerm.equals("4+")) {
@@ -148,10 +148,10 @@ public class DaFilter {
                 if (studio) {
                     if (!pending.getBed().contains("Studio")) return false;
                 }
-                else if (searchTerm.contains(".5")) {
+                if (searchTerm.contains(".5")) {
                     searchTerm = searchTerm.replace(".5", "½");
                 }
-                else if (!pending.getBed().contains(searchTerm)) return false;
+                if (!pending.getBed().contains(searchTerm)) return false;
             }
             catch (NumberFormatException e) {
                 Log.e(TAG, "Error parsing int in Beds!");
