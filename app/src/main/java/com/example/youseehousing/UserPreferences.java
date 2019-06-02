@@ -74,10 +74,12 @@ public class UserPreferences extends AppCompatActivity {
            // Log.d(TAG,"Before set name: " + ds.child(Uid).getValue(Account.class).getName());
             uInfo.setName( ds.child(Uid).getValue(Account.class).getName()); //set the name
             uInfo.setEmail(ds.child(Uid).getValue(Account.class).getEmail()); //set the email
+            uInfo.setFavorites(ds.child(Uid).getValue(Account.class).getFavorites()); // set the favorites
             Log.d(TAG, "name:" + ds.child(Uid).getValue());
             //display all the information
             Log.d(TAG, "showData: name: " + uInfo.getName());
             Log.d(TAG, "showData: email: " + uInfo.getEmail());
+            Log.d(TAG, "showData: favorites: " + uInfo.getFavorites());
 
             final TextView name = (TextView) findViewById(R.id.name);
             name.setText(uInfo.getName());

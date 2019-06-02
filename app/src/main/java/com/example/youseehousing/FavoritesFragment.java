@@ -11,6 +11,8 @@ public class FavoritesFragment extends ListPageFragment {
 
     private ListType type = ListPageFragment.ListType.FAVORITES;
 
+    private int mColumnCount = 1;
+
     public FavoritesFragment() {
         super();
     }

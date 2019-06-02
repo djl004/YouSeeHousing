@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_list_item"
+    android:id="@+id/fragment_image_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/card_margin"
@@ -33,15 +33,16 @@
                 <ImageView
                     android:id="@+id/thumbnail"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="220dp"
                     android:layout_marginBottom="8dp"
                     android:layout_weight="1"
                     android:adjustViewBounds="true"
                     android:contentDescription="Image"
                     android:cropToPadding="false"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/placeholder"
-                    app:layout_constrainedHeight="true" />
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/placeholder2"
+                    app:layout_constrainedHeight="true"
+                    app:srcCompat="@drawable/placeholder2" />
             </TableRow>
 
             <TableRow
@@ -55,25 +56,17 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/title"
+                        android:id="@+id/thumbnail_address"
+                        style="@style/thumbnail_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:background="@color/colorCardBG"
-                        android:gravity="bottom"
-                        android:padding="@dimen/text_padding"
-                        android:text="Listing Title"
-                        android:textAllCaps="false"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:text="TextView" />
 
                     <TextView
-                        android:id="@+id/details"
+                        android:id="@+id/thumbnail_caption"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
-                        android:background="@color/colorCardBG"
                         android:gravity="bottom"
                         android:padding="@dimen/text_padding"
                         android:text="Brief listing description"

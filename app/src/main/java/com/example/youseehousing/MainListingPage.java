@@ -23,7 +23,6 @@ import com.mapbox.mapboxsdk.maps.Style;
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.Locale;
@@ -68,9 +67,9 @@ public class MainListingPage extends AppCompatActivity {
 
 
         imagesView = (ImageView) findViewById(R.id.image);
-        addressView = (TextView) findViewById(R.id.title);
-        captionView = (TextView) findViewById(R.id.caption);
-        descriptionView = (TextView) findViewById(R.id.description);
+        addressView = (TextView) findViewById(R.id.listing_address);
+        captionView = (TextView) findViewById(R.id.listing_price);
+        descriptionView = (TextView) findViewById(R.id.listing_description);
 
         // Get data passed from previous activity
         // Check if members are null when setting parameters
@@ -107,6 +106,10 @@ public class MainListingPage extends AppCompatActivity {
         registerNetworkBroadcastForNougat();
 */
         // Convert user address to coordinates (latitude & longitude)
+        mapSetup(userAddress);
+    } // End of onCreate()
+
+    private void mapSetup(String userAddress) {
         Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
         List<Address> addresses;
 
@@ -165,7 +168,7 @@ public class MainListingPage extends AppCompatActivity {
                 });
             } // End of onMapReady()
         }); // End of .getMapAsync()
-    } // End of onCreate()
+    }
 
 
 } // End of MainListingPage class

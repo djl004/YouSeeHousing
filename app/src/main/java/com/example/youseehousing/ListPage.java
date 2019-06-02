@@ -11,12 +11,14 @@ public class ListPage {
     private ActivityFragmentOrigin afoActivity;
     private RefreshableListFragmentPage refreshableFragment;
 
+
     public ListPageFragment.ListType getListType() {
         return type;
     }
 
     private ListPageFragment.ListType type = ListPageFragment.ListType.MAIN_LISTING_PAGE;
-    public static List<ListingDetails> ITEMS = new ArrayList<ListingDetails>();
+
+    public static List<RecyclerViewListItem> ITEMS = new ArrayList<RecyclerViewListItem>();
 
 
 
@@ -26,23 +28,26 @@ public class ListPage {
              throw new ClassCastException();
          }
         setRefreshableFragment(fragment);
-
      }
+
+     public ListPage(RefreshableListFragmentPage fragment) {
+        setRefreshableFragment(fragment);
+     }
+
+     public ListPage() {
+     }
+
     public ActivityFragmentOrigin getActivityFragmentOrigin() {
         return afoActivity;
     }
 
-     public RefreshableListFragmentPage getRefreshableFragment() {
+    public RefreshableListFragmentPage getRefreshableFragment() {
          return refreshableFragment;
      }
 
     private void setRefreshableFragment(RefreshableListFragmentPage fragment) {
          this.refreshableFragment = fragment;
     }
-
-//    private void addListingToItems(ListingDetails newListing) {
-//        ITEMS.add(newListing);
-//    }
 
     /**
      * Verify that activity passed is in fact an ActivityFragmentOrigin object.
@@ -64,12 +69,23 @@ public class ListPage {
      * Add a listing to ITEMS.
      */
     public void addListingToPage(QueryDocumentSnapshot document) {
-        ListingDetails newListing = ListingDetails.makeListingDetailsFromDocumentSnapshot(document);
-        if ( newListing != null ) {
-            ITEMS.add(newListing);
+        if(getListType() != ListPageFragment.ListType.IMAGE_RECYCLER) {
+            ListingDetails newListing = ListingDetails.makeListingDetailsFromDocumentSnapshot(document);
+            // TODO: add filter here
+            if (newListing != null) {
+                ITEMS.add(newListing);
+            }
         }
-
     }
+    public void addListingToPage(ListingDetails item) {
+        if(getListType() != ListPageFragment.ListType.IMAGE_RECYCLER) {
+            // TODO: add filter here
+            if (item != null) {
+                ITEMS.add(item);
+            }
+        }
+    }
+
 
     /**
      * Clears the list for a new query.
@@ -79,5 +95,13 @@ public class ListPage {
         if(refreshableFragment != null) {
             refreshableFragment.refreshPage();
         }
+    }
+
+    /**
+     * Returns number of items in ITEMS
+     * @return
+     */
+    public int size() {
+        return ITEMS.size();
     }
 }

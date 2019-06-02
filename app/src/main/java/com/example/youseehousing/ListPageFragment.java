@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +21,17 @@ public class ListPageFragment extends RefreshableListFragmentPage {
 
     private ListType type = ListType.MAIN_LISTING_PAGE;
 
+    public OnListFragmentInteractionListener getmListener() {
+        return mListener;
+    }
+
+    public void setmListener(OnListFragmentInteractionListener mListener) {
+        this.mListener = mListener;
+    }
+
     // The types of list
     public enum ListType {
-        FAVORITES, MAIN_LISTING_PAGE
+        FAVORITES, MAIN_LISTING_PAGE, IMAGE_RECYCLER
     }
 
     // TODO: Customize parameters
@@ -30,6 +40,13 @@ public class ListPageFragment extends RefreshableListFragmentPage {
     private Bundle savedInstanceState;
     private View createdView;
     private RecyclerView recyclerView;
+
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
+    public void setRecyclerView(RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
+    }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
@@ -46,7 +63,7 @@ public class ListPageFragment extends RefreshableListFragmentPage {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            setmColumnCount(getArguments().getInt(ARG_COLUMN_COUNT));
         }
         this.savedInstanceState = savedInstanceState;
     }
@@ -61,10 +78,10 @@ public class ListPageFragment extends RefreshableListFragmentPage {
         if (createdView instanceof RecyclerView) {
             Context context = createdView.getContext();
             recyclerView = (RecyclerView) createdView;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            if (getmColumnCount() <= 1) {
+                recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                recyclerView.setLayoutManager(new GridLayoutManager(context, getmColumnCount()));
             }
             // TODO: Listings are inserted into the display list here
 
@@ -72,14 +89,15 @@ public class ListPageFragment extends RefreshableListFragmentPage {
             switch(this.getListType()) {
                 case MAIN_LISTING_PAGE:
                     recyclerView.setAdapter
-                            (new MyItemRecyclerViewAdapter(
-                                    MainHousingListing_PopulateList.ITEMS, mListener));
+                            (new MyItemRecyclerViewAdapter(MainHousingListing_PopulateList.ITEMS, getmListener()));
                     break;
+
                 case FAVORITES:
                     recyclerView.setAdapter
-                            (new MyItemRecyclerViewAdapter(
-                                    Favorites_PopulateList.ITEMS, mListener));
+                            (new MyItemRecyclerViewAdapter(Favorites_PopulateList.ITEMS, getmListener()));
                     break;
+
+                case IMAGE_RECYCLER:
                 default: throw new TypeNotPresentException("Invalid List Type", new Throwable());
             }
         }
@@ -90,7 +108,7 @@ public class ListPageFragment extends RefreshableListFragmentPage {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+            setmListener((OnListFragmentInteractionListener) context);
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
@@ -100,8 +118,7 @@ public class ListPageFragment extends RefreshableListFragmentPage {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
-
+        setmListener(null);
     }
 
     @Override
@@ -126,6 +143,20 @@ public class ListPageFragment extends RefreshableListFragmentPage {
         return type;
     }
 
+    public int getmColumnCount() {
+        return mColumnCount;
+    }
+
+    public void setmColumnCount(int mColumnCount) {
+        this.mColumnCount = mColumnCount;
+    }
+
+    /**
+     * Shows an empty text notice if no results were found.
+     */
+    public void showEmptyNotice() {
+
+    }
 
     /**
      * This interface must be implemented by activities that contain this
@@ -141,4 +172,5 @@ public class ListPageFragment extends RefreshableListFragmentPage {
         // TODO: Update argument type and name
         void onListFragmentInteraction(ListingDetails item);
     }
+
 }

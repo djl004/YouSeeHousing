@@ -15,10 +15,7 @@ import android.util.Log;
 
 
 public class MainHousingListing extends AppCompatActivity implements MainListingPageFragment.OnListFragmentInteractionListener {
-    private android.support.v4.app.Fragment itemFragment;
     private String TAG = "MainHousingListing";
-    private MyItemRecyclerViewAdapter adapter;
-    MainHousingListing_PopulateList queryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -48,8 +48,8 @@
                     android:padding="8sp">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
                         android:layout_marginTop="0dp"
                         android:layout_marginEnd="7dp"
                         android:layout_weight="1"
@@ -57,68 +57,93 @@
 
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="0sp"
-                            android:layout_marginTop="0sp"
-                            android:paddingLeft="8sp"
-                            android:paddingRight="8sp"
-                            android:text="Display Name:" />
-
-                        <TextView
+                            android:id="@+id/textView9"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="0"
-                            android:background="#FFFDF2"
+                            android:text="Display Name:" />
+
+                        <TextView
+                            android:id="@+id/name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="0sp"
+                            android:layout_marginTop="0sp"
+                            android:layout_weight="1"
                             android:paddingLeft="8sp"
-                            android:paddingRight="8sp"
-                            android:text="Sandy"
-                            android:textAlignment="center" />
+                            android:paddingRight="8sp" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/textView12"
+                            android:id="@+id/textView10"
                             android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0"
+                            android:text="Email:" />
+
+                        <TextView
+                            android:id="@+id/email"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="0sp"
                             android:layout_marginTop="0sp"
-                            android:layout_weight="0"
+                            android:layout_weight="1"
                             android:paddingLeft="8sp"
-                            android:paddingRight="8sp"
-                            android:text="Display Name:" />
+                            android:paddingRight="8sp" />
 
-                        <TextView
-                            android:id="@+id/textView4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0"
-                            android:background="#FFFDF2"
-                            android:paddingLeft="8sp"
-                            android:paddingRight="8sp"
-                            android:text="Sandy"
-                            android:textAlignment="center" />
                     </LinearLayout>
+
+                    <Button
+                        android:id="@+id/button9"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="#00FFFFFF"
+                        android:text="Change Display Name" />
+
+                    <Button
+                        android:id="@+id/button"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="#05FFFFFF"
+                        android:text="Change Password" />
+
+                    <Button
+                        android:id="@+id/button10"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="#00FFFFFF"
+                        android:text="Change Email Address" />
 
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <FrameLayout
+                    android:layout_width="175dp"
+                    android:layout_height="150dp"
                     android:layout_below="@+id/textView5"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="-2dp"
-                    android:padding="8sp"
-                    android:visibility="visible"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:layout_marginTop="0dp">
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="175dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="-2dp"
+                        android:background="@color/ucsdDarkBlue"
+                        android:padding="8sp"
+                        android:visibility="visible"
+                        tools:srcCompat="@android:drawable/ic_menu_camera"
+                        tools:visibility="visible" />
+                </FrameLayout>
 
             </RelativeLayout>
 
@@ -165,10 +190,11 @@
                             android:textSize="18sp" />
 
                         <android.support.v7.widget.AppCompatSpinner
+                            android:id="@+id/smoking"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawSelectorOnTop="true"
-                            android:entries="@array/smokingList"
+                            android:entries="@array/smokeList"
                             android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
                     </LinearLayout>
 
@@ -188,19 +214,21 @@
                             android:textSize="18sp" />
 
                         <android.support.v7.widget.AppCompatSpinner
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawSelectorOnTop="true"
-                            android:entries="@array/smokingList"
-                            android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
-
-                        <android.support.v7.widget.AppCompatSpinner
-                            android:id="@+id/appCompatSpinner"
+                            android:id="@+id/wake"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="0"
                             android:drawSelectorOnTop="true"
-                            android:entries="@array/smokingList"
+                            android:entries="@array/wakeSleepList"
+                            android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
+
+                        <android.support.v7.widget.AppCompatSpinner
+                            android:id="@+id/sleep"
+                            android:layout_width="134dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0"
+                            android:drawSelectorOnTop="true"
+                            android:entries="@array/wakeSleepList"
                             android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
 
                     </LinearLayout>
@@ -221,10 +249,11 @@
                             android:textSize="18sp" />
 
                         <android.support.v7.widget.AppCompatSpinner
+                            android:id="@+id/guest"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawSelectorOnTop="true"
-                            android:entries="@array/smokingList"
+                            android:entries="@array/guestList"
                             android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
 
                     </LinearLayout>
@@ -245,10 +274,11 @@
                             android:textSize="18sp" />
 
                         <android.support.v7.widget.AppCompatSpinner
+                            android:id="@+id/noise"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawSelectorOnTop="true"
-                            android:entries="@array/smokingList"
+                            android:entries="@array/noiseList"
                             android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
 
                     </LinearLayout>
@@ -265,22 +295,34 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="0"
-                            android:text="Miscellaneous:"
+                            android:text="About Me:"
                             android:textSize="18sp" />
 
                         <EditText
-                            android:id="@+id/editText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0"
+                            android:id="@+id/other"
+                            android:layout_width="match_parent"
+                            android:layout_height="192dp"
+                            android:layout_weight="1"
                             android:ems="10"
-                            android:inputType="textPersonName"
-                            android:text="Name" />
+                            android:inputType="textMultiLine"
+                            android:overScrollMode="always"
+                            android:scrollbarStyle="insideInset"
+                            android:scrollbars="vertical"
+                            android:scrollHorizontally="false"
+                            android:hyphenationFrequency="none"/>
 
 
                     </LinearLayout>
                 </LinearLayout>
+
             </RelativeLayout>
+
+            <Button
+                android:id="@+id/update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="Update" />
 
         </LinearLayout>
     </ScrollView>

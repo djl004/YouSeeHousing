@@ -16,7 +16,7 @@ import java.util.List;
  *        based on its id and populates these parameters with that information. DONE!
  */
 
-public class ListingDetails implements Parcelable {
+public class ListingDetails extends RecyclerViewListItem implements Parcelable, Cloneable {
 
     private static final String TAG = "ListingDetails";
 //    private String id;
@@ -34,10 +34,11 @@ public class ListingDetails implements Parcelable {
     private String price;
     private String unitLease;
     private String washerDryer;
+    private String furnished;
 
     private final String[] queryList = {    "address", "bath", "bed",
                                             "buildingLease", "contact", "desc",
-                                            "dim", "link", "parking",
+                                            "dim", "furnished", "link", "parking",
                                             "pictures", "pet", "price",
                                             "unitLease", "washerDryer"};
 
@@ -50,13 +51,15 @@ public class ListingDetails implements Parcelable {
                           String contact,
                           String desc,
                           String dim,
+                          String furnished,
                           String link,
                           String parking,
                           ArrayList<String> pictures,
                           String pet,
                           String price,
                           String unitLease,
-                          String washerDryer) {
+                          String washerDryer
+                          ) {
 //        this.id = id;
         this.address = address;
         this.bath = bath;
@@ -65,6 +68,7 @@ public class ListingDetails implements Parcelable {
         this.contact = contact;
         this.desc = desc;
         this.dim = dim;
+        this.furnished = furnished;
         this.link = link;
         this.parking = parking;
         this.pictures = pictures;
@@ -83,13 +87,14 @@ public class ListingDetails implements Parcelable {
         this.contact = in.readString();
         this.desc = in.readString();
         this.dim = in.readString();
+        this.furnished = in.readString();
         this.link = in.readString();
         this.parking = in.readString();
         this.pictures = (ArrayList<String>) in.readSerializable();
         this.pet = in.readString();
         this.price = in.readString();
         this.unitLease = in.readString();
-        this.washerDryer =in.readString();
+        this.washerDryer = in.readString();
     }
 
     @Override
@@ -101,6 +106,8 @@ public class ListingDetails implements Parcelable {
 //    public String getId() {
 //        return this.id;
 //    }
+
+
     public String getAddress() {
         return this.address;
     }
@@ -121,6 +128,9 @@ public class ListingDetails implements Parcelable {
     }
     public String getDim() {
         return dim;
+    }
+    public String getFurnished() {
+        return furnished;
     }
     public String getLink() {
         return link;
@@ -187,6 +197,9 @@ public class ListingDetails implements Parcelable {
     public void setWasherDryer(String washerDryer) {
         this.washerDryer = washerDryer;
     }
+    public void setFurnished(String furnished) {
+        this.furnished = furnished;
+    }
 
     // Begin implemented Parcelable methods
 
@@ -217,6 +230,7 @@ public class ListingDetails implements Parcelable {
         dest.writeString(contact);
         dest.writeString(desc);
         dest.writeString(dim);
+        dest.writeString(furnished);
         dest.writeString(link);
         dest.writeString(parking);
         dest.writeSerializable(pictures);
@@ -241,6 +255,7 @@ public class ListingDetails implements Parcelable {
 //                "dim", "link", "parking",
 //                "pictures", "pet", "price",
 //                "unitLease", "washerDryer"
+        // TODO: If any field is null, return a default string.
         if (document.exists()) {
             String address = document.get("address").toString(); // Address
             String bath = document.get("bath").toString(); // Bath
@@ -249,6 +264,7 @@ public class ListingDetails implements Parcelable {
             String contact = document.get("contact").toString(); // contact
             String desc = document.get("desc").toString(); // desc
             String dim = document.get("dim").toString(); // dim
+            String furnished = document.get("furnished").toString(); // furnished
             String link = document.get("link").toString(); // link
             String parking = document.get("parking").toString(); // parking
 
@@ -266,7 +282,7 @@ public class ListingDetails implements Parcelable {
             Log.i(TAG, "Queried db: " + address);
 
             return new ListingDetails(address, bath, bed, buildingLease, contact,
-                    desc, dim, link, parking, pictures, pet, price, unitLease, washerDryer);
+                    desc, dim, furnished, link, parking, pictures, pet, price, unitLease, washerDryer);
         } else {
             return null;
         }
@@ -296,5 +312,41 @@ public class ListingDetails implements Parcelable {
             return pictureList.get(0);
         }
         return pictureList.get(index);
+    }
+
+    /**
+     * Returns the number of images in the ListingDetails item
+     * Returns 0 if images is null!
+     */
+    public int getNumImages() {
+        if (getPictures() != null) {
+            return getPictures().size();
+        }
+        else {
+            return 0;
+        }
+    }
+
+    public ArrayList<String> getListOfImages() {
+        if (getNumImages() <= 0) {
+            return new ArrayList<String>();
+        }
+        else return pictures;
+    }
+
+    /**
+     * from https://medium.com/@hamidgh/sending-objects-to-fragment-naive-question-is-it-sent-by-value-ddaaa19fa42d
+     * @return
+     */
+    @Override
+    public Object clone() {
+        Parcel parcel = Parcel.obtain();
+        this.writeToParcel(parcel, 0);
+        byte[] bytes = parcel.marshall();
+
+        Parcel parcel2 = Parcel.obtain();
+        parcel2.unmarshall(bytes, 0, bytes.length);
+        parcel2.setDataPosition(0);
+        return ListingDetails.CREATOR.createFromParcel(parcel2);
     }
 }

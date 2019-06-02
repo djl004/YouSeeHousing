@@ -10,6 +10,8 @@ public class MainListingPageFragment extends ListPageFragment {
 
     private ListType type = ListPageFragment.ListType.MAIN_LISTING_PAGE;
 
+    private int mColumnCount = 1;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
