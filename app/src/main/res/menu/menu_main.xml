@@ -35,7 +35,6 @@
                     android:id="@+id/action_dropdown_sqft"
                     android:title="by Square Feet" />
 
-
                 <item
                     android:id="@+id/action_dropdown_extras"
                     android:title="by Parking/Pets/Washer/etc" />
@@ -43,6 +42,9 @@
                 <item
                     android:id="@+id/action_dropdown_lease"
                     android:title="by Lease Duration" />
+                <item
+                    android:id="@+id/action_clear_filters"
+                    android:title="Clear Filters" />
 
             </group>
         </menu>

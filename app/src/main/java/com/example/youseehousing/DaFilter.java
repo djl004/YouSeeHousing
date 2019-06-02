@@ -1,5 +1,8 @@
 package com.example.youseehousing;
 
+import android.support.annotation.NonNull;
+import android.util.Log;
+
 /**
  * This static method is called to sort the ArrayList of Listing objects
  *           In general, there are two types of filters.
@@ -26,7 +29,7 @@ package com.example.youseehousing;
  * @return the filtered ArrayList of Listings
  */
 public class DaFilter {
-
+    private final String TAG = "DaFilter";
     private String priceMin;
     private String priceMax;
     private String distance;
@@ -43,7 +46,7 @@ public class DaFilter {
     private static DaFilter theFilter;
 
     private DaFilter(){
-
+        Log.i(TAG, "Instancing new DaFilter object!");
     }
 
     public static DaFilter getInstance(){
@@ -53,6 +56,11 @@ public class DaFilter {
         return theFilter;
     }
 
+    /**
+     * If a ListingDetails object 'passes' the filter, then return true.
+     * @param pending
+     * @return
+     */
     public boolean passes(ListingDetails pending){
         String delims = "[-]+";
         String[] bounds;
@@ -251,6 +259,7 @@ public class DaFilter {
     }
 
     public void setDistance(String distance) {
+        Log.i(TAG, "Setting distance filter to : " + distance);
         this.distance = distance;
     }
 
@@ -277,4 +286,13 @@ public class DaFilter {
     public void setParking(String parking) {
         this.parking = parking;
     }
+
+    /**
+     * Clear filter by making instance null
+     */
+    public void resetFilters() {
+        Log.i(TAG, "Resetting filters!");
+        theFilter = null;
+    }
+
 }

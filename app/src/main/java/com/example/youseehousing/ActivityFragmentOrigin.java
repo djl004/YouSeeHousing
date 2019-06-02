@@ -231,6 +231,14 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
     }
 
     /**
+     * Returns the previously selected listing.
+     * @return
+     */
+    public ListingDetails getPreviousSelectedItem() {
+        return previousSelectedItem;
+    }
+
+    /**
      * What happens when a listing is selected
      * @param item : the selected listing
      */
@@ -364,6 +372,10 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                 FilterButtonActions.setLogOut(this);
                 return true;
 
+            case R.id.action_clear_filters:
+                FilterButtonActions.clearFilters(this);
+                return true;
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -392,17 +404,6 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
      * End filter options menu methods
      */
 
-
-
-
-
-    /**
-     * Returns the previously selected listing.
-     * @return
-     */
-    public ListingDetails getPreviousSelectedItem() {
-        return previousSelectedItem;
-    }
 
 }
 
