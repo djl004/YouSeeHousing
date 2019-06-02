@@ -58,7 +58,6 @@ public class DaFilter {
     }
 
     private static String parser(String myInput){
-
         return myInput.replaceAll("[^\\d]", "");
     }
 
@@ -190,6 +189,8 @@ public class DaFilter {
             try {
                 int min = Integer.parseInt(parser(sqftMin));
                 int max = Integer.parseInt(parser(sqftMax));
+
+                if(sqftMax.contains("+")) max = Integer.MAX_VALUE;
                 String unPainify = pending.getDim();
                 unPainify = unPainify.replace(" Sq Ft", "");
                 bounds = unPainify.split(delims);
