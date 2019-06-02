@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_DefaultBG"
     tools:context=".AccountCreation">
 
     <LinearLayout
@@ -16,10 +17,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/mainHousingListing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="User account should be created!"
+            android:text="Main Housing Listing comes here"
             android:textSize="36sp" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -1,12 +1,15 @@
 package com.example.youseehousing;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -64,16 +67,19 @@ public class UserPreferences extends AppCompatActivity {
         });
     }
 
+
     private void showData(DataSnapshot dataSnapshot) {
         for(DataSnapshot ds : dataSnapshot.getChildren()){
             Account uInfo = new Account();
            // Log.d(TAG,"Before set name: " + ds.child(Uid).getValue(Account.class).getName());
             uInfo.setName( ds.child(Uid).getValue(Account.class).getName()); //set the name
             uInfo.setEmail(ds.child(Uid).getValue(Account.class).getEmail()); //set the email
+            uInfo.setFavorites(ds.child(Uid).getValue(Account.class).getFavorites()); // set the favorites
             Log.d(TAG, "name:" + ds.child(Uid).getValue());
             //display all the information
             Log.d(TAG, "showData: name: " + uInfo.getName());
             Log.d(TAG, "showData: email: " + uInfo.getEmail());
+            Log.d(TAG, "showData: favorites: " + uInfo.getFavorites());
 
             final TextView name = (TextView) findViewById(R.id.name);
             name.setText(uInfo.getName());
@@ -83,4 +89,10 @@ public class UserPreferences extends AppCompatActivity {
         }
     }
 
+    public void doneUserPreferencesOnClick(View view) {
+        Intent myIntent = new Intent(UserPreferences.this, MainActivity.class);
+        startActivity(myIntent);
+        Toast.makeText(getApplicationContext(), "Please log in",
+                Toast.LENGTH_LONG).show();
+    }
 }

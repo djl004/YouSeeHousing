@@ -64,6 +64,8 @@ public class Listing implements Comparable<Listing>{
         this.address = newAddress;  // the id should be based off of the address
     }
 
+    public Listing() {}
+
     public int getId() {
         return id;
     }
