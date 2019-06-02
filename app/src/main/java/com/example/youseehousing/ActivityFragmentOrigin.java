@@ -1,7 +1,6 @@
 package com.example.youseehousing;
 
 import android.content.DialogInterface;
-import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -16,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -103,7 +101,6 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                 });
     }
 
-
     private void openUserPreferencesPage() {
         fm.beginTransaction().hide(active).show(fragment1).commit();
         active = fragment1;
@@ -131,6 +128,11 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
 
     }
 
+    /**
+     * Toggles visibility of a fragment.
+     * @param visible
+     * @param fragment
+     */
     private void showOverlayFragment(boolean visible, Fragment fragment) {
         if(visible) {
             fm.beginTransaction().setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
@@ -183,7 +185,6 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         else return false;
     }
 
-
     /**
      * Changes the current displayed fragment to the main housing listing page, and
      * redraws the page.
@@ -221,7 +222,13 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         selectListingFxn(item);
     }
 
-
+    /**
+     * Used for compare function.
+     * @param previousSelectedItem - the item that was selected to compare
+     */
+    public void setPreviousSelectedItem(ListingDetails previousSelectedItem) {
+        this.previousSelectedItem = previousSelectedItem;
+    }
 
     /**
      * What happens when a listing is selected
@@ -295,6 +302,7 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         // Set previousSelectedItem to null to cancel compare mode
         disableCompareMode(false);
     }
+
     public void disableCompareMode(boolean silent) {
         // Set previousSelectedItem to null to cancel compare mode
 
@@ -304,7 +312,9 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         }
     }
 
-
+    /**
+     * Begin filter options menu methods
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -327,287 +337,37 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
 
         switch (item.getItemId()) {
             case R.id.action_dropdown_distance:
-                setDistanceFilter();
+                FilterButtonActions.setDistanceFilter(this);
                 return true;
 
             case R.id.action_dropdown_price:
-                setPriceFilter();
+                FilterButtonActions.setPriceFilter(this);
+                return true;
 
-                return true;
             case R.id.action_dropdown_bedsbathrooms:
-                setBedsBathsFilter();
+                FilterButtonActions.setBedsBathsFilter(this);
                 return true;
+
             case R.id.action_dropdown_extras:
-                setExtrasFilter();
+                FilterButtonActions.setExtrasFilter(this);
                 return true;
+
             case R.id.action_dropdown_lease:
-                setLeaseLengthFilter();
+                FilterButtonActions.setLeaseLengthFilter(this);
                 return true;
+
             case R.id.action_dropdown_sqft:
-                setSquareFtFilter();
+                FilterButtonActions.setSquareFtFilter(this);
                 return true;
+
             case R.id.action_logout:
-                setLogOut();
+                FilterButtonActions.setLogOut(this);
                 return true;
 
         }
 
         return super.onOptionsItemSelected(item);
     }
-
-    private void setLogOut() {
-        AlertDialog.Builder mBuilder;
-        AlertDialog dialog;
-        mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
-        mBuilder.setTitle("Are you sure you want to log out?");
-
-        mBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick (DialogInterface dialogInterface, int i) {
-
-            }
-        });
-
-        mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-
-        dialog = mBuilder.create();
-        dialog.show();
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
-    }
-
-    private void setSquareFtFilter() {
-        AlertDialog.Builder mBuilder;
-        View mView;
-        Spinner mSpinner2;
-        ArrayAdapter<String> adapter2;
-        Spinner mSpinner3;
-        ArrayAdapter<String> adapter3;
-        AlertDialog dialog;
-        mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
-        mView = getLayoutInflater().inflate(R.layout.dialog_doublespinner, null);
-        mBuilder.setTitle("Set Square Foot (Min/Max) Filter");
-
-        mSpinner2 = (Spinner) ((View) mView).findViewById(R.id.spinner1);
-        adapter2 = new ArrayAdapter<String>(ActivityFragmentOrigin.this, android.R.layout.simple_spinner_item,
-                getResources().getStringArray(R.array.sizeList));
-        mSpinner2.setAdapter(adapter2);
-
-        mSpinner3 = (Spinner) ((View) mView).findViewById(R.id.spinner2);
-        adapter3 = new ArrayAdapter<String>(ActivityFragmentOrigin.this, android.R.layout.simple_spinner_item,
-                getResources().getStringArray(R.array.sizeList));
-        mSpinner3.setAdapter(adapter3);
-
-        mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick (DialogInterface dialogInterface, int i) {
-
-            }
-        });
-
-        mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-
-        mBuilder.setView(mView);
-        dialog = mBuilder.create();
-        dialog.show();
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
-    }
-
-    private void setLeaseLengthFilter() {
-        AlertDialog.Builder mBuilder;
-        View mView;
-        final Spinner mSpinner;
-        ArrayAdapter<String> adapter;
-        AlertDialog dialog;
-        mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
-        mView = getLayoutInflater().inflate(R.layout.dialog_spinner, null);
-        mBuilder.setTitle("Set Lease Duration Filter");
-        mSpinner = (Spinner) ((View) mView).findViewById(R.id.spinner);
-        adapter = new ArrayAdapter<String>(ActivityFragmentOrigin.this, android.R.layout.simple_spinner_item,
-                getResources().getStringArray(R.array.durationList));
-        mSpinner.setAdapter(adapter);
-
-        mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick (DialogInterface dialogInterface, int i) {
-                if(!mSpinner.getSelectedItem().toString().equalsIgnoreCase("alpha…")){
-
-                    Toast.makeText(ActivityFragmentOrigin.this,
-                            mSpinner.getSelectedItem().toString(),
-                            Toast.LENGTH_LONG)
-                            .show();
-                }
-            }
-        });
-
-        mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-
-        mBuilder.setView(mView);
-        dialog = mBuilder.create();
-        dialog.show();
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
-    }
-
-    private void setExtrasFilter() {
-        AlertDialog.Builder mBuilder;
-        AlertDialog dialog;
-        final String[] values = {" Washer/Dryer "," Furnished "," Parking "," Pets "};
-        final ArrayList itemsSelected = new ArrayList();
-        mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
-        mBuilder.setTitle("Filter by Included Amenities");
-        mBuilder.setMultiChoiceItems(values, null,
-                new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int selectedItemId,
-                                        boolean isSelected) {
-                        if (isSelected) {
-                            itemsSelected.add(selectedItemId);
-                        } else if (itemsSelected.contains(selectedItemId)) {
-                            itemsSelected.remove(Integer.valueOf(selectedItemId));
-                        }
-                    }
-                })
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        //Your logic when OK button is clicked
-                    }
-                })
-                .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                    }
-                });
-        dialog = mBuilder.create();
-        dialog.show();
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
-    }
-
-    private void setBedsBathsFilter() {
-        AlertDialog.Builder mBuilder;
-        View mView;
-        Spinner mSpinner2;
-        ArrayAdapter<String> adapter2;
-        Spinner mSpinner3;
-        ArrayAdapter<String> adapter3;
-        AlertDialog dialog;
-        mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
-        mView = getLayoutInflater().inflate(R.layout.dialog_doublespinner, null);
-        mBuilder.setTitle("Set #Bed/#Bathroom Filter");
-
-        mSpinner2 = (Spinner) ((View) mView).findViewById(R.id.spinner1);
-        adapter2 = new ArrayAdapter<String>(ActivityFragmentOrigin.this, android.R.layout.simple_spinner_item,
-                getResources().getStringArray(R.array.bedList));
-        mSpinner2.setAdapter(adapter2);
-
-        mSpinner3 = (Spinner) ((View) mView).findViewById(R.id.spinner2);
-        adapter3 = new ArrayAdapter<String>(ActivityFragmentOrigin.this, android.R.layout.simple_spinner_item,
-                getResources().getStringArray(R.array.bathroomList));
-        mSpinner3.setAdapter(adapter3);
-
-        mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick (DialogInterface dialogInterface, int i) {
-
-            }
-        });
-
-        mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-
-        mBuilder.setView(mView);
-        dialog = mBuilder.create();
-        dialog.show();
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
-    }
-
-    private void setPriceFilter() {
-        AlertDialog.Builder mBuilder;
-        View mView;
-        AlertDialog dialog;
-        mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
-        mView = getLayoutInflater().inflate(R.layout.dialog_minmax, null);
-        mBuilder.setTitle("Set Price (MIN/MAX) Filter");
-
-        mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick (DialogInterface dialogInterface, int i) {
-                ////When ok is clicked
-            }
-        });
-
-        mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-
-        mBuilder.setView(mView);
-        dialog = mBuilder.create();
-        dialog.show();
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
-    }
-
-    private void setDistanceFilter() {
-        AlertDialog.Builder mBuilder;
-        View mView;
-        final Spinner mSpinner;
-        ArrayAdapter<String> adapter;
-        AlertDialog dialog;
-        mBuilder = new AlertDialog.Builder(ActivityFragmentOrigin.this);
-        mView = getLayoutInflater().inflate(R.layout.dialog_spinner, null);
-        mBuilder.setTitle("Set Distance Filter");
-        mSpinner = (Spinner) ((View) mView).findViewById(R.id.spinner);
-        adapter = new ArrayAdapter<String>(ActivityFragmentOrigin.this, android.R.layout.simple_spinner_item,
-                getResources().getStringArray(R.array.distanceList));
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinner.setAdapter(adapter);
-
-        mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick (DialogInterface dialogInterface, int i) {
-                if(!mSpinner.getSelectedItem().toString().equalsIgnoreCase("alpha…")){
-
-                    Toast.makeText(ActivityFragmentOrigin.this,
-                            mSpinner.getSelectedItem().toString(),
-                            Toast.LENGTH_LONG)
-                            .show();
-                }
-            }
-        });
-
-        mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-
-        mBuilder.setView(mView);
-        dialog = mBuilder.create();
-        dialog.show();
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
-    }
-
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -629,6 +389,14 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
     }
 
     /**
+     * End filter options menu methods
+     */
+
+
+
+
+
+    /**
      * Returns the previously selected listing.
      * @return
      */
@@ -636,13 +404,6 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         return previousSelectedItem;
     }
 
-    /**
-     * Used for compare function.
-     * @param previousSelectedItem - the item that was selected to compare
-     */
-    public void setPreviousSelectedItem(ListingDetails previousSelectedItem) {
-        this.previousSelectedItem = previousSelectedItem;
-    }
 }
 
 
