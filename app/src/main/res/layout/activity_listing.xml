@@ -17,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/image_recycler_view"
@@ -26,20 +27,10 @@
                 android:layout_weight="1"
                 tools:listitem="@layout/image_item" />
 
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:cropToPadding="false"
-                android:scaleType="centerCrop"
-                android:visibility="gone"
-                app:srcCompat="@drawable/placeholder2" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/buttons"
+            android:id="@+id/listing_buttonsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0"
@@ -241,10 +232,12 @@
                     android:textColor="@color/SecondaryTextColor" />
 
                 <LinearLayout
+                    android:id="@+id/listing_descriptionLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/listing_description"
@@ -267,7 +260,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/mapLayout"
+                    android:id="@+id/listing_mapLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

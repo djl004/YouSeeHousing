@@ -63,8 +63,10 @@ public class ListingDetailsOverlayFragment extends Fragment {
     private Button btnFavorite;
     private Button btnContact;
     private Button btnMap;
-    private LinearLayout buttonsView;
+    private LinearLayout buttonsLayoutView;
     private LinearLayout mapLayoutView;
+    private LinearLayout imageLayoutView;
+    private LinearLayout descriptionLayoutView;
     private RecyclerView imageRecyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -114,8 +116,10 @@ public class ListingDetailsOverlayFragment extends Fragment {
         btnMap = (Button) rootView.findViewById(R.id.btnMap);
 
         // hideable layouts
-        buttonsView = (LinearLayout) rootView.findViewById(R.id.buttons);
-        mapLayoutView = (LinearLayout) rootView.findViewById(R.id.mapLayout);
+        buttonsLayoutView = (LinearLayout) rootView.findViewById(R.id.listing_buttonsLayout);
+        mapLayoutView = (LinearLayout) rootView.findViewById(R.id.listing_mapLayout);
+        imageLayoutView = (LinearLayout) rootView.findViewById(R.id.listing_imageLayout);
+        descriptionLayoutView = (LinearLayout) rootView.findViewById(R.id.listing_descriptionLayout);
 
         // swipeable images
         imageRecyclerView = (RecyclerView) rootView.findViewById(R.id.image_recycler_view);
@@ -138,8 +142,7 @@ public class ListingDetailsOverlayFragment extends Fragment {
             try {
                 ListingDetails visibility = (ListingDetails) getArguments().get(ActivityFragmentOrigin.BUNDLE_VISIBILITY);
                 if (visibility != null) {
-                    hideButtons(this, true);
-                    hideMap(this, true);
+                    hideDetailsForCompare(this, true);
                 }
             }
             catch (NullPointerException e) {
@@ -249,16 +252,40 @@ public class ListingDetailsOverlayFragment extends Fragment {
         getFragmentManager().beginTransaction().detach(this).attach(this).commit();
     }
 
-    public static void hideButtons(final ListingDetailsOverlayFragment fragment, final boolean visible) {
+    /**
+     * Hides information for the compare functionality to work better
+     * @param fragment
+     * @param visible
+     */
+    private static void hideDetailsForCompare(final ListingDetailsOverlayFragment fragment, final boolean visible) {
                 if (visible) {
-                    fragment.buttonsView.setVisibility(View.VISIBLE);
+                    fragment.buttonsLayoutView.setVisibility(View.VISIBLE);
+                    fragment.imageLayoutView.setVisibility(View.VISIBLE);
+                    fragment.mapLayoutView.setVisibility(View.VISIBLE);
+                    fragment.descriptionLayoutView.setVisibility(View.VISIBLE);
                 }
                 else {
-                    fragment.buttonsView.setVisibility(View.GONE);
+                    fragment.buttonsLayoutView.setVisibility(View.GONE);
+                    fragment.imageLayoutView.setVisibility(View.GONE);
+                    fragment.mapLayoutView.setVisibility(View.GONE);
+                    fragment.descriptionLayoutView.setVisibility(View.GONE);
                 }
     }
 
-    public static void hideMap(final ListingDetailsOverlayFragment fragment, final boolean visible) {
+    private static void hidePictures(final ListingDetailsOverlayFragment fragment, final boolean visible) {
+        if (visible) {
+//            fragment.imagesView.setVisibility(View.VISIBLE);
+            fragment.imageLayoutView.setVisibility(View.VISIBLE);
+//            fragment.imageRecyclerView.setVisibility(View.VISIBLE);
+        }
+        else {
+//            fragment.imagesView.setVisibility(View.GONE);
+            fragment.imageLayoutView.setVisibility(View.GONE);
+//            fragment.imageRecyclerView.setVisibility(View.GONE);
+        }
+    }
+
+    private static void hideMap(final ListingDetailsOverlayFragment fragment, final boolean visible) {
         if (visible) {
             fragment.mapLayoutView.setVisibility(View.VISIBLE);
         }

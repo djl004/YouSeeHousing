@@ -94,7 +94,7 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
         this.pet = in.readString();
         this.price = in.readString();
         this.unitLease = in.readString();
-        this.washerDryer =in.readString();
+        this.washerDryer = in.readString();
     }
 
     @Override
@@ -107,9 +107,7 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
 //        return this.id;
 //    }
 
-    public String getFurnished() {
-        return furnished;
-    }
+
     public String getAddress() {
         return this.address;
     }
@@ -130,6 +128,9 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
     }
     public String getDim() {
         return dim;
+    }
+    public String getFurnished() {
+        return furnished;
     }
     public String getLink() {
         return link;
@@ -229,6 +230,7 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
         dest.writeString(contact);
         dest.writeString(desc);
         dest.writeString(dim);
+        dest.writeString(furnished);
         dest.writeString(link);
         dest.writeString(parking);
         dest.writeSerializable(pictures);
