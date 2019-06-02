@@ -24,6 +24,11 @@ public class WrapContentLinearLayoutManager extends LinearLayoutManager {
     }
 
     @Override
+    public boolean supportsPredictiveItemAnimations() {
+        return false;
+    }
+
+    @Override
     public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
         try {
             super.onLayoutChildren(recycler, state);

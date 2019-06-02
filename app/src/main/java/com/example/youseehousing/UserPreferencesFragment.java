@@ -104,6 +104,8 @@ public class UserPreferencesFragment extends Fragment {
     private void showData(DataSnapshot dataSnapshot) {
         for(DataSnapshot ds : dataSnapshot.getChildren()){
             uInfo = new Account();
+            // TODO: Add error checks here in case something returns null.
+            // TODO: For example try username b@b.com password bbbbbb
             // Log.d(TAG,"Before set name: " + ds.child(Uid).getValue(Account.class).getName());
             uInfo.setName( ds.child(Uid).getValue(Account.class).getName()); //set the name
             uInfo.setEmail(ds.child(Uid).getValue(Account.class).getEmail()); //set the email
