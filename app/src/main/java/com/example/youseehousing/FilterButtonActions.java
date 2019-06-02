@@ -4,15 +4,25 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.FieldPosition;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.ParsePosition;
 import java.util.ArrayList;
+import java.util.Currency;
+import java.util.Locale;
 
 public class FilterButtonActions {
     private final static String TAG = "FilterButton";
+    private final static String STRING_TRUE = "true";
+    private final static String STRING_FALSE = "false";
+    private static final int MAX_RENT = 99999;
 
     /**
      * Filter button methods
@@ -113,8 +123,6 @@ public class FilterButtonActions {
             @Override
             public void onClick (DialogInterface dialogInterface, int i) {
                 if(!mSpinner.getSelectedItem().toString().equalsIgnoreCase("alpha…")){
-                    Log.i(TAG, "Lease length filter set!");
-
                     // Call to DaFilter
                     String selectedItem = mSpinner.getSelectedItem().toString();
                     DaFilter.getInstance().setLeaseLength(selectedItem);
@@ -123,6 +131,8 @@ public class FilterButtonActions {
                             mSpinner.getSelectedItem().toString(),
                             Toast.LENGTH_LONG)
                             .show();
+
+                    Log.i(TAG, "Lease length filter set : " + selectedItem);
                 }
             }
         });
@@ -141,9 +151,10 @@ public class FilterButtonActions {
     }
 
     public static void setExtrasFilter(ActivityFragmentOrigin activityFragmentOrigin) {
-        AlertDialog.Builder mBuilder;
+        final AlertDialog.Builder mBuilder;
         AlertDialog dialog;
         final String[] values = {" Washer/Dryer "," Furnished "," Parking "," Pets "};
+        final Boolean[] bools = {false, false, false, false}; // Corresponds to above array
         final ArrayList itemsSelected = new ArrayList();
         mBuilder = new AlertDialog.Builder(activityFragmentOrigin);
         mBuilder.setTitle("Filter by Included Amenities");
@@ -154,8 +165,23 @@ public class FilterButtonActions {
                                         boolean isSelected) {
                         if (isSelected) {
                             itemsSelected.add(selectedItemId);
+                            try {
+                                bools[selectedItemId] = true;
+                            }
+                            catch (ArrayIndexOutOfBoundsException e) {
+                                e.printStackTrace();
+                                Log.e(TAG, "Bad array index");
+                            }
+
                         } else if (itemsSelected.contains(selectedItemId)) {
                             itemsSelected.remove(Integer.valueOf(selectedItemId));
+                            try {
+                                bools[selectedItemId] = false;
+                            }
+                            catch (ArrayIndexOutOfBoundsException e) {
+                                e.printStackTrace();
+                                Log.e(TAG, "Bad array index");
+                            }
                         }
                     }
                 })
@@ -164,6 +190,7 @@ public class FilterButtonActions {
                     public void onClick(DialogInterface dialog, int id) {
                         //Your logic when OK button is clicked
                         Log.i(TAG, "Extras filter set!");
+                        extrasFilterHelper(bools);
                     }
                 })
                 .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
@@ -176,12 +203,52 @@ public class FilterButtonActions {
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
     }
 
+    /**
+     * Helper function to set DaFilter values.
+     * @param bools
+     */
+    private static void extrasFilterHelper(Boolean[] bools) {
+        try {
+            // Set W/D
+            if (bools[0] == true) {
+                DaFilter.getInstance().setWasherDryer(STRING_TRUE);
+            } else {
+                DaFilter.getInstance().setWasherDryer(STRING_FALSE);
+            }
+            // Set Furnished
+            if (bools[1] == true) {
+                DaFilter.getInstance().setFurnished(STRING_TRUE);
+            } else {
+                DaFilter.getInstance().setFurnished(STRING_FALSE);
+            }
+            // Set Parking
+            if (bools[2] == true) {
+                DaFilter.getInstance().setParking(STRING_TRUE);
+            } else {
+                DaFilter.getInstance().setParking(STRING_FALSE);
+            }
+            // Set Pets
+            if (bools[3] == true) {
+                DaFilter.getInstance().setPets(STRING_TRUE);
+            } else {
+                DaFilter.getInstance().setPets(STRING_FALSE);
+            }
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            throw e;
+        }
+        Log.i(TAG, "W/D : " + bools[0]);
+        Log.i(TAG, "Furnished : " + bools[1]);
+        Log.i(TAG, "Parking : " + bools[2]);
+        Log.i(TAG, "Pets : " + bools[3]);
+    }
+
     public static void setBedsBathsFilter(ActivityFragmentOrigin activityFragmentOrigin) {
         AlertDialog.Builder mBuilder;
         View mView;
-        Spinner mSpinner2;
+        final Spinner mSpinner2;
         ArrayAdapter<String> adapter2;
-        Spinner mSpinner3;
+        final Spinner mSpinner3;
         ArrayAdapter<String> adapter3;
         AlertDialog dialog;
         mBuilder = new AlertDialog.Builder(activityFragmentOrigin);
@@ -201,7 +268,12 @@ public class FilterButtonActions {
         mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick (DialogInterface dialogInterface, int i) {
-                Log.i(TAG, "Bed/Bath filter set!");
+
+                String beds = mSpinner2.getSelectedItem().toString();
+                String baths = mSpinner3.getSelectedItem().toString();
+                DaFilter.getInstance().setBeds(beds);
+                DaFilter.getInstance().setBaths(baths);
+                Log.i(TAG, "Bed/Bath filter set : " + beds + " " + baths);
             }
         });
 
@@ -218,19 +290,72 @@ public class FilterButtonActions {
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
     }
 
-    public static void setPriceFilter(ActivityFragmentOrigin activityFragmentOrigin) {
-        AlertDialog.Builder mBuilder;
-        View mView;
+    public static void setPriceFilter(final ActivityFragmentOrigin activityFragmentOrigin) {
+        final AlertDialog.Builder mBuilder;
+        final View mView;
         AlertDialog dialog;
         mBuilder = new AlertDialog.Builder(activityFragmentOrigin);
         mView = activityFragmentOrigin.getLayoutInflater().inflate(R.layout.dialog_minmax, null);
-        mBuilder.setTitle("Set Price (MIN/MAX) Filter");
+        final EditText minTextView = (EditText) mView.findViewById(R.id.dialog_price_min);
+        final EditText maxTextView = (EditText) mView.findViewById(R.id.dialog_price_max);
+
+        mBuilder.setTitle("Set Min/Max Price Filter");
 
         mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick (DialogInterface dialogInterface, int i) {
                 ////When ok is clicked
-                Log.i(TAG, "Price filter set!");
+                int min = 0;
+                int max = MAX_RENT;
+                boolean success = true;
+
+                try {
+                    min = Integer.parseInt(minTextView.getText().toString());
+                    max = Integer.parseInt(maxTextView.getText().toString());
+                }
+                catch (NumberFormatException e) {
+                    Log.e(TAG, "Error parsing min or max!");
+                    e.printStackTrace();
+                    success = false;
+                }
+
+                // Error checking
+                if(min > max) {
+                    // Min must be less than max
+                    Log.e(TAG, "Min > Max :" + min + " " + max);
+                    success = false;
+                }
+                if (min < 0 || max < 0) {
+                    // Must be greater than 0
+                    Log.e(TAG, "Min or Max Negative: " + min + " " + max);
+                    success = false;
+                }
+
+                if(max > MAX_RENT) {
+                    // Must be less than the max rent value
+                    Log.e(TAG, "Max greater than max rent: " + min + " " + max);
+                    success = false;
+                }
+                if(min > MAX_RENT) {
+                    // Min must be less than the max rent value
+                    Log.e(TAG, "Min greater than max rent: " + min + " " + max);
+                    success = false;
+                }
+
+                if(success) {
+                    String minString = Integer.toString(min);
+                    String maxString = Integer.toString(max);
+
+                    DaFilter.getInstance().setPriceMin(minString);
+                    DaFilter.getInstance().setPriceMax(maxString);
+                    Log.i(TAG, "Price filter set : " + min + " " + max);
+                }
+                else {
+                    Toast.makeText(activityFragmentOrigin,
+                            "Invalid min/max price entered",
+                            Toast.LENGTH_LONG)
+                            .show();
+                }
             }
         });
 
@@ -269,7 +394,7 @@ public class FilterButtonActions {
             @Override
             public void onClick (DialogInterface dialogInterface, int i) {
                 if(!mSpinner.getSelectedItem().toString().equalsIgnoreCase("alpha…")){
-                    Log.i(TAG, "Distance filter set!");
+
 
                     // Set DaFilter parameter here
                     String selectedItem = mSpinner.getSelectedItem().toString();
@@ -279,6 +404,8 @@ public class FilterButtonActions {
                             mSpinner.getSelectedItem().toString(),
                             Toast.LENGTH_LONG)
                             .show();
+
+                    Log.i(TAG, "Distance filter set : " + selectedItem);
                 }
             }
         });
