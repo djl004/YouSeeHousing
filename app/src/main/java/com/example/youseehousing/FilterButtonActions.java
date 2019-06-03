@@ -25,21 +25,16 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Locale;
 
-public class FilterButtonActions extends AppCompatActivity {
+public class FilterButtonActions {
     private final static String TAG = "FilterButton";
     private final static String STRING_TRUE = "true";
     private final static String STRING_FALSE = "false";
     private static final int MAX_RENT = 99999;
 
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     /**
-     * Filter button methods
-     * @param activityFragmentOrigin
+     * Logout button methods
+     * @param activityFragmentOrigin, mContext
      */
     public static void setLogOut(ActivityFragmentOrigin activityFragmentOrigin, final Context mContext) {
         AlertDialog.Builder mBuilder;
@@ -51,10 +46,11 @@ public class FilterButtonActions extends AppCompatActivity {
             @Override
             public void onClick (DialogInterface dialogInterface, int i) {
 
-                FirebaseAuth.getInstance().signOut();
+                FirebaseAuth.getInstance().signOut(); // Sign out the user
                 Intent myIntent = new Intent(mContext, MainActivity.class);
-                mContext.startActivity(myIntent);
+                mContext.startActivity(myIntent); // Redirect user to sign-in page
                 Log.d(TAG, "User Signed Out");
+                // I can possibly add some more code to check if the authentication is now offline.
 
             }
         });
@@ -71,6 +67,10 @@ public class FilterButtonActions extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
     }
 
+    /**
+     * Filter button methods
+     * @param activityFragmentOrigin
+     */
     public static void setSquareFtFilter(final ActivityFragmentOrigin activityFragmentOrigin) {
         AlertDialog.Builder mBuilder;
         View mView;
