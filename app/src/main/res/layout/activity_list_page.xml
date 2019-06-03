@@ -14,13 +14,13 @@
 
         <fragment
             android:id="@+id/fragment_list"
-            android:name="com.example.youseehousing.MainListingPageFragment"
+            android:name="com.example.youseehousing.lib.fragment.MainListingPageFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <fragment
             android:id="@+id/fragment"
-            android:name="com.example.youseehousing.ActivityListPageFragment"
+            android:name="com.example.youseehousing.lib.fragment.ActivityListPageFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
