@@ -77,8 +77,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+
+
     }
 
+    @Override
+    public void onBackPressed() {
+        // do nothing to disable back button in log-in page.
+        // Enabling back button can cause signed-out user to go back to where they came from.
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

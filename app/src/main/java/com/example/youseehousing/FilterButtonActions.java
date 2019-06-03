@@ -46,7 +46,7 @@ public class FilterButtonActions {
             @Override
             public void onClick (DialogInterface dialogInterface, int i) {
 
-                FirebaseAuth.getInstance().signOut(); // Sign out the user
+                FirebaseAuth.getInstance().signOut(); // Sign out the user;
                 Intent myIntent = new Intent(mContext, MainActivity.class);
                 mContext.startActivity(myIntent); // Redirect user to sign-in page
                 Log.d(TAG, "User Signed Out");
