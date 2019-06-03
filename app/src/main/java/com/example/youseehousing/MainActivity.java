@@ -7,13 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.example.youseehousing.forlisting.Listing;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -21,18 +20,17 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button signUp, logIn;
     private FirebaseAuth mAuth;
-    private static final String TAG = "EmailPassword";
+    private static final String TAG = "login";
 
 
     String email, pw;
     EditText emailInput, pwInput;
+    TextView pwRecovery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +41,8 @@ public class MainActivity extends AppCompatActivity {
         logIn = findViewById(R.id.login);
         emailInput = findViewById(R.id.loginUsername);
         pwInput = findViewById(R.id.password);
+        pwRecovery = (TextView) findViewById(R.id.forgotPwButton);
         mAuth = FirebaseAuth.getInstance();
-
-        // When "SIGN UP" button is clicked.
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signupFxn();
-            }
-        });
 
         logIn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -68,17 +59,26 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        pwRecovery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                Intent recover = new Intent(MainActivity.this, PasswordRecovery.class);
+                startActivity(recover);
+            }
+        });
+
+        // When "SIGN UP" button is clicked.
+        signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(MainActivity.this, SignUpPage.class);
+                startActivity(myIntent);
+            }
+        });
     }
 
-    private void signupFxn() {
-        Intent myIntent = new Intent(MainActivity.this, SignUpPage.class);
-        startActivity(myIntent);
-    }
-
-    private void logInFxn() {
-        Intent myIntent = new Intent(MainActivity.this, ActivityFragmentOrigin.class);
-        startActivity(myIntent);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -97,7 +97,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
                             Log.d(TAG, "signInWithEmail:success");
-                            logInFxn();
+                            Intent myIntent = new Intent(MainActivity.this, ActivityFragmentOrigin.class);
+                            startActivity(myIntent);
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() { // If authentication fails

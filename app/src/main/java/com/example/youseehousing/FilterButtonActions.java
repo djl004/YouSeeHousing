@@ -1,7 +1,11 @@
 package com.example.youseehousing;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -9,6 +13,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Intent;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.FieldPosition;
 import java.text.NumberFormat;
@@ -18,17 +25,23 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Locale;
 
-public class FilterButtonActions {
+public class FilterButtonActions extends AppCompatActivity {
     private final static String TAG = "FilterButton";
     private final static String STRING_TRUE = "true";
     private final static String STRING_FALSE = "false";
     private static final int MAX_RENT = 99999;
 
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     /**
      * Filter button methods
      * @param activityFragmentOrigin
      */
-    public static void setLogOut(ActivityFragmentOrigin activityFragmentOrigin) {
+    public static void setLogOut(ActivityFragmentOrigin activityFragmentOrigin, final Context mContext) {
         AlertDialog.Builder mBuilder;
         AlertDialog dialog;
         mBuilder = new AlertDialog.Builder(activityFragmentOrigin);
@@ -37,7 +50,12 @@ public class FilterButtonActions {
         mBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick (DialogInterface dialogInterface, int i) {
-                Log.i(TAG, "Log out button presesd!");
+
+                FirebaseAuth.getInstance().signOut();
+                Intent myIntent = new Intent(mContext, MainActivity.class);
+                mContext.startActivity(myIntent);
+                Log.d(TAG, "User Signed Out");
+
             }
         });
 

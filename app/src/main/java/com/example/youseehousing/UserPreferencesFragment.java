@@ -88,7 +88,7 @@ public class UserPreferencesFragment extends Fragment {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                showData(dataSnapshot);
+                //showData(dataSnapshot);
                 Log.d(TAG, "showData called");
             }
 

@@ -369,7 +369,7 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                 return true;
 
             case R.id.action_logout:
-                FilterButtonActions.setLogOut(this);
+                FilterButtonActions.setLogOut(this, getApplicationContext());
                 return true;
 
             case R.id.action_clear_filters:
