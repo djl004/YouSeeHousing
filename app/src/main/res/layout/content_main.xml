@@ -21,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:background="#00C21313"
             android:src="@drawable/youseelogo" />
     </LinearLayout>
 
