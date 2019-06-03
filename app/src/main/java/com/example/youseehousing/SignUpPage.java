@@ -24,11 +24,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-
 public class SignUpPage extends AppCompatActivity {
-    EditText emailInput, pwInput, pwInput2, fNameInput, lNameInput, cityInput,dofInput;
+    EditText emailInput, pwInput, pwInput2, fNameInput, lNameInput, genderInput,dofInput;
     DatePicker dofInput2;
-    String email, pw, confirmPw, fName, lName, dof, city, uid;
+    String email, pw, confirmPw, fName, lName, dof, gender, uid;
 
     //used to store all user info for firebase database
     //Account newUser = new Account();
@@ -53,7 +52,7 @@ public class SignUpPage extends AppCompatActivity {
         fNameInput = findViewById(R.id.firstname);
         lNameInput = findViewById(R.id.lastname);
         dofInput = findViewById(R.id.dateofbirth);
-        cityInput = findViewById(R.id.city);
+        genderInput = findViewById(R.id.gender);
 
         //initialize auth
         mAuth = FirebaseAuth.getInstance();
@@ -71,7 +70,7 @@ public class SignUpPage extends AppCompatActivity {
         fName = capFirstChar(fNameInput.getText().toString());
         lName = capFirstChar(lNameInput.getText().toString());
         dof = dofInput.getText().toString();
-        city = capFirstChar(cityInput.getText().toString());
+        gender = capFirstChar(genderInput.getText().toString());
 
 
         // Email address is not entered
@@ -107,7 +106,7 @@ public class SignUpPage extends AppCompatActivity {
          */
 
         // Check if city is entered
-        else if(city.length() == 0) {
+        else if(gender.length() == 0) {
             Toast.makeText(getApplicationContext(), "Please enter your city you're living.",
                     Toast.LENGTH_LONG).show();
         }
@@ -159,7 +158,7 @@ public class SignUpPage extends AppCompatActivity {
         Log.d(TAG,"Entering profilesetup#1");
         Account user = new Account();
         user.setName(fName + " " + lName);
-        user.setGender("male");
+        user.setGender(gender);
         user.setEmail(email);
         user.setBirth(dof);
         user.setOther("");
@@ -167,7 +166,7 @@ public class SignUpPage extends AppCompatActivity {
         user.setSleep("");
         user.setGuest("");
         user.setSmoking("");
-        user.setFavorites(Account.makeEmptyFavorites());
+        //user.setFavorites(new ArrayList<String>());
         //Log.d(TAG,  user.getBirth());
         Log.d(TAG, uid);
 
@@ -175,6 +174,7 @@ public class SignUpPage extends AppCompatActivity {
         //write in to firebase
         Log.d(TAG,uid);
         mDatabase.child(uid).setValue(user);
+
         Log.d(TAG,"Entering profilesetup#3");
     }
 

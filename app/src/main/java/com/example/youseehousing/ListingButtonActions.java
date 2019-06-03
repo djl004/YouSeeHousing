@@ -3,6 +3,8 @@ package com.example.youseehousing;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class ListingButtonActions {
     private final static String TAG = "ListingButtonActions";
     public final static String STRING_COMPARE_PROMPT = "Select another listing to compare\nBack button to cancel";
