@@ -14,5 +14,5 @@
     android:paddingEnd="@dimen/list_padding"
     android:paddingRight="@dimen/list_padding"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".MainListingPageFragment"
+    tools:context=".lib.fragment.MainListingPageFragment"
     tools:listitem="@layout/fragment_list_item" />

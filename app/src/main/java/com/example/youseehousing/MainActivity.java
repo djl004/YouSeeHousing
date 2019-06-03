@@ -13,6 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.youseehousing.lib.authentication.PasswordRecovery;
+import com.example.youseehousing.lib.authentication.SignUpPage;
+import com.example.youseehousing.lib.fragment.ActivityFragmentOrigin;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         logIn = findViewById(R.id.login);
         emailInput = findViewById(R.id.loginUsername);
         pwInput = findViewById(R.id.password);
-        pwRecovery = (TextView) findViewById(R.id.forgotPwButton);
+        pwRecovery = findViewById(R.id.forgotPwButton);
         mAuth = FirebaseAuth.getInstance();
 
         logIn.setOnClickListener(new View.OnClickListener(){
@@ -63,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         pwRecovery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
                 Intent recover = new Intent(MainActivity.this, PasswordRecovery.class);
                 startActivity(recover);
             }
