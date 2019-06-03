@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-                Intent recover = new Intent(MainActivity.this, SignUpPage.class);
+                Intent recover = new Intent(MainActivity.this, PasswordRecovery.class);
                 startActivity(recover);
             }
         });

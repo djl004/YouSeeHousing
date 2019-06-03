@@ -53,6 +53,12 @@
             android:value=".MainActivity" />
 
         <activity
+            android:name=".PasswordRecovery"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
+
+        <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
