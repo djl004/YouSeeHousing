@@ -162,5 +162,15 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="action_settings">Settings</string>
-    <string name="recover_your_password_here">Recover your password here!</string>
+    <string name="email">Email</string>
+    <string name="emailEx">email@example.com</string>
+    <string name="recoverPw">Recover Password</string>
+    <string name="recoverPwInst"> Please enter your email address below.\n
+        (You will receive an email with instruction to change your password.)</string>
+
+    <string name="changePw">Change Password</string>
+    <string name="changePw_currentPw">Current password</string>
+    <string name="changePw_newPw">New password</string>
+    <string name="changePw_newPwConfirm">Confirm new password</string>
+
 </resources>

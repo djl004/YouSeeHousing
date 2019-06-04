@@ -1,6 +1,7 @@
 package com.example.youseehousing.lib.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.youseehousing.lib.authentication.Account;
 import com.example.youseehousing.R;
+import com.example.youseehousing.lib.authentication.ChangePassword;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -39,7 +41,7 @@ public class UserPreferencesFragment extends Fragment {
     //Spinner input
     private AppCompatSpinner smokingInput,noiseInput,wakeInput,sleepInput,guestInput;
     private EditText otherInput;
-    private Button update;
+    private Button update, changePwButton;
     Account uInfo;
     View view;
 
@@ -64,8 +66,9 @@ public class UserPreferencesFragment extends Fragment {
         wakeInput = view.findViewById(R.id.wake);
         sleepInput = view.findViewById(R.id.sleep);
         guestInput = view.findViewById(R.id.guest);
+        changePwButton = view.findViewById(R.id.changePwButton);
 
-        update = view.findViewById(R.id.update);
+                update = view.findViewById(R.id.update);
 
         update.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +77,13 @@ public class UserPreferencesFragment extends Fragment {
             }
         });
 
+        changePwButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent changePw = new Intent(getContext(), ChangePassword.class);
+                startActivity(changePw);
+            }
+        });
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override

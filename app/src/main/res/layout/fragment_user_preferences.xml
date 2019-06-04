@@ -101,28 +101,11 @@
                     </LinearLayout>
 
                     <Button
-                        android:id="@+id/button9"
+                        android:id="@+id/changePwButton"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:background="#00FFFFFF"
-                        android:text="Change Display Name" />
-
-                    <Button
-                        android:id="@+id/button"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:background="#05FFFFFF"
-                        android:text="Change Password" />
-
-                    <Button
-                        android:id="@+id/button10"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:background="#00FFFFFF"
-                        android:text="Change Email Address" />
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:text="@string/changePw" />
 
                 </LinearLayout>
 

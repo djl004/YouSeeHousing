@@ -49,13 +49,11 @@ public class PasswordRecovery extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void>task) {
                                     if (task.isSuccessful()) {
-                                        Log.d(TAG, "Reset email instructions sent to " + email);
-                                        Intent myIntent = new Intent(PasswordRecovery.this, MainActivity.class);
-                                        startActivity(myIntent); // Redirect user to sign-in page
+                                        Toast.makeText(getApplicationContext(), "Password reset email has been sent\n" +
+                                                        "\t\t\tto " + email, Toast.LENGTH_LONG).show();
+                                        finish();   // Redirect user back to the log-in page
                                     } else {
                                         Log.d(TAG, "Something went wrong (task not successful)" + email);
-
-                                        Toast.makeText(getApplicationContext(), email + " does not exist", Toast.LENGTH_LONG).show();
                                     }
                                 }
                             }).addOnFailureListener(new OnFailureListener() {

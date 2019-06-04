@@ -47,7 +47,7 @@ public class UserPreferences extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if(user != null){
-                    Log.d(TAG,"user signed in" + user.getUid());
+                    Log.d(TAG, "User: " + user.getEmail() + " is signed in");
                 } else{
                     Log.d(TAG,"unsuccessful sign in");
                 }
