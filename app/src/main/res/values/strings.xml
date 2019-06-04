@@ -8,15 +8,9 @@
     <string name="bottombar_listing">Listing</string>
     <string name="bottombar_favorites">Favorites</string>
     <string name="prompt">Select…</string>
-
-    <string-array name="testList">
-        <item>alpha…</item>
-        <item>beta</item>
-        <item>charlie</item>
-        <item>delta</item>
-    </string-array>
-
+    
     <string-array name="distanceList">
+        <item>Any</item>
         <item>1 Mile</item>
         <item>2 Miles</item>
         <item>3 Miles</item>
@@ -29,39 +23,19 @@
 
     </string-array>
 
-    <string-array name="priceList">
-        <item>alpha…</item>
-        <item>beta</item>
-        <item>charlie</item>
-        <item>delta</item>
-    </string-array>
-
-    <string-array name="washdryList">
-        <item>alpha…</item>
-        <item>beta</item>
-        <item>charlie</item>
-        <item>delta</item>
-    </string-array>
-
-    <string-array name="furnishedList">
-        <item>alpha…</item>
-        <item>beta</item>
-        <item>charlie</item>
-        <item>delta</item>
-    </string-array>
-
     <string-array name="sizeList">
+        <item>Any</item>
         <item>500 sqft</item>
         <item>600 sqft</item>
         <item>700 sqft</item>
         <item>800 sqft</item>
         <item>900 sqft</item>
         <item>1000+ sqft</item>
-
     </string-array>
 
 
     <string-array name="bedList">
+        <item>Any</item>
         <item>1 Studio</item>
         <item>1 Bed</item>
         <item>1.5 Bed</item>
@@ -73,6 +47,7 @@
     </string-array>
 
     <string-array name="bathroomList">
+        <item>Any</item>
         <item>1 Bathroom</item>
         <item>1.5 Bathroom</item>
         <item>2 Bathroom</item>
@@ -81,6 +56,7 @@
     </string-array>
 
     <string-array name="wakeSleepList">
+        <item>Any</item>
         <item>1 AM</item>
         <item>2 AM</item>
         <item>3 AM</item>
@@ -108,44 +84,27 @@
     </string-array>
 
     <string-array name="smokeList">
+        <item>Any</item>
         <item>Yes</item>
         <item>No</item>
     </string-array>
 
     <string-array name="guestList">
+        <item>Any</item>
         <item>No guests ever</item>
         <item>Guest are fine as long as im told before</item>
         <item>Guest are always allowed</item>
     </string-array>
 
     <string-array name="noiseList">
+        <item>Any</item>
         <item>Whisper Only</item>
         <item>Normal Indoor Voice</item>
         <item>Shout</item>
     </string-array>
 
-    <string-array name="petsList">
-        <item>alpha…</item>
-        <item>beta</item>
-        <item>charlie</item>
-        <item>delta</item>
-    </string-array>
-
-    <string-array name="vacanciesList">
-        <item>alpha…</item>
-        <item>beta</item>
-        <item>charlie</item>
-        <item>delta</item>
-    </string-array>
-
-    <string-array name="utilitiesList">
-        <item>alpha…</item>
-        <item>beta</item>
-        <item>charlie</item>
-        <item>delta</item>
-    </string-array>
-
     <string-array name="durationList">
+        <item>Any</item>
         <item>1 Month</item>
         <item>3 Months</item>
         <item>4 Months</item>
