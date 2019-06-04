@@ -40,13 +40,20 @@ public class FilterButtonActions {
         mBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick (DialogInterface dialogInterface, int i) {
+                FirebaseAuth user = FirebaseAuth.getInstance();
+                String userEmail = user.getCurrentUser().getEmail();
 
-                FirebaseAuth.getInstance().signOut(); // Sign out the user;
-                Intent myIntent = new Intent(mContext, MainActivity.class);
-                mContext.startActivity(myIntent); // Redirect user to sign-in page
-                Log.d(TAG, "User Signed Out");
-                // I can possibly add some more code to check if the authentication is now offline.
+                user.signOut(); // Sign out the user
 
+                if(user.getCurrentUser() == null) {
+                    Log.d(TAG, "User: " + userEmail + " is signed out");
+                    Intent myIntent = new Intent(mContext, MainActivity.class);
+                    myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(myIntent); // Redirect user to sign-in page
+                }
+                else {
+                    Log.e(TAG, "User: " + user.getCurrentUser().getEmail() + " is still online.");
+                }
             }
         });
 
