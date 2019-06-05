@@ -95,7 +95,6 @@ public class Favorites_PopulateList extends ListPage {
                                     // call function to add listing details
                                     addAddressToFavoritesList(document);
                                 }
-                                assignNewItemsList();
                             } else {
                                 Log.w(TAG, "Error getting address: " + favoriteString, task.getException());
                             }
@@ -112,7 +111,9 @@ public class Favorites_PopulateList extends ListPage {
     private void addAddressToFavoritesList(QueryDocumentSnapshot document) {
 //        addListingToPage(document);
         ListingDetails item = ListingDetails.makeListingDetailsFromDocumentSnapshot(document);
-        addListingToTemporaryBuffer(item);
+        addListingToItems(item);
+        getRefreshableFragment().notifyAdapterOneItemInserted(size());
+//        addListingToTemporaryBuffer(item);
 //        getRefreshableFragment().refreshPage();
     }
 

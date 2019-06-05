@@ -84,6 +84,16 @@ public class ListPage {
     }
 
     /**
+     * Adds a listing to ITEMS.
+     * @param item
+     * @return
+     */
+    public void addListingToItems(ListingDetails item) {
+        if (item != null) {
+            ITEMS.add(item);
+        }
+    }
+    /**
      * Adds a listing to a temporary buffer for later processing
      * This is an attempted fix for the index out of bounds Recycler View error
      * See https://medium.com/@nhancv/android-fix-java-lang-indexoutofboundsexception-inconsistency-detected-invalid-item-70e9b3b489a2
@@ -92,7 +102,6 @@ public class ListPage {
     public void addListingToTemporaryBuffer(ListingDetails item) {
         if (item != null) {
             ITEMS_BUFFER.add(item);
-
         }
     }
 

@@ -110,6 +110,15 @@ public class ListPageFragment extends RefreshableListFragmentPage {
     }
 
     @Override
+    public boolean notifyAdapterOneItemInserted(int position) {
+        if(mAdapter != null) {
+            mAdapter.notifyItemInserted(position);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnListFragmentInteractionListener) {
@@ -128,19 +137,9 @@ public class ListPageFragment extends RefreshableListFragmentPage {
 
     @Override
     public void refreshPage() {
-//        if (getActivity() != null) {
-//            new Thread() {
-//                public void run() {
-//                    getActivity().runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Log.i(TAG, "Redrawing " + getListType() + "!!!");
-                            recyclerView.getAdapter().notifyDataSetChanged();
-//                        }
-//                    });
-//                }
-//            }.start();
-//        }
+        if (getActivity() != null) {
+            recyclerView.getAdapter().notifyDataSetChanged();
+        }
     }
 
     @Override

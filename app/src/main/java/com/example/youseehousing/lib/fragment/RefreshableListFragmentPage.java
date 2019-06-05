@@ -7,4 +7,6 @@ public abstract class RefreshableListFragmentPage extends Fragment {
     abstract public void refreshPage();
 
     abstract public ListPageFragment.ListType getListType();
+
+    abstract public boolean notifyAdapterOneItemInserted(int position);
 }
