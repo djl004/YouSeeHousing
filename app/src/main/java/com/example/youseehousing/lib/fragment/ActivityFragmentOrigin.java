@@ -93,17 +93,34 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                                 invalidateOptionsMenu();
                                 return true;
                             case R.id.bottombaritem_listing:
-                                switchToView(fragment2);
+                                openMainHousingListingPage();
                                 invalidateOptionsMenu();
                                 return true;
                             case R.id.bottombaritem_favorites:
-                                switchToView(fragment3);
+                                openFavoritesPage();
                                 invalidateOptionsMenu();
                                 return true;
                         }
                         return false;
                     }
                 });
+    }
+
+    /**
+     * Open MainHousingListing page
+     */
+    private void openMainHousingListingPage() {
+        switchToView(ListPageFragment.ListType.MAIN_LISTING_PAGE);
+//        switchToView(fragment2);
+    }
+
+    /**
+     * Open favorites page
+     */
+    private void openFavoritesPage() {
+
+        switchToView(ListPageFragment.ListType.FAVORITES);
+//        switchToView(fragment3);
     }
 
     private void openUserPreferencesPage() {
@@ -201,18 +218,27 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
         toggleListingOverlay(false); // testing
         toggleCompareOverlay(false); // testing
     }
+    private void switchToView(ListPageFragment.ListType type) {
+//        fm.beginTransaction().hide(active).show(pageFragment).commit();
+//        active = pageFragment;
+        createAndPopulateListingPage(type);
+        toggleListingOverlay(false); // testing
+        toggleCompareOverlay(false); // testing
+    }
 
     /**
      * Creates a new ListPage object.
      */
     public void createAndPopulateListingPage(ListPageFragment.ListType TYPE) {
-        // Call AsyncTask execute to populate listing list
+
         switch(TYPE) {
             case MAIN_LISTING_PAGE:
+                activeList.clearList();
                 activeList = new MainHousingListing_PopulateList(ActivityFragmentOrigin.this, fragment2);
                 break;
             case FAVORITES:
-                favoritesList = new Favorites_PopulateList(ActivityFragmentOrigin.this, fragment3);
+                activeList.clearList();
+                activeList = new Favorites_PopulateList(ActivityFragmentOrigin.this, fragment2);
                 break;
 
         }

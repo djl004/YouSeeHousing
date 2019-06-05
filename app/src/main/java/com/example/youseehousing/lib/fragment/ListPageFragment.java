@@ -44,6 +44,7 @@ public class ListPageFragment extends RefreshableListFragmentPage {
     private Bundle savedInstanceState;
     private View createdView;
     private RecyclerView recyclerView;
+    private MyItemRecyclerViewAdapter mAdapter;
 
     public RecyclerView getRecyclerView() {
         return recyclerView;
@@ -92,13 +93,13 @@ public class ListPageFragment extends RefreshableListFragmentPage {
             // Create a new list page type based on the ListPage.ListType this object has
             switch(this.getListType()) {
                 case MAIN_LISTING_PAGE:
-                    recyclerView.setAdapter
-                            (new MyItemRecyclerViewAdapter(MainHousingListing_PopulateList.ITEMS, getmListener()));
+                    mAdapter = new MyItemRecyclerViewAdapter(MainHousingListing_PopulateList.ITEMS, getmListener());
+                    recyclerView.setAdapter(mAdapter);
                     break;
 
                 case FAVORITES:
-                    recyclerView.setAdapter
-                            (new MyItemRecyclerViewAdapter(Favorites_PopulateList.ITEMS, getmListener()));
+                    mAdapter = new MyItemRecyclerViewAdapter(MainHousingListing_PopulateList.ITEMS, getmListener());
+                    recyclerView.setAdapter(mAdapter);
                     break;
 
                 case IMAGE_RECYCLER:
@@ -127,19 +128,19 @@ public class ListPageFragment extends RefreshableListFragmentPage {
 
     @Override
     public void refreshPage() {
-        if (getActivity() != null) {
-            new Thread() {
-                public void run() {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.i(TAG, "Redrawing " + getListType() + "!!!");
+//        if (getActivity() != null) {
+//            new Thread() {
+//                public void run() {
+//                    getActivity().runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Log.i(TAG, "Redrawing " + getListType() + "!!!");
                             recyclerView.getAdapter().notifyDataSetChanged();
-                        }
-                    });
-                }
-            }.start();
-        }
+//                        }
+//                    });
+//                }
+//            }.start();
+//        }
     }
 
     @Override

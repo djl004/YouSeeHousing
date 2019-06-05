@@ -49,7 +49,7 @@ public class Favorites_PopulateList extends ListPage {
     public Favorites_PopulateList(Activity activityFragmentOrigin, RefreshableListFragmentPage fragment) {
         super(activityFragmentOrigin, fragment);
         afoActivity = super.getActivityFragmentOrigin();
-        super.clearList();
+//        super.clearList();
         queryUserFavorites();
     }
 
@@ -95,6 +95,7 @@ public class Favorites_PopulateList extends ListPage {
                                     // call function to add listing details
                                     addAddressToFavoritesList(document);
                                 }
+                                assignNewItemsList();
                             } else {
                                 Log.w(TAG, "Error getting address: " + favoriteString, task.getException());
                             }
@@ -109,8 +110,10 @@ public class Favorites_PopulateList extends ListPage {
     }
 
     private void addAddressToFavoritesList(QueryDocumentSnapshot document) {
-        addListingToPage(document);
-        getRefreshableFragment().refreshPage();
+//        addListingToPage(document);
+        ListingDetails item = ListingDetails.makeListingDetailsFromDocumentSnapshot(document);
+        addListingToTemporaryBuffer(item);
+//        getRefreshableFragment().refreshPage();
     }
 
 
