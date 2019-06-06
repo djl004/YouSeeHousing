@@ -232,7 +232,7 @@ public class ListingDetailsOverlayFragment extends Fragment {
             bedsView.setText(item.getBed());
             bathsView.setText(item.getBath());
             parkingView.setText(item.getParking());
-//            furnishedView.setText(item.); // TODO: I forgot to add furnished...
+            furnishedView.setText(item.getFurnished()); // TODO: I forgot to add furnished...
             buildingLeaseView.setText(item.getBuildingLease());
             contactInfoView.setText(item.getContact());
         }
