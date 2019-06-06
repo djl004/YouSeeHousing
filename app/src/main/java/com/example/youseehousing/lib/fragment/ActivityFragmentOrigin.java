@@ -110,6 +110,9 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
      * Open MainHousingListing page
      */
     private void openMainHousingListingPage() {
+        toggleListingOverlay(false); // testing
+        toggleCompareOverlay(false); // testing
+        showFragment(fragment2);
         switchToView(ListPageFragment.ListType.MAIN_LISTING_PAGE);
 //        switchToView(fragment2);
     }
@@ -118,14 +121,15 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
      * Open favorites page
      */
     private void openFavoritesPage() {
-
+        toggleListingOverlay(false); // testing
+        toggleCompareOverlay(false); // testing
+        showFragment(fragment2);
         switchToView(ListPageFragment.ListType.FAVORITES);
 //        switchToView(fragment3);
     }
 
     private void openUserPreferencesPage() {
-        fm.beginTransaction().hide(active).show(fragment1).commit();
-        active = fragment1;
+        showFragment(fragment1);
         toggleListingOverlay(false); // testing
         toggleCompareOverlay(false); // testing
         if(isCompareModeEnabled()) {
@@ -147,7 +151,6 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
     public void toggleCompareOverlay(boolean visible) {
             showOverlayFragment(visible, compare_bottom);
             showOverlayFragment(visible, compare_top);
-
     }
 
     /**
@@ -211,12 +214,12 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
      * Changes the current displayed fragment to the main housing listing page, and
      * redraws the page.
      */
-    private void switchToView(ListPageFragment pageFragment) {
+    private void showFragment(Fragment pageFragment) {
         fm.beginTransaction().hide(active).show(pageFragment).commit();
         active = pageFragment;
-        createAndPopulateListingPage(pageFragment.getListType());
-        toggleListingOverlay(false); // testing
-        toggleCompareOverlay(false); // testing
+//        createAndPopulateListingPage(pageFragment.getListType());
+//        toggleListingOverlay(false); // testing
+//        toggleCompareOverlay(false); // testing
     }
     private void switchToView(ListPageFragment.ListType type) {
 //        fm.beginTransaction().hide(active).show(pageFragment).commit();
