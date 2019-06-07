@@ -168,6 +168,7 @@ public class MainListingPage extends AppCompatActivity {
             } // End of onMapReady()
         }); // End of .getMapAsync()
 
+        /*        In progress to make map scrollable vertically.
         mapView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -193,6 +194,8 @@ public class MainListingPage extends AppCompatActivity {
                     }
                 }
         });
+
+        */
     } // End of mapSetup
 
 } // End of MainListingPage class
