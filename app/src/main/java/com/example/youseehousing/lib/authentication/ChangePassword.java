@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -69,6 +70,7 @@ public class ChangePassword extends AppCompatActivity {
             }
         });
     }
+
 
     private void updatePw() {
         // Get user's credential using their current password they input
@@ -137,5 +139,15 @@ public class ChangePassword extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    // To make 'ActionBar back button' work the same as the 'hardware back button' in the bottom of screen.
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return false;
     }
 }

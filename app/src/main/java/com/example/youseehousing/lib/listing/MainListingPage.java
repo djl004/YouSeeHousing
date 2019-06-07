@@ -7,7 +7,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.youseehousing.R;
@@ -46,6 +50,7 @@ import java.util.Locale;
 public class MainListingPage extends AppCompatActivity {
 
     private static final String TAG = "MainListingPage";
+    private ScrollView verticalScroll;
     private ImageView imagesView;
     private TextView addressView;
     private TextView captionView;
@@ -66,7 +71,7 @@ public class MainListingPage extends AppCompatActivity {
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
 
-
+        verticalScroll = findViewById(R.id.verticalScroll);
         imagesView = (ImageView) findViewById(R.id.image);
         addressView = (TextView) findViewById(R.id.listing_address);
         captionView = (TextView) findViewById(R.id.listing_price);
@@ -95,22 +100,15 @@ public class MainListingPage extends AppCompatActivity {
         }
 
 
-        /************************************* Map Feature ****************************************/
-
-
-        String userAddress = listing.getAddress();
-        Log.d(TAG, "User address: " + userAddress);
-
-        /*
-        tv_check_connection = findViewById(R.id.tv_check_connection);
-        mNetworkReceiver = new NetworkChangeReceiver();
-        registerNetworkBroadcastForNougat();
-*/
-        // Convert user address to coordinates (latitude & longitude)
-        mapSetup(userAddress);
+        // Load a map of the address
+        mapSetup(listing.getAddress());
     } // End of onCreate()
 
+
+    /************************************* Map Feature ****************************************/
+
     private void mapSetup(String userAddress) {
+        // Convert user address to coordinates (latitude & longitude)
         Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
         List<Address> addresses;
 
@@ -169,7 +167,32 @@ public class MainListingPage extends AppCompatActivity {
                 });
             } // End of onMapReady()
         }); // End of .getMapAsync()
-    }
 
+        mapView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    int action = event.getAction();
+                    switch (action) {
+                        case MotionEvent.ACTION_DOWN:
+                            // Disallow ScrollView to intercept touch events.
+                            verticalScroll.requestDisallowInterceptTouchEvent(true);
+                            // Disable touch on transparent view
+                            return false;
+
+                        case MotionEvent.ACTION_UP:
+                            // Allow ScrollView to intercept touch events.
+                            verticalScroll.requestDisallowInterceptTouchEvent(false);
+                            return true;
+
+                        case MotionEvent.ACTION_MOVE:
+                            verticalScroll.requestDisallowInterceptTouchEvent(true);
+                            return false;
+
+                        default:
+                            return true;
+                    }
+                }
+        });
+    } // End of mapSetup
 
 } // End of MainListingPage class
