@@ -112,6 +112,11 @@
         <item>12+ Months</item>
     </string-array>
 
+    <string-array name="genderList">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Nonbinary</item>
+    </string-array>
 
 
 

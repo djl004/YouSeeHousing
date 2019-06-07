@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatSpinner;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -27,8 +28,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 
 public class SignUpPage extends AppCompatActivity {
-    EditText emailInput, pwInput, pwInput2, fNameInput, lNameInput, genderInput,dofInput;
+    EditText emailInput, pwInput, pwInput2, fNameInput, lNameInput;
     DatePicker dofInput2;
+    private AppCompatSpinner genderInput;
     String email, pw, confirmPw, fName, lName, dof, gender, uid;
 
     //used to store all user info for firebase database
@@ -53,8 +55,8 @@ public class SignUpPage extends AppCompatActivity {
         pwInput2 = findViewById(R.id.createPw2);
         fNameInput = findViewById(R.id.firstname);
         lNameInput = findViewById(R.id.lastname);
-        dofInput = findViewById(R.id.dateofbirth);
-        genderInput = findViewById(R.id.gender);
+        genderInput = findViewById(R.id.gender2);
+        dofInput2 = findViewById(R.id.dateofbirth2);
 
         //initialize auth
         mAuth = FirebaseAuth.getInstance();
@@ -71,8 +73,10 @@ public class SignUpPage extends AppCompatActivity {
         confirmPw = pwInput2.getText().toString();
         fName = capFirstChar(fNameInput.getText().toString());
         lName = capFirstChar(lNameInput.getText().toString());
-        dof = dofInput.getText().toString();
-        gender = capFirstChar(genderInput.getText().toString());
+
+        dof = "" + dateTrans(dofInput2.getMonth()+1) + "/" + dateTrans(dofInput2.getDayOfMonth())
+                + "/" + dofInput2.getYear();
+        gender = genderInput.getSelectedItem().toString();
 
 
         // Email address is not entered
@@ -212,6 +216,12 @@ public class SignUpPage extends AppCompatActivity {
         return name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
     }
 
+    private String dateTrans(int date){
+        if(date < 10){
+            return "0" + date;
+        }
+        return Integer.toString(date);
+    }
 
     /**
      * NOTE: How much date-checking do you guys want? So far, I have it so that the format is

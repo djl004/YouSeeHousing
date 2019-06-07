@@ -189,18 +189,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/dateofbirth"
-                    android:layout_width="194dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="MM/DD/YYYY"
-                    android:inputType="textPersonName"
-                    android:textAlignment="center" />
-            </LinearLayout>
+                android:orientation="vertical"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -210,20 +199,19 @@
 
                 <TextView
                     android:id="@id/textview2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="104dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="Gender:" />
 
-                <EditText
-                    android:id="@+id/gender"
-                    android:layout_width="138dp"
-                    android:layout_height="wrap_content"
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/gender2"
+                    android:layout_width="212dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="Male/Female/Nonbinary"
-                    android:inputType="textPersonName"
-                    android:textAlignment="center" />
+                    android:drawSelectorOnTop="true"
+                    android:entries="@array/genderList"
+                    android:prompt="@string/prompt"></android.support.v7.widget.AppCompatSpinner>
 
             </LinearLayout>
 
