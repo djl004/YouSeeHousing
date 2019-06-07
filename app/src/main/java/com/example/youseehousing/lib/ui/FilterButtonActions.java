@@ -2,6 +2,8 @@ package com.example.youseehousing.lib.ui;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
@@ -57,13 +59,6 @@ public class FilterButtonActions {
             }
         });
 
-        mBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-
         dialog = mBuilder.create();
         dialog.show();
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
@@ -81,6 +76,8 @@ public class FilterButtonActions {
         final Spinner mSpinner3;
         ArrayAdapter<String> adapter3;
         AlertDialog dialog;
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(activityFragmentOrigin.getApplicationContext());
+        final SharedPreferences.Editor prefEditor = sharedPref.edit();
         mBuilder = new AlertDialog.Builder(activityFragmentOrigin);
         mView = activityFragmentOrigin.getLayoutInflater().inflate(R.layout.dialog_doublespinner, null);
 
@@ -91,12 +88,15 @@ public class FilterButtonActions {
         adapter2 = new ArrayAdapter<String>(activityFragmentOrigin, android.R.layout.simple_spinner_item,
                 activityFragmentOrigin.getResources().getStringArray(R.array.sizeList));
         mSpinner2.setAdapter(adapter2);
+        mSpinner2.setSelection(sharedPref.getInt("sqftSpinner2", 0));
 
         //mSpinner3 is upper bound
         mSpinner3 = (Spinner) ((View) mView).findViewById(R.id.spinner2);
         adapter3 = new ArrayAdapter<String>(activityFragmentOrigin, android.R.layout.simple_spinner_item,
                 activityFragmentOrigin.getResources().getStringArray(R.array.sizeList));
         mSpinner3.setAdapter(adapter3);
+        mSpinner3.setSelection(sharedPref.getInt("sqftSpinner3", 0));
+
 
 
 
@@ -110,15 +110,13 @@ public class FilterButtonActions {
                 DaFilter.getInstance().setSqftMin(lowerBound);
                 DaFilter.getInstance().setSqftMax(upperBound);
                 refreshList(activityFragmentOrigin);
+
+                prefEditor.putInt("sqftSpinner2",mSpinner2.getSelectedItemPosition());
+                prefEditor.putInt("sqftSpinner3",mSpinner3.getSelectedItemPosition());
+                prefEditor.commit();
             }
         });
 
-        mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
 
         mBuilder.setView(mView);
         dialog = mBuilder.create();
@@ -132,6 +130,8 @@ public class FilterButtonActions {
         final Spinner mSpinner;
         ArrayAdapter<String> adapter;
         AlertDialog dialog;
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(activityFragmentOrigin.getApplicationContext());
+        final SharedPreferences.Editor prefEditor = sharedPref.edit();
         mBuilder = new AlertDialog.Builder(activityFragmentOrigin);
         mView = activityFragmentOrigin.getLayoutInflater().inflate(R.layout.dialog_spinner, null);
         mBuilder.setTitle("Set Lease Duration Filter");
@@ -139,11 +139,12 @@ public class FilterButtonActions {
         adapter = new ArrayAdapter<String>(activityFragmentOrigin, android.R.layout.simple_spinner_item,
                 activityFragmentOrigin.getResources().getStringArray(R.array.durationList));
         mSpinner.setAdapter(adapter);
+        mSpinner.setSelection(sharedPref.getInt("leaseSpinner", 0));
+
 
         mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick (DialogInterface dialogInterface, int i) {
-                if(!mSpinner.getSelectedItem().toString().equalsIgnoreCase("alpha…")){
                     // Call to DaFilter
                     String selectedItem = mSpinner.getSelectedItem().toString();
                     DaFilter.getInstance().setLeaseLength(selectedItem);
@@ -155,14 +156,10 @@ public class FilterButtonActions {
 
                     Log.i(TAG, "Lease length filter set : " + selectedItem);
                     refreshList(activityFragmentOrigin);
-                }
-            }
-        });
 
-        mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
+                    prefEditor.putInt("leaseSpinner",mSpinner.getSelectedItemPosition());
+                    prefEditor.commit();
+
             }
         });
 
@@ -176,29 +173,41 @@ public class FilterButtonActions {
         final AlertDialog.Builder mBuilder;
         AlertDialog dialog;
         final String[] values = {" Washer/Dryer "," Furnished "," Parking "," Pets "};
-        final Boolean[] bools = {false, false, false, false}; // Corresponds to above array
+      //final Boolean[] bools = {false, false, false, false}; // Corresponds to above array
         final ArrayList itemsSelected = new ArrayList();
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(activityFragmentOrigin.getApplicationContext());
+        final SharedPreferences.Editor prefEditor = sharedPref.edit();
+        final Boolean[] bools = {sharedPref.getBoolean("wd", true),
+                sharedPref.getBoolean("furnish", true),
+                sharedPref.getBoolean("parking", true),
+                sharedPref.getBoolean("pets", true)}; // Corresponds to above array
+
         mBuilder = new AlertDialog.Builder(activityFragmentOrigin);
         mBuilder.setTitle("Filter by Included Amenities");
-        mBuilder.setMultiChoiceItems(values, null,
+        final boolean[] b2 = new boolean[bools.length];
+        for(int i = 0; i < bools.length; i++) b2[i] = bools[i];
+        mBuilder.setMultiChoiceItems(values, b2,
                 new DialogInterface.OnMultiChoiceClickListener() {
+
                     @Override
+
                     public void onClick(DialogInterface dialog, int selectedItemId,
                                         boolean isSelected) {
                         if (isSelected) {
                             itemsSelected.add(selectedItemId);
                             try {
                                 bools[selectedItemId] = true;
+
                             }
                             catch (ArrayIndexOutOfBoundsException e) {
                                 e.printStackTrace();
                                 Log.e(TAG, "Bad array index");
                             }
-
                         } else if (itemsSelected.contains(selectedItemId)) {
                             itemsSelected.remove(Integer.valueOf(selectedItemId));
                             try {
                                 bools[selectedItemId] = false;
+
                             }
                             catch (ArrayIndexOutOfBoundsException e) {
                                 e.printStackTrace();
@@ -214,13 +223,14 @@ public class FilterButtonActions {
                         Log.i(TAG, "Extras filter set!");
                         extrasFilterHelper(bools);
                         refreshList(activityFragmentOrigin);
-                    }
-                })
-                .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
+                        prefEditor.putBoolean("wd", b2[0]);
+                        prefEditor.putBoolean("furnish", b2[1]);
+                        prefEditor.putBoolean("parking", b2[2]);
+                        prefEditor.putBoolean("pets", b2[3]);
+                        prefEditor.commit();
                     }
                 });
+
         dialog = mBuilder.create();
         dialog.show();
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.white);
@@ -275,6 +285,8 @@ public class FilterButtonActions {
         final Spinner mSpinner3;
         ArrayAdapter<String> adapter3;
         AlertDialog dialog;
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(activityFragmentOrigin.getApplicationContext());
+        final SharedPreferences.Editor prefEditor = sharedPref.edit();
         mBuilder = new AlertDialog.Builder(activityFragmentOrigin);
         mView = activityFragmentOrigin.getLayoutInflater().inflate(R.layout.dialog_doublespinner, null);
         mBuilder.setTitle("Set #Bed/#Bathroom Filter");
@@ -283,11 +295,12 @@ public class FilterButtonActions {
         adapter2 = new ArrayAdapter<String>(activityFragmentOrigin, android.R.layout.simple_spinner_item,
                 activityFragmentOrigin.getResources().getStringArray(R.array.bedList));
         mSpinner2.setAdapter(adapter2);
-
+        mSpinner2.setSelection(sharedPref.getInt("bedSpinner", 0));
         mSpinner3 = (Spinner) ((View) mView).findViewById(R.id.spinner2);
         adapter3 = new ArrayAdapter<String>(activityFragmentOrigin, android.R.layout.simple_spinner_item,
                 activityFragmentOrigin.getResources().getStringArray(R.array.bathroomList));
         mSpinner3.setAdapter(adapter3);
+        mSpinner3.setSelection(sharedPref.getInt("bathroomSpinner",0));
 
         mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
@@ -299,15 +312,13 @@ public class FilterButtonActions {
                 DaFilter.getInstance().setBaths(baths);
                 Log.i(TAG, "Bed/Bath filter set : " + beds + " " + baths);
                 refreshList(activityFragmentOrigin);
+
+                prefEditor.putInt("bedSpinner",mSpinner2.getSelectedItemPosition());
+                prefEditor.putInt("bathroomSpinner", mSpinner3.getSelectedItemPosition());
+                prefEditor.commit();
             }
         });
 
-        mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
 
         mBuilder.setView(mView);
         dialog = mBuilder.create();
@@ -319,10 +330,15 @@ public class FilterButtonActions {
         final AlertDialog.Builder mBuilder;
         final View mView;
         AlertDialog dialog;
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(activityFragmentOrigin.getApplicationContext());
+        final SharedPreferences.Editor prefEditor = sharedPref.edit();
+
         mBuilder = new AlertDialog.Builder(activityFragmentOrigin);
         mView = activityFragmentOrigin.getLayoutInflater().inflate(R.layout.dialog_minmax, null);
         final EditText minTextView = (EditText) mView.findViewById(R.id.dialog_price_min);
         final EditText maxTextView = (EditText) mView.findViewById(R.id.dialog_price_max);
+        minTextView.setText(Integer.toString(sharedPref.getInt("priceInputMin",0)));
+        maxTextView.setText(Integer.toString(sharedPref.getInt("priceInputMax",0)));
 
         mBuilder.setTitle("Set Min/Max Price Filter");
 
@@ -375,6 +391,10 @@ public class FilterButtonActions {
                     DaFilter.getInstance().setPriceMax(maxString);
                     Log.i(TAG, "Price filter set : " + min + " " + max);
                     refreshList(activityFragmentOrigin);
+
+                    prefEditor.putInt("priceInputMin", min);
+                    prefEditor.putInt("priceInputMax", max);
+                    prefEditor.commit();
                 }
                 else {
                     Toast.makeText(activityFragmentOrigin,
@@ -385,12 +405,6 @@ public class FilterButtonActions {
             }
         });
 
-        mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
 
         mBuilder.setView(mView);
         dialog = mBuilder.create();
@@ -404,24 +418,24 @@ public class FilterButtonActions {
         final Spinner mSpinner;
         ArrayAdapter<String> adapter;
         AlertDialog dialog;
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(activityFragmentOrigin.getApplicationContext());
+        final SharedPreferences.Editor prefEditor = sharedPref.edit();
 
         mBuilder = new AlertDialog.Builder(activityFragmentOrigin);
         mView = activityFragmentOrigin.getLayoutInflater().inflate(R.layout.dialog_spinner, null);
         mBuilder.setTitle("Set Max Distance Filter");
         mSpinner = (Spinner) ((View) mView).findViewById(R.id.spinner);
 
-
         adapter = new ArrayAdapter<String>(activityFragmentOrigin, android.R.layout.simple_spinner_item,
                 activityFragmentOrigin.getResources().getStringArray(R.array.distanceList));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
+        mSpinner.setSelection(sharedPref.getInt("distanceSpinner", 0));
+
 
         mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick (DialogInterface dialogInterface, int i) {
-                if(!mSpinner.getSelectedItem().toString().equalsIgnoreCase("alpha…")){
-
-
                     // Set DaFilter parameter here
                     String selectedItem = mSpinner.getSelectedItem().toString();
                     DaFilter.getInstance().setDistance(selectedItem);
@@ -433,14 +447,11 @@ public class FilterButtonActions {
 
                     Log.i(TAG, "Distance filter set : " + selectedItem);
                     refreshList(activityFragmentOrigin);
-                }
-            }
-        });
 
-        mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
+                    prefEditor.putInt("distanceSpinner", mSpinner.getSelectedItemPosition());
+                    prefEditor.commit();
+                    
+
             }
         });
 
@@ -460,6 +471,22 @@ public class FilterButtonActions {
                 .show();
         DaFilter.getInstance().resetFilters();
         refreshList(activityFragmentOrigin);
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(activityFragmentOrigin.getApplicationContext());
+        final SharedPreferences.Editor prefEditor = sharedPref.edit();
+        prefEditor.putInt("sqftSpinner2",0);
+        prefEditor.putInt("sqftSpinner3",0);
+        prefEditor.putInt("distanceSpinner",0);
+        prefEditor.putInt("priceInputMin",0);
+        prefEditor.putInt("priceInputMax",9999);
+        prefEditor.putInt("bedSpinner",0);
+        prefEditor.putInt("bathroomSpinner",0);
+        prefEditor.putInt("leaseSpinner",0);
+        prefEditor.putBoolean("wd",true);
+        prefEditor.putBoolean("furnish",true);
+        prefEditor.putBoolean("parking",true);
+        prefEditor.putBoolean("pets",true);
+        prefEditor.commit();
     }
 
     private static void refreshList(final ActivityFragmentOrigin activityFragmentOrigin) {
