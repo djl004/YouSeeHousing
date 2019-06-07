@@ -15,5 +15,5 @@
     app:layoutManager="android.support.v7.widget.GridLayoutManager"
     app:reverseLayout="false"
     android:orientation="horizontal"
-    tools:context=".ImageRecyclerFragment"
+    tools:context=".lib.fragment.ImageRecyclerFragment"
     tools:listitem="@layout/fragment_image_item" />

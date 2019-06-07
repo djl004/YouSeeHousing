@@ -307,7 +307,7 @@
                         android:id="@+id/spacer_bottom"
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
-                        android:background="@color/listing_lightGrey" />
+                        android:background="@color/ucsdDarkBlue" />
                 </LinearLayout>
 
             </LinearLayout>

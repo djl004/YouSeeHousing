@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_DefaultBG"
-    tools:context=".SignUpPage">
+    tools:context=".lib.authentication.SignUpPage">
 
     <LinearLayout
         android:layout_width="395dp"
@@ -129,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="John"
+                    android:hint="First"
                     android:inputType="textPersonName"
                     android:textAlignment="center" />
 
@@ -154,7 +154,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="Bae"
+                    android:hint="Last"
                     android:inputType="textPersonName"
                     android:textAlignment="center" />
 
@@ -197,7 +197,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="07/26/1993"
+                    android:hint="MM/DD/YYYY"
                     android:inputType="textPersonName"
                     android:textAlignment="center" />
             </LinearLayout>

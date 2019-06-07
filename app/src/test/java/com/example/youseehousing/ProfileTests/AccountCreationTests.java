@@ -5,14 +5,9 @@ package com.example.youseehousing.ProfileTests;
 
 
 // Import for testing
-import com.example.youseehousing.SignUpPage;
+import com.example.youseehousing.lib.authentication.SignUpPage;
 
-import junit.framework.TestCase;
 import org.junit.Test;
-import java.util.ArrayList;
-import static org.junit.Assert.*;
-import java.lang.Math;              // To generate random numbers
-
 
 
 public class AccountCreationTests {
