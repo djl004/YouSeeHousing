@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.example.youseehousing.R;
 import com.example.youseehousing.lib.ui.RecyclerViewListItem;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -29,6 +30,7 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
     private ArrayList<String> coordinates;
     private String desc;
     private String dim;
+    private String furnished;
     private String link;
     private String parking;
     private ArrayList<String> pictures;
@@ -36,7 +38,6 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
     private String price;
     private String unitLease;
     private String washerDryer;
-    private String furnished;
 
     private final String[] queryList = {    "address", "bath", "bed",
                                             "buildingLease", "contact", "coordinates", "desc",
@@ -138,7 +139,12 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
         return dim;
     }
     public String getFurnished() {
-        return furnished;
+        if (furnished != null) {
+            if(furnished.contains("true")) {
+                return "Furnished";
+            }
+        }
+        return "Not Furnished";
     }
     public String getLink() {
         return link;

@@ -131,5 +131,7 @@
     <string name="changePw_currentPw">Current password</string>
     <string name="changePw_newPw">New password</string>
     <string name="changePw_newPwConfirm">Confirm new password</string>
+    <string name="furnished_true">Furnished</string>
+    <string name="furnished_false">Not Furnished</string>
 
 </resources>

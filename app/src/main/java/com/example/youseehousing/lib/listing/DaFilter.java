@@ -236,7 +236,7 @@ public class DaFilter {
 
         if(furnished != null){
             if(furnished.equals("true")) {
-                if(pending.getFurnished().equals("false")) return false;
+                if(pending.getFurnished().equals("Not Furnished")) return false;
             }
         }
 
