@@ -71,8 +71,8 @@ public class SignUpPage extends AppCompatActivity {
         email = emailInput.getText().toString().toLowerCase();
         pw = pwInput.getText().toString();
         confirmPw = pwInput2.getText().toString();
-        fName = capFirstChar(fNameInput.getText().toString());
-        lName = capFirstChar(lNameInput.getText().toString());
+        fName = fNameInput.getText().toString();
+        lName = lNameInput.getText().toString();
 
         dof = "" + dateTrans(dofInput2.getMonth()+1) + "/" + dateTrans(dofInput2.getDayOfMonth())
                 + "/" + dofInput2.getYear();
@@ -120,6 +120,8 @@ public class SignUpPage extends AppCompatActivity {
         else {
             //Intent myIntent = new Intent(SignUpPage.this, MainHousingListing.class);
             //record down the information into account.txt
+            fName = capFirstChar(fName);
+            lName = capFirstChar(lName);
             createAccount();
         }
     }
