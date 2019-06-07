@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,8 @@ import com.example.youseehousing.lib.listing.ListingButtonActions;
 import com.example.youseehousing.lib.listing.ListingDetails;
 import com.example.youseehousing.lib.listing.MainHousingListing_PopulateList;
 import com.example.youseehousing.R;
+
+import java.util.List;
 
 public class ActivityFragmentOrigin extends AppCompatActivity implements ListPageFragment.OnListFragmentInteractionListener {
 
@@ -52,6 +55,8 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
 
     private ListingDetails previousSelectedItem = null;
     private ListingDetails currentSelectedItem = null;
+
+    private Menu optionsMenu;
 
 
     @Override
@@ -93,11 +98,11 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                                 invalidateOptionsMenu();
                                 return true;
                             case R.id.bottombaritem_listing:
-                                switchToView(fragment2);
+                                openMainHousingListingPage();
                                 invalidateOptionsMenu();
                                 return true;
                             case R.id.bottombaritem_favorites:
-                                switchToView(fragment3);
+                                openFavoritesPage();
                                 invalidateOptionsMenu();
                                 return true;
                         }
@@ -106,9 +111,32 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
                 });
     }
 
+    /**
+     * Open MainHousingListing page
+     */
+    private void openMainHousingListingPage() {
+        toggleListingOverlay(false); // testing
+        toggleCompareOverlay(false); // testing
+        showFragment(fragment2);
+        switchToView(ListPageFragment.ListType.MAIN_LISTING_PAGE);
+        showOptions(ListPageFragment.ListType.MAIN_LISTING_PAGE);
+//        switchToView(fragment2);
+    }
+
+    /**
+     * Open favorites page
+     */
+    private void openFavoritesPage() {
+        toggleListingOverlay(false); // testing
+        toggleCompareOverlay(false); // testing
+        showFragment(fragment3);
+        switchToView(ListPageFragment.ListType.FAVORITES);
+        showOptions(ListPageFragment.ListType.FAVORITES);
+//        switchToView(fragment3);
+    }
+
     private void openUserPreferencesPage() {
-        fm.beginTransaction().hide(active).show(fragment1).commit();
-        active = fragment1;
+        showFragment(fragment1);
         toggleListingOverlay(false); // testing
         toggleCompareOverlay(false); // testing
         if(isCompareModeEnabled()) {
@@ -123,14 +151,11 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
     public void toggleListingOverlay(boolean visible) {
 //            ListingDetailsOverlayFragment.hideButtons(fragment4, !visible);
             showOverlayFragment(visible, fragment4);
-
-
     }
 
     public void toggleCompareOverlay(boolean visible) {
             showOverlayFragment(visible, compare_bottom);
             showOverlayFragment(visible, compare_top);
-
     }
 
     /**
@@ -194,10 +219,17 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
      * Changes the current displayed fragment to the main housing listing page, and
      * redraws the page.
      */
-    private void switchToView(ListPageFragment pageFragment) {
+    private void showFragment(Fragment pageFragment) {
         fm.beginTransaction().hide(active).show(pageFragment).commit();
         active = pageFragment;
-        createAndPopulateListingPage(pageFragment.getListType());
+//        createAndPopulateListingPage(pageFragment.getListType());
+//        toggleListingOverlay(false); // testing
+//        toggleCompareOverlay(false); // testing
+    }
+    private void switchToView(ListPageFragment.ListType type) {
+//        fm.beginTransaction().hide(active).show(pageFragment).commit();
+//        active = pageFragment;
+        createAndPopulateListingPage(type);
         toggleListingOverlay(false); // testing
         toggleCompareOverlay(false); // testing
     }
@@ -206,15 +238,16 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
      * Creates a new ListPage object.
      */
     public void createAndPopulateListingPage(ListPageFragment.ListType TYPE) {
-        // Call AsyncTask execute to populate listing list
+
         switch(TYPE) {
             case MAIN_LISTING_PAGE:
+                activeList.clearList();
                 activeList = new MainHousingListing_PopulateList(ActivityFragmentOrigin.this, fragment2);
                 break;
             case FAVORITES:
-                favoritesList = new Favorites_PopulateList(ActivityFragmentOrigin.this, fragment3);
+                activeList.clearList();
+                activeList = new Favorites_PopulateList(ActivityFragmentOrigin.this, fragment3);
                 break;
-
         }
     }
 
@@ -332,6 +365,7 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        optionsMenu = menu;
         return true;
     }
 
@@ -393,16 +427,31 @@ public class ActivityFragmentOrigin extends AppCompatActivity implements ListPag
             menu.findItem(R.id.action_logout).setVisible(true);
         }
         if(active.equals(fragment2)) {
+            // MainListingPage
             menu.findItem(R.id.action_filters).setVisible(true);
             menu.findItem(R.id.action_logout).setVisible(false);
         }
-        if(active.equals(fragment3))
-        {
-            menu.findItem(R.id.action_filters).setVisible(false);
-            menu.findItem(R.id.action_logout).setVisible(false);
-
+         if(active.equals(fragment3)) {
+            // Favorites page
+                menu.findItem(R.id.action_filters).setVisible(false);
+                menu.findItem(R.id.action_logout).setVisible(false);
         }
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    private void showOptions(ListPageFragment.ListType type) {
+        if(optionsMenu == null) {
+            Log.e(TAG, "optionsMenu is null!");
+            return;
+        }
+        if (type == ListPageFragment.ListType.MAIN_LISTING_PAGE) {
+            optionsMenu.findItem(R.id.action_filters).setVisible(true);
+            optionsMenu.findItem(R.id.action_logout).setVisible(false);
+        }
+        else {
+            optionsMenu.findItem(R.id.action_filters).setVisible(false);
+            optionsMenu.findItem(R.id.action_logout).setVisible(false);
+        }
     }
 
     /**

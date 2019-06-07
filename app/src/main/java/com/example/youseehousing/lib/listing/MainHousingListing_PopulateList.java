@@ -24,7 +24,7 @@ public class MainHousingListing_PopulateList extends ListPage {
 
 //    public static List<ListingDetails> ITEMS = new ArrayList<ListingDetails>();
 
-    private static final int COUNT = 250; // Max number of listings to query at once from database.
+    private static final int COUNT = 75; // Max number of listings to query at once from database.
     private final ListPageFragment.ListType TYPE = ListPageFragment.ListType.MAIN_LISTING_PAGE;
 
     /**
@@ -34,7 +34,7 @@ public class MainHousingListing_PopulateList extends ListPage {
     public MainHousingListing_PopulateList(Activity activityFragmentOrigin, RefreshableListFragmentPage fragment) {
         super(activityFragmentOrigin, fragment);
         afoActivity = super.getActivityFragmentOrigin();
-        super.clearList();
+//        super.clearList();
         queryDatabase();
     }
 
@@ -65,13 +65,16 @@ public class MainHousingListing_PopulateList extends ListPage {
                                     if (item != null) {
                                         if (checkListingPassesFilter(item)) {
                                             Log.i(TAG, "Listing " + item.getAddress() + " passes filter!");
-                                            addListingToPage(document);
-                                            getRefreshableFragment().refreshPage();
+                                            addListingToTemporaryBuffer(item);
                                         } else {
                                             Log.i(TAG, "Listing " + item.getAddress() + " does not pass filter!");
                                         }
                                     }
                                 }
+                                // When done adding items, call assign new list
+                                // This is an attempted fix for the index out of bounds exception
+                                assignNewItemsList();
+
                             } else {
                                 Log.w(TAG, "Error getting documents.", task.getException());
                             }

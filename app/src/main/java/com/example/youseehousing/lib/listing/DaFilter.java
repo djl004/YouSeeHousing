@@ -28,6 +28,21 @@ import android.util.Log;
  * @return the filtered ArrayList of Listings
  */
 public class DaFilter {
+
+    // Important variables:
+    // If, for whatever reason, a Listing's address could not be converted to coordinates, use -1.
+    public static final double NO_LATITUDE = -1000;  // Latitude goes from -90 to 90
+    public static final double NO_LONGITUDE = -1000; // Longitude goes from -180 to 180
+    public static final double NO_DISTANCE = -1; // Probably would want to print out "N/A"
+
+    // Constants used for calculations (Haversine formula)
+    public static final double R = 6372.8;             // In kilometers
+    public static final double KM_CONSTANT = 0.621371; // How many miles in a kilometer
+
+    public static final double[] UCSDCoords = {32.8752631656, -117.236132389};
+
+    public static final int MAXIMUM_MIN_VALUE = 1000;
+
     private static final String STRING_PARSE = "Parsing string: ";
     private final String TAG = "DaFilter";
     private String priceMin;
@@ -85,7 +100,7 @@ public class DaFilter {
                     if (minPrice < min || minPrice > max) return false;
                 } else {
                     int maxPrice = Integer.parseInt(parser(boundsOfPrice[1]));
-                    if (min < maxPrice || max > minPrice) return false;
+                    if (maxPrice < min || minPrice > max) return false;
                 }
             }
             catch (NumberFormatException e) {
@@ -95,7 +110,11 @@ public class DaFilter {
             }
         }
 
-        if(distance != null){
+        if(distance != null && !distance.equals("Any")){
+            double preferredDistanceToUCSD = Double.parseDouble(parser(distance));
+            double distanceToUCSD = dBetweenCoords(Double.parseDouble(pending.getCoordinates().get(0)), Double.parseDouble(pending.getCoordinates().get(1)), UCSDCoords[0], UCSDCoords[1]);
+            if( distanceToUCSD > preferredDistanceToUCSD)
+                return false;
             // null for complication so far
         }
 
@@ -118,7 +137,7 @@ public class DaFilter {
             }
         }
 
-        if(leaseLength != null){
+        if(leaseLength != null && !leaseLength.equals("Any")){
             String searchTerm = leaseLength.replace(" Month", "");
             searchTerm = searchTerm.replace(" Months", "");
             searchTerm = parser(searchTerm);
@@ -126,7 +145,7 @@ public class DaFilter {
             if(!pending.getBuildingLease().contains(searchTerm) && !pending.getUnitLease().contains(searchTerm)) return false;
         }
 
-        if(beds != null){
+        if(beds != null && !beds.equals("Any")){
             String searchTerm = beds.replace(" Bed", "");
             Log.i(TAG, STRING_PARSE + searchTerm);
             try {
@@ -160,7 +179,7 @@ public class DaFilter {
             }
         }
 
-        if(baths != null){
+        if(baths != null && !baths.equals("Any")){
             String searchTerm = baths.replace(" Bathroom","");
             Log.i(TAG, STRING_PARSE + searchTerm);
             try {
@@ -188,8 +207,13 @@ public class DaFilter {
         if(sqftMin != null || sqftMax != null){
 
             try {
-                int min = Integer.parseInt(parser(sqftMin));
-                int max = Integer.parseInt(parser(sqftMax));
+                int min;
+                int max;
+                if(sqftMin.equals("Any")) min = 0;
+                else min = Integer.parseInt(parser(sqftMin));
+
+                if(sqftMax.equals("Any")) max = Integer.MAX_VALUE;
+                else max = Integer.parseInt(parser(sqftMax));
 
                 if(sqftMax.contains("+")) max = Integer.MAX_VALUE;
                 String unPainify = pending.getDim();
@@ -200,7 +224,7 @@ public class DaFilter {
                     if (minSize < min || minSize > max) return false;
                 } else {
                     int maxSize = Integer.parseInt(parser(bounds[1]));
-                    if (min < maxSize || max > minSize) return false;
+                    if (maxSize < min || minSize > max) return false;
                 }
             }
             catch (NumberFormatException e) {
@@ -212,7 +236,7 @@ public class DaFilter {
 
         if(furnished != null){
             if(furnished.equals("true")) {
-                if(pending.getFurnished().equals("false")) return false;
+                if(pending.getFurnished().equals("Not Furnished")) return false;
             }
         }
 
@@ -331,5 +355,45 @@ public class DaFilter {
         Log.i(TAG, "Resetting filters!");
         theFilter = null;
     }
+
+    /**
+     * Helper function used to calculate the distance (in miles) between two sets of coordinates
+     * Resource: https://rosettacode.org/wiki/Haversine_formula#Java
+     *
+     * Error case: If any of the coordinates are invalid (-1000), then return -1
+     *
+     * @return the distance, in miles, between the two sets of coordinates
+     */
+    public static double dBetweenCoords(double lat1, double lng1, double lat2, double lng2){
+
+        // If any of the coords are invalid, return -1
+        if(lat1 == NO_LATITUDE || lat2 == NO_LATITUDE || lng1 == NO_LONGITUDE
+                || lng2 == NO_LONGITUDE){
+            return NO_DISTANCE;
+        }
+
+
+        // Calculate this and return;
+        double distance = 0;
+
+
+        // Haversine formula to calculate distance
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lng2 - lng1);
+        lat1 = Math.toRadians(lat1);
+        lat2 = Math.toRadians(lat2);
+
+        double a = Math.pow(Math.sin(dLat / 2),2) + Math.pow(Math.sin(dLon / 2),2) * Math.cos(lat1) * Math.cos(lat2);
+        double c = 2 * Math.asin(Math.sqrt(a));
+        distance = R * c;
+
+
+
+
+        // Convert answer in kilometers to miles, and return
+        return distance * KM_CONSTANT;
+
+    } // end of dBetweenCoords()
+
 
 }

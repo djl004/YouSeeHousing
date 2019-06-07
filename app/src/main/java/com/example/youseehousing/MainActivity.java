@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
 
    private void signIn(String email, String password){
-        Log.d(TAG,"signIn:" + email);
+        Log.d(TAG,"signIn: " + email);
 
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this
                 , new OnCompleteListener<AuthResult>() {

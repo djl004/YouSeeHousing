@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.example.youseehousing.R;
 import com.example.youseehousing.lib.ui.RecyclerViewListItem;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -26,8 +27,10 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
     private String bed;
     private String buildingLease;
     private String contact;
+    private ArrayList<String> coordinates;
     private String desc;
     private String dim;
+    private String furnished;
     private String link;
     private String parking;
     private ArrayList<String> pictures;
@@ -35,10 +38,9 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
     private String price;
     private String unitLease;
     private String washerDryer;
-    private String furnished;
 
     private final String[] queryList = {    "address", "bath", "bed",
-                                            "buildingLease", "contact", "desc",
+                                            "buildingLease", "contact", "coordinates", "desc",
                                             "dim", "furnished", "link", "parking",
                                             "pictures", "pet", "price",
                                             "unitLease", "washerDryer"};
@@ -50,6 +52,7 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
                           String bed,
                           String buildingLease,
                           String contact,
+                          ArrayList<String> coordinates,
                           String desc,
                           String dim,
                           String furnished,
@@ -67,6 +70,7 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
         this.bed = bed;
         this.buildingLease = buildingLease;
         this.contact = contact;
+        this.coordinates = coordinates;
         this.desc = desc;
         this.dim = dim;
         this.furnished = furnished;
@@ -86,6 +90,7 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
         this.bed = in.readString();
         this.buildingLease = in.readString();
         this.contact = in.readString();
+        this.coordinates = (ArrayList<String>) in.readSerializable();
         this.desc = in.readString();
         this.dim = in.readString();
         this.furnished = in.readString();
@@ -124,6 +129,9 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
     public String getContact() {
         return contact;
     }
+    public ArrayList<String> getCoordinates() {
+        return coordinates;
+    }
     public String getDesc() {
         return desc;
     }
@@ -131,7 +139,12 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
         return dim;
     }
     public String getFurnished() {
-        return furnished;
+        if (furnished != null) {
+            if(furnished.contains("true")) {
+                return "Furnished";
+            }
+        }
+        return "Not Furnished";
     }
     public String getLink() {
         return link;
@@ -170,6 +183,9 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
     }
     public void setContact(String contact) {
         this.contact = contact;
+    }
+    public void setCoordinates(ArrayList<String> coordinates) {
+        this.coordinates = coordinates;
     }
     public void setDesc(String desc) {
         this.desc = desc;
@@ -229,6 +245,7 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
         dest.writeString(bed);
         dest.writeString(buildingLease);
         dest.writeString(contact);
+        dest.writeSerializable(coordinates);
         dest.writeString(desc);
         dest.writeString(dim);
         dest.writeString(furnished);
@@ -252,7 +269,7 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
      */
     public static ListingDetails makeListingDetailsFromDocumentSnapshot(QueryDocumentSnapshot document) {
 //                "address", "bath", "bed",
-//                "buildingLease", "contact", "desc",
+//                "buildingLease", "contact", "coordinates", "desc",
 //                "dim", "link", "parking",
 //                "pictures", "pet", "price",
 //                "unitLease", "washerDryer"
@@ -263,6 +280,12 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
             String bed = document.get("bed").toString(); // bed
             String buildingLease = document.get("buildingLease").toString(); // Bath
             String contact = document.get("contact").toString(); // contact
+
+            ArrayList<String> coordinates = (ArrayList<String>) document.get("coordinates"); // parking
+            if(coordinates.isEmpty()) {
+                coordinates.add("");
+            }
+
             String desc = document.get("desc").toString(); // desc
             String dim = document.get("dim").toString(); // dim
             String furnished = document.get("furnished").toString(); // furnished
@@ -282,7 +305,7 @@ public class ListingDetails extends RecyclerViewListItem implements Parcelable, 
 
             Log.i(TAG, "Queried db: " + address);
 
-            return new ListingDetails(address, bath, bed, buildingLease, contact,
+            return new ListingDetails(address, bath, bed, buildingLease, contact, coordinates,
                     desc, dim, furnished, link, parking, pictures, pet, price, unitLease, washerDryer);
         } else {
             return null;
