@@ -12,7 +12,8 @@ Gmail: youseehousing110@gmail.com
 
 Gmail password: UChousing110
 
-Application password:
+Application password: UChousing110
 
 
-Account with information:
+Account with information: youseehousing110@gmail.com 
+For the following account, some favorites have been added for the account and the preferences have been added.
